@@ -78,7 +78,13 @@ int FileFound(int argc, char const* argv[]){
       }
     }
   }
-  printf("%s\n",fullpath);
+  strcpy(bx_path, fullpath);
+  strcpy(ptr_path, fullpath);
+  strcpy(col_path, fullpath);
+  strcat(bx_path, "bx.txt");
+  strcat(ptr_path, "Ptr.txt");
+  strcat(col_path, "ColVal.txt");
+
   if(!file_found){
     printf("Matrix file not found\n");
   }else{

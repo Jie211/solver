@@ -15,11 +15,9 @@
 #define INNER
 #endif
 
-// #define BX_PATH ""
-// #define PTR_PATH ""
-// #define COL_PATH ""
-//
-
+char bx_path[512];
+char ptr_path[512];
+char col_path[512];
 
 extern 
 int CSR_start(int argc, 
