@@ -13,7 +13,7 @@ void VPCR_Init(double *v1, double *v2, double *v3, double *v4, double *v5, doubl
 int VPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max){
   /* int i, j, k, n; */
   int loop;
-  
+
   double *rvec, *pvec, *qvec, *svec, *zvec, *wvec, *x_0, error=0.0;
   double alpha, beta, bnorm, rnorm;
   double zs, zs2;
@@ -59,11 +59,11 @@ int VPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nd
   //p=z
   DoubleVecCopy(pvec, zvec, ndata);
 
-  //q=Ap
-  DoubleMVMCSR(qvec, val, col, ptr, pvec, ndata);
+  //s=Ap
+  DoubleMVMCSR(svec, val, col, ptr, pvec, ndata);
 
-  //s=q
-  DoubleVecCopy(svec, qvec, ndata);
+  //q=s
+  DoubleVecCopy(qvec, svec, ndata);
 
   // (z,s)
   zs=DoubleDot(zvec, svec, ndata); 
@@ -81,7 +81,7 @@ int VPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nd
 
     //init wvec
     DoubleVecInit(wvec, 0.0, ndata);
-    
+
     //solve w by Aw=q
     error_message=InnerSolverSelecter(val, col, ptr, qvec, wvec, ndata, I_EPS, I_I_MAX, I_KSKIP, I_FIX);
     if(error_message!=0){
@@ -92,13 +92,13 @@ int VPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nd
     //alpha=(z,s)/(w,q)
     alpha = zs / DoubleDot(wvec, qvec, ndata);
 
-    //x=x+alpha*pvec
+    //x=alpha*pvec+x
     DoubleScalarxpy(xvec, alpha, pvec, xvec, ndata);
 
-    //r=r-alpha*qvec
+    //r=-alpha*qvec+r
     DoubleScalarxpy(rvec, -alpha, qvec, rvec, ndata);
 
-    //z=z-alpha*wvec
+    //z=-alpha*wvec+z
     DoubleScalarxpy(zvec, -alpha, wvec, zvec, ndata);
 
     //s=Az
@@ -112,30 +112,29 @@ int VPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nd
 
     zs=zs2;
 
-    //p=z+beta*p
+    //p=beta*p+z
     DoubleScalarxpy(pvec, beta, pvec, zvec, ndata);
 
-    //q=s+beta*q
-    DoubleScalarxpy(qvec, beta, qvec, svec, ndata);
+    //q=beta*q+s
+    DoubleScalarxpy(qvec, beta, qvec, svec, ndata); 
+  } 
+  FileOutPutVec(p_x, xvec, ndata); 
+  t_error=error_check_CRS(val, col, ptr, bvec, xvec, x_0, ndata); 
+  printf("|b-ax|2/|b|2=%.1f\n", t_error); 
 
-  }
-  FileOutPutVec(p_x, xvec, ndata);
-  t_error=error_check_CRS(val, col, ptr, bvec, xvec, x_0, ndata);
-  printf("|b-ax|2/|b|2=%.1f\n", t_error);
+  Double1Free(rvec); 
+  Double1Free(pvec); 
+  Double1Free(qvec); 
+  Double1Free(zvec); 
+  Double1Free(wvec); 
+  Double1Free(x_0); 
+  FileClose(p_x); 
+  FileClose(p_his); 
 
-  Double1Free(rvec);
-  Double1Free(pvec);
-  Double1Free(qvec);
-  Double1Free(zvec);
-  Double1Free(wvec);
-  Double1Free(x_0);
-  FileClose(p_x);
-  FileClose(p_his);
-
-  if(flag){
-    return 1;
-  }else{
-    return 2;
-  }
-  return 0;
+  if(flag){ 
+    return 1; 
+  }else{ 
+    return 2; 
+  } 
+  return 0; 
 }
