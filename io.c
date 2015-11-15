@@ -33,7 +33,7 @@ int FileFound(int argc, char const* argv[]){
   }
 
   if((dir=opendir(path))==NULL){
-    perror("** error opendir **");
+    perror("** error opendir **\n");
     return -1;
   }
   for(dp=readdir(dir);dp!=NULL;dp=readdir(dir)){
@@ -57,7 +57,7 @@ int FileFound(int argc, char const* argv[]){
   strcat(fullpath, searchname);
   strcat(fullpath, "/");
   if((dir=opendir(fullpath))==NULL){
-    perror("** erro opendir **");
+    perror("** error opendir **\n");
     return -1;
   }
   for(dp=readdir(dir);dp!=NULL;dp=readdir(dir)){
