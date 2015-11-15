@@ -2,4 +2,4 @@
 *.out
 *.dSYM
 *.tags
-output/
+/output
