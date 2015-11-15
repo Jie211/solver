@@ -12,7 +12,7 @@ int CR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
   /* int i, j, k, n; */
   int loop;
   
-  double *rvec, *pvec, *qvec, *svec, *x_0, error;
+  double *rvec, *pvec, *qvec, *svec, *x_0, error=0.0;
   double alpha, beta, bnorm, rnorm;
   double rs, rs2;
 

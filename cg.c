@@ -11,7 +11,7 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
   /* int i, j, k, n; */
   int loop;
   
-  double *rvec, *pvec, *Av, *x_0, error;
+  double *rvec, *pvec, *Av, *x_0, error=0.0;
   double alpha, beta, bnorm, rnorm;
   double rr, rr2;
 

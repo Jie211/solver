@@ -10,11 +10,12 @@ int CSR_start(int argc, char const* argv[]){
   double *bvec,*xvec, *val;
   int *col, *ptr;
   
-  omp_set_num_threads(8);
+  omp_set_num_threads(THREADS);
+  printf("---- OpenMP set to %d ----\n", THREADS);
   
   int error = UsageCheck(argc, argv);
   if(error!=0){
-    printf("error in start\n");
+    printf("** error in start **\n");
     return -1;
   }
   
@@ -33,7 +34,7 @@ int CSR_start(int argc, char const* argv[]){
   error = SolverSelecter(val, col, ptr, bvec, xvec, N, EPS, I_MAX, KSKIP, FIX);
 
   if(error!=0){
-    printf("error in start\n");
+    printf("** error in start **\n");
     return(-1);
   }
 

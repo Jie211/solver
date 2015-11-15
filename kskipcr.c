@@ -19,7 +19,7 @@ int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
 
   double *Ar, *Ap, *delta, *eta, *zeta;
   double *rvec, *pvec, *Av, *x_0;
-  double rnorm, bnorm, error,alpha, beta;
+  double rnorm, bnorm, alpha, beta, error=0.0;
   bool flag=false;
 
 #ifndef INNER

@@ -11,11 +11,11 @@ int InnerSolverSelecter(double *val, int *col, int *ptr, double *bvec, double *x
 #elif IK_CR
   error=KSKIPCR_CRS(val, col, ptr, bvec, xvec, ndata, eps, i_max, kskip, fix);
 #else
-  printf("no inner solver selected\n");
+  printf("---- no inner solver selected ----\n");
   return -1;
 #endif
   if(error==-1){
-    printf("error in innersolvers\n");
+    printf("** error in innersolvers **\n");
     return -1;
   }
   return 0;

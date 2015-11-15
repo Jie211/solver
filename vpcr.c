@@ -14,7 +14,7 @@ int VPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nd
   /* int i, j, k, n; */
   int loop;
   
-  double *rvec, *pvec, *qvec, *svec, *zvec, *wvec, *x_0, error;
+  double *rvec, *pvec, *qvec, *svec, *zvec, *wvec, *x_0, error=0.0;
   double alpha, beta, bnorm, rnorm;
   double zs, zs2;
 

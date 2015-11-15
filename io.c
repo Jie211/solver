@@ -4,7 +4,7 @@
 int UsageCheck(int argc, char const* argv[]){
   int error = FileFound(argc, argv);
   if(error!=0){
-    printf("filefound error\n");
+    printf("** error Usagecheck **\n");
     return -1;
   }
 
@@ -25,7 +25,7 @@ int FileFound(int argc, char const* argv[]){
   bool file_found=false;
 
   if(argc!=2){
-    printf("./a.out [matrix file name]\n");
+    printf("---- Usage : ./a.out [matrix file name] ----\n");
     return -1;
   }else{
     strcpy(searchname, argv[1]);
@@ -33,7 +33,7 @@ int FileFound(int argc, char const* argv[]){
   }
 
   if((dir=opendir(path))==NULL){
-    perror("opendir");
+    perror("** error opendir **");
     return -1;
   }
   for(dp=readdir(dir);dp!=NULL;dp=readdir(dir)){
@@ -48,16 +48,16 @@ int FileFound(int argc, char const* argv[]){
     }
   }
   if(!dir_found){
-    printf("Matrix directory not found\n");
+    printf("** error Matrix directory not found **\n");
   }else{
-    printf("dirfound\n");
+    printf("---- DirFound ----\n");
   }
   
   strcpy(fullpath, path);
   strcat(fullpath, searchname);
   strcat(fullpath, "/");
   if((dir=opendir(fullpath))==NULL){
-    perror("opendir");
+    perror("** erro opendir **");
     return -1;
   }
   for(dp=readdir(dir);dp!=NULL;dp=readdir(dir)){
@@ -86,9 +86,9 @@ int FileFound(int argc, char const* argv[]){
   strcat(col_path, "ColVal.txt");
 
   if(!file_found){
-    printf("Matrix file not found\n");
+    printf("** error Matrix file not found **\n");
   }else{
-    printf("filefound\n");
+    printf("---- FileFound ----\n");
   }
   closedir(dir);
   return 0;
@@ -100,19 +100,19 @@ void GetHead(const char *bx, const char *col, const char *ptr, int *n, int *nnz)
 
   if((in1 = fopen(bx, "r")) == NULL)
   {
-    printf("head %s file open error\n", bx);
+    printf("** error in head %s file open **\n", bx);
     exit(-1);
   }
 
   if((in2 = fopen(col, "r")) == NULL)
   {
-    printf("head %s file open error\n", col);
+    printf("** error head %s file open **\n", col);
     exit(-1);
   }
 
   if((in3 = fopen(ptr, "r")) == NULL)
   {
-    printf("head %s file open error\n", ptr);
+    printf("** error head %s file open **\n", ptr);
     exit(-1);
   }
   int N11, N12, N21, N22, N31, N32;
@@ -124,29 +124,29 @@ void GetHead(const char *bx, const char *col, const char *ptr, int *n, int *nnz)
 
   if(N11!=N12)
   {
-    printf("in %s N!=M \n", bx);
+    printf("** error in %s N!=M **\n", bx);
     exit(-1);
   }
   if(N21!=N22)
   {
-    printf("in %s N!=M \n", col);
+    printf("** error in %s N!=M **\n", col);
     exit(-1);
   }
   if(N31!=N32)
   {
-    printf("in %s N!=M \n", ptr);
+    printf("** error in %s N!=M **\n", ptr);
     exit(-1);
   }
 
   if(N11 != N21 || N21!=N31 || N31!=N11)
   {
-    printf("N was not same in 3files\n");
+    printf("** error N was not same in 3files **\n");
     exit(-1);
   }
 
   if(NZ1 != NZ2 || NZ2!=NZ3 || NZ3!=NZ1)
   {
-    printf("NNZ was not same in 3files\n");
+    printf("** error NNZ was not same in 3files **\n");
     exit(-1);
   }
   *n = N11;
@@ -161,19 +161,19 @@ void GetData(const char *file1, const char *file2, const char *file3, int *col, 
   FILE *in1,*in2,*in3;
   if((in1 = fopen(file1, "r")) == NULL)
   {
-    printf("%s file open error", file1);
+    printf("** error %s file open **", file1);
     exit(0);
   }
 
   if((in2 = fopen(file2, "r")) == NULL)
   {
-    printf("%s file open error", file2);
+    printf("** error %s file open **", file2);
     exit(0);
   }
 
   if((in3 = fopen(file3, "r")) == NULL)
   {
-    printf("%s file open error", file3);
+    printf("** error %s file open **", file3);
     exit(0);
   }
   int getint;
@@ -211,7 +211,7 @@ void GetData(const char *file1, const char *file2, const char *file3, int *col, 
 FILE* FileInit(char *name, char *mode){
   FILE *tmp;
   if((tmp = fopen(name, mode))==NULL){
-    perror("File init error\n");
+    perror("** error File init **\n");
     exit(-1);
   }
   return (tmp);

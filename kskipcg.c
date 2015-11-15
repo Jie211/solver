@@ -22,7 +22,7 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
   double *rvec, *pvec, *Av, *x_0;
   double rnorm, bnorm, alpha, beta, gamma;
   bool flag=false;
-  double error;
+  double error=0.0;
 
 #ifndef INNER
   double t_error;

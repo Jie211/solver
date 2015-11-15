@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <omp.h>
 
+#define THREADS 8
+
 #define EPS 1e-8
 #define I_MAX 10000
 #define KSKIP 2
