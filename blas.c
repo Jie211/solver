@@ -32,10 +32,10 @@ void Double1Free(double *ptr)
 {
   free(ptr);
 }
-void Double2Free(double **ptr, int ndata)
+void Double2Free(double **ptr, int ndatay)
 {
   int i;
-  for(i=0;i<ndata;i++){
+  for(i=0;i<ndatay;i++){
     free(ptr[i]);
   }
   free(ptr);
@@ -214,6 +214,15 @@ void DoubleVecInit(double *vec, double val, int ndata)
   int i;
   for(i=0;i<ndata;i++){
     vec[i]=val;
+  }
+}
+void Double2VecInit(double **vec, double val, int ndatax, int ndatay)
+{
+  int i, j;
+  for(i=0;i<ndatay;i++){
+    for(j=0;j<ndatax;j++){
+      vec[i][j]=val;
+    }
   }
 }
 void DoubleCalArApKCG(double *Ar, double *Ap, double *val, int *col, int *ptr, double *rvec, double *pvec, int ndata, int kskip)

@@ -17,7 +17,7 @@ Double1Free(double *ptr);
 
 extern void 
 Double2Free(double **ptr, 
-    int ndata);
+    int ndatay);
 
 extern int *
 Intger1Malloc(int ndata);
@@ -94,6 +94,11 @@ extern void
 DoubleVecInit(double *vec, 
     double val, 
     int ndata);
+extern void 
+Double2VecInit(double **vec, 
+    double val, 
+    int ndatax, 
+    int ndatay);
 extern void 
 DoubleCalArApKCG(double *Ar, 
     double *Ap, 

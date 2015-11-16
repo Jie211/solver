@@ -12,6 +12,8 @@
 #include "kskipcr.h"
 #include "vpcg.h"
 #include "vpcr.h"
+#include "vpgcr.h"
+#include "start.h"
 
 extern int 
 SolverSelecter(double *val, 
@@ -23,7 +25,8 @@ SolverSelecter(double *val,
     double eps, 
     int i_max,
     int kskip,
-    int fix);
+    int fix,
+    int restart);
 
 #endif //SOLVERS_H_INCLUDED__
 

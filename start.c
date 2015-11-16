@@ -31,7 +31,7 @@ int CSR_start(int argc, char const* argv[]){
   GetData(col_path, ptr_path, bx_path, col, ptr, val, bvec, xvec, N, NNZ);
 
 
-  error = SolverSelecter(val, col, ptr, bvec, xvec, N, EPS, I_MAX, KSKIP, FIX);
+  error = SolverSelecter(val, col, ptr, bvec, xvec, N, EPS, I_MAX, KSKIP, FIX, RESTART);
 
   if(error!=0){
     printf("** error in start **\n");

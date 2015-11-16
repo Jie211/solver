@@ -1,8 +1,8 @@
 #include "solvers.h"
 
-int SolverSelecter(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix){
+int SolverSelecter(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix, int restart){
   int error=0;
-#if (defined (VP_CG) || defined (VP_CR))  &&  (!defined (IS_CG) && !defined (IS_CR) && !defined (IK_CG) && !defined (IK_CR))
+#if (defined (VP_CG) || defined (VP_CR) || defined (VP_GCR))  &&  (!defined (IS_CG) && !defined (IS_CR) && !defined (IK_CG) && !defined (IK_CR))
   printf("---- if use VP solver, you need to select some Inner solver else ----\n");
   return -1;
 #endif
@@ -25,6 +25,9 @@ int SolverSelecter(double *val, int *col, int *ptr, double *bvec, double *xvec, 
 #elif VP_CR
   printf("---- VPCR selected ----\n");
   error=VPCR_CRS(val, col, ptr, bvec, xvec, ndata, eps, i_max);
+#elif VP_GCR
+  printf("---- VPGCR selected ----\n");
+  error=VPGCR_CRS(val, col, ptr, bvec, xvec, ndata, eps, i_max, restart);
 #else
   printf("---- no solver selected ----\n");
 #endif
