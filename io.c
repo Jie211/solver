@@ -212,6 +212,7 @@ FILE* FileInit(char *name, char *mode){
   FILE *tmp;
   if((tmp = fopen(name, mode))==NULL){
     perror("** error File init **\n");
+    printf("---- No directory <output> ----\n---- please create it .ex: mkdir ./output ----\n");
     exit(-1);
   }
   return (tmp);
