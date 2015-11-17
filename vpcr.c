@@ -14,9 +14,9 @@ int VPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nd
   /* int i, j, k, n; */
   int loop;
 
-  double *rvec, *pvec, *qvec, *svec, *zvec, *wvec, *x_0, error=0.0;
+  double *rvec, *pvec, *zvec, *Av, *Ap, *x_0, error=0.0;
   double alpha, beta, bnorm, rnorm;
-  double zs, zs2;
+  double zaz, zaz2;
 
   bool flag=false;
   double t_error=0.0;
@@ -28,25 +28,31 @@ int VPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nd
 
   rvec=Double1Malloc(ndata);
   pvec=Double1Malloc(ndata);
-  qvec=Double1Malloc(ndata);
-  svec=Double1Malloc(ndata);
   zvec=Double1Malloc(ndata);
-  wvec=Double1Malloc(ndata);
+  Av=Double1Malloc(ndata);
+  Ap=Double1Malloc(ndata);
   x_0=Double1Malloc(ndata);
 
   //init vectory
-  VPCR_Init(rvec, pvec, qvec, svec, zvec, wvec, xvec, ndata);
+  /* VPCR_Init(rvec, pvec, qvec, svec, zvec, wvec, xvec, ndata); */
+
+  DoubleVecInit(rvec, 0.0, ndata);
+  DoubleVecInit(pvec, 0.0, ndata);
+  DoubleVecInit(zvec, 0.0, ndata);
+  DoubleVecInit(Av, 0.0, ndata);
+  DoubleVecInit(Ap, 0.0, ndata);
+  DoubleVecInit(xvec, 0.0, ndata);
 
   DoubleVecCopy(x_0, xvec, ndata);
 
   // b 2norm
   bnorm = Double2Norm(bvec, ndata);
 
-  //Ax
-  DoubleMVMCSR(qvec, val, col, ptr, xvec, ndata);
+  //Ax(Av)
+  DoubleMVMCSR(Av, val, col, ptr, xvec, ndata);
 
   //r=b-Ax
-  DoubleVecSub(rvec, bvec, qvec, ndata);
+  DoubleVecSub(rvec, bvec, Av, ndata);
 
 
   //solve z by Az=r
@@ -59,14 +65,16 @@ int VPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nd
   //p=z
   DoubleVecCopy(pvec, zvec, ndata);
 
-  //s=Ap
-  DoubleMVMCSR(svec, val, col, ptr, pvec, ndata);
+  //Az(Av)
+  DoubleMVMCSR(Av, val, col, ptr, zvec, ndata);
 
-  //q=s
-  DoubleVecCopy(qvec, svec, ndata);
+  //Ap=Az
+  DoubleVecCopy(Ap, Av, ndata);
+  /* //q=s */
+  /* DoubleVecCopy(qvec, svec, ndata); */
 
-  // (z,s)
-  zs=DoubleDot(zvec, svec, ndata); 
+  // (z,Az)
+  zaz=DoubleDot(zvec, Av, ndata); 
 
   for(loop=0;loop<i_max;loop++){
     //rnorm
@@ -79,54 +87,51 @@ int VPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nd
       break;
     }
 
-    //init wvec
-    DoubleVecInit(wvec, 0.0, ndata);
+    //alpha=(z,Az)/(Ap,Ap)
+    alpha = zaz / DoubleDot(Ap, Ap, ndata);
 
-    //solve w by Aw=q
-    error_message=InnerSolverSelecter(val, col, ptr, qvec, wvec, ndata, I_EPS, I_I_MAX, I_KSKIP, I_FIX);
+    //x=alpha*pvec+x
+    DoubleScalarxpy(xvec, alpha, pvec, xvec, ndata);
+
+    //r=-alpha*Ap+r
+    DoubleScalarxpy(rvec, -alpha, Ap, rvec, ndata);
+
+    //init zvec
+    DoubleVecInit(zvec, 0.0, ndata);
+
+    //solve z by Az=r
+    error_message=InnerSolverSelecter(val, col, ptr, rvec, zvec, ndata, I_EPS, I_I_MAX, I_KSKIP, I_FIX);
     if(error_message!=0){
       printf("error in vpcr\n");
       return -1;
     }
 
-    //alpha=(z,s)/(w,q)
-    alpha = zs / DoubleDot(wvec, qvec, ndata);
-
-    //x=alpha*pvec+x
-    DoubleScalarxpy(xvec, alpha, pvec, xvec, ndata);
-
-    //r=-alpha*qvec+r
-    DoubleScalarxpy(rvec, -alpha, qvec, rvec, ndata);
-
-    //z=-alpha*wvec+z
-    DoubleScalarxpy(zvec, -alpha, wvec, zvec, ndata);
-
-    //s=Az
-    DoubleMVMCSR(svec, val, col, ptr, zvec, ndata);
-
-    //(z,s)
-    zs2=DoubleDot(zvec, svec, ndata);
+    //Az
+    DoubleMVMCSR(Av, val, col, ptr, zvec, ndata);
+    
+    //(z,Az)
+    zaz2=DoubleDot(zvec, Av, ndata);
 
     //beta=(z_new,s_new)/(z,s)
-    beta = zs2/zs;
+    beta = zaz2/zaz;
 
-    zs=zs2;
+    zaz=zaz2;
 
     //p=beta*p+z
     DoubleScalarxpy(pvec, beta, pvec, zvec, ndata);
 
-    //q=beta*q+s
-    DoubleScalarxpy(qvec, beta, qvec, svec, ndata); 
+    //Ap=beta*Ap+Az
+    DoubleScalarxpy(Ap, beta, Ap, Av, ndata); 
   } 
   FileOutPutVec(p_x, xvec, ndata); 
   t_error=error_check_CRS(val, col, ptr, bvec, xvec, x_0, ndata); 
   printf("|b-ax|2/|b|2=%.1f\n", t_error); 
-
+  
   Double1Free(rvec); 
   Double1Free(pvec); 
-  Double1Free(qvec); 
   Double1Free(zvec); 
-  Double1Free(wvec); 
+  Double1Free(Av); 
+  Double1Free(Ap); 
   Double1Free(x_0); 
   FileClose(p_x); 
   FileClose(p_his); 
