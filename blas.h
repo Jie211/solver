@@ -4,6 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+extern void 
+Display_Mes(char *mes);
+
+extern void 
+Display_Err(char *err);
 
 extern double *
 Double1Malloc(int ndata);

@@ -1,5 +1,10 @@
 #include "blas.h"
-
+void Display_Mes(char *mes){
+  printf("---- %s ----\n", mes);
+}
+void Display_Err(char *err){
+  printf("** %s **\n", err);
+}
 double *Double1Malloc(int ndata)
 {
   double *tmp;

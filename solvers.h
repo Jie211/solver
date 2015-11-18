@@ -6,6 +6,8 @@
 #include <math.h>
 #include <stdbool.h>
 
+#include "start.h"
+#include "blas.h"
 #include "cg.h"
 #include "cr.h"
 #include "kskipcg.h"
@@ -13,7 +15,7 @@
 #include "vpcg.h"
 #include "vpcr.h"
 #include "vpgcr.h"
-#include "start.h"
+#include "gcr.h"
 
 extern int 
 SolverSelecter(double *val, 
@@ -25,8 +27,7 @@ SolverSelecter(double *val,
     double eps, 
     int i_max,
     int kskip,
-    int fix,
-    int restart);
+    int fix);
 
 #endif //SOLVERS_H_INCLUDED__
 
