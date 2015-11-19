@@ -1,8 +1,9 @@
 #include <stdio.h>
-#include <omp.h>
+// #include <omp.h>
+#include <stdlib.h>
 #include "blas.h"
 
-#define THREADS 8
+#define THREADS 2
 
 #define EPS 1e-8
 #define I_MAX 8000

@@ -31,6 +31,7 @@ int DisplaySolver(void){
   return -1;
 #endif
 
+#ifdef INNER
 #ifdef IS_CG
   Display_Mes("Inner CG selected");
 #elif IS_CR
@@ -45,6 +46,7 @@ int DisplaySolver(void){
   Display_Err("no inner solver selected");
   return -1;
 #endif
+#endif
 
   return 0;
 }
@@ -52,6 +54,7 @@ int DisplaySolver(void){
 int CSR_start(int argc, char const* argv[]){
   int N, NNZ;
  
+  char setThreads[10];
   double *bvec,*xvec, *val;
   int *col, *ptr;
   int error;
@@ -61,8 +64,13 @@ int CSR_start(int argc, char const* argv[]){
     Display_Err("error in start");
     return -1;
   }
-
-  omp_set_num_threads(THREADS);
+  sprintf(setThreads, "%d", THREADS);
+  /* omp_set_num_threads(THREADS); */
+  error=setenv("OMP_NUM_THREADS",setThreads,1);
+  if(error!=0){
+    Display_Err("set omp error in start");
+    return -1;
+  }
   printf("---- OpenMP set to %d ----\n", THREADS);
   
   error = UsageCheck(argc, argv);
