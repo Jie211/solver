@@ -1,12 +1,12 @@
 #ifndef INNERSOLVERS_H_INCLUDED__
 #define INNERSOLVERS_H_INCLUDED__
 
-#include "blas.h"
-#include "cg.h"
-#include "cr.h"
-#include "kskipcg.h"
-#include "kskipcr.h"
-#include "gcr.h"
+#include "./functions/blas.h"
+#include "./CRS/cg.h"
+#include "./CRS/cr.h"
+#include "./CRS/kskipcg.h"
+#include "./CRS/kskipcr.h"
+#include "./CRS/gcr.h"
 
 extern int
 InnerSolverSelecter(double *val, 

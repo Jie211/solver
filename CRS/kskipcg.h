@@ -1,9 +1,9 @@
 #ifndef KSKIPCG_H_INCLUDED__
 #define KSKIPCG_H_INCLUDED__
 
-#include "io.h"
-#include "blas.h"
-#include "start.h"
+#include "../functions/io.h"
+#include "../functions/blas.h"
+#include "../start.h"
 
 
 extern void 

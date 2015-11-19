@@ -9,7 +9,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <stdbool.h>
-#include "start.h"
+#include "../start.h"
 
 extern int 
 UsageCheck(int argc, 

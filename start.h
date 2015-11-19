@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "blas.h"
+#include "./functions/blas.h"
+#include "./functions/io.h"
+#include "solvers.h"
+
 
 #define THREADS 8
 

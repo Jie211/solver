@@ -1,7 +1,4 @@
 #include "start.h"
-#include "io.h"
-#include "blas.h"
-#include "solvers.h"
 
 int DisplaySolver(void){
 

@@ -1,10 +1,10 @@
 #ifndef VPCG_H_INCLUDED__
 #define VPCG_H_INCLUDED__
 
-#include "io.h"
-#include "blas.h"
-#include "innersolvers.h"
-#include "start.h"
+#include "../functions/io.h"
+#include "../functions/blas.h"
+#include "../innersolvers.h"
+#include "../start.h"
 
 
 extern void 

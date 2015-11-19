@@ -1,9 +1,9 @@
 #ifndef CG_H_INCLUDED__
 #define CG_H_INCLUDED__
 
-#include "blas.h"
-#include "io.h"
-#include "start.h"
+#include "../functions/blas.h"
+#include "../functions/io.h"
+#include "../start.h"
 
 extern int 
 CG_CRS(double *val, 

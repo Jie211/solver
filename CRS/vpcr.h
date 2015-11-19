@@ -1,10 +1,10 @@
 #ifndef VPCR_H_INCLUDED__
 #define VPCR_H_INCLUDED__
 
-#include "io.h"
-#include "blas.h"
-#include "innersolvers.h"
-#include "start.h"
+#include "../functions/io.h"
+#include "../functions/blas.h"
+#include "../innersolvers.h"
+#include "../start.h"
 
 extern int 
 VPCR_CRS(double *val, 

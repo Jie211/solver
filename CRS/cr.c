@@ -1,4 +1,4 @@
-#include "cg.h"
+#include "cr.h"
 
 void CR_Init(double *v1, double *v2, double *v3, double *v4, double *x, double ndata){
   DoubleVecInit(v1,0.0,ndata);
