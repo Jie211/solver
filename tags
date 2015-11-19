@@ -12,12 +12,16 @@ CR_CRS	cr.c	/^int CR_CRS(double *val, int *col, int *ptr, double *bvec, double *
 CR_H_INCLUDED__	cr.h	/^#define CR_H_INCLUDED__$/;"	d
 CR_Init	cr.c	/^void CR_Init(double *v1, double *v2, double *v3, double *v4, double *x, double ndata){$/;"	f
 CSR_start	start.c	/^int CSR_start(int argc, char const* argv[]){$/;"	f
+DisplaySolver	start.c	/^int DisplaySolver(void){$/;"	f
+Display_Err	blas.c	/^void Display_Err(char *err){$/;"	f
+Display_Mes	blas.c	/^void Display_Mes(char *mes){$/;"	f
 Double1Free	blas.c	/^void Double1Free(double *ptr)$/;"	f
 Double1Malloc	blas.c	/^double *Double1Malloc(int ndata)$/;"	f
 Double1Norm	blas.c	/^double Double1Norm(double *x, int ndata)$/;"	f
-Double2Free	blas.c	/^void Double2Free(double **ptr, int ndata)$/;"	f
+Double2Free	blas.c	/^void Double2Free(double **ptr, int ndatay)$/;"	f
 Double2Malloc	blas.c	/^double **Double2Malloc(int ndatax, int ndatay)$/;"	f
 Double2Norm	blas.c	/^double Double2Norm(double *x, int ndata)$/;"	f
+Double2VecInit	blas.c	/^void Double2VecInit(double **vec, double val, int ndatax, int ndatay)$/;"	f
 DoubleCalArApKCG	blas.c	/^void DoubleCalArApKCG(double *Ar, double *Ap, double *val, int *col, int *ptr, double *rvec, double *pvec, int ndata, int kskip)$/;"	f
 DoubleCalArApKCR	blas.c	/^void DoubleCalArApKCR(double *Ar, double *Ap, double *val, int *col, int *ptr, double *rvec, double *pvec, int ndata, int kskip)$/;"	f
 DoubleCalDeltaEtaZetaKCG	blas.c	/^void DoubleCalDeltaEtaZetaKCG(double *delta, double *eta, double *zeta, double *Ar, double *Ap, double *rvec, double *pvec, int ndata, int kskip)$/;"	f
@@ -38,6 +42,9 @@ FileClose	io.c	/^void FileClose(FILE *fp){$/;"	f
 FileFound	io.c	/^int FileFound(int argc, char const* argv[]){$/;"	f
 FileInit	io.c	/^FILE* FileInit(char *name, char *mode){$/;"	f
 FileOutPutVec	io.c	/^void FileOutPutVec(FILE *fp, double *vec, int ndata){$/;"	f
+GCR_CRS	gcr.c	/^int GCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int restart){$/;"	f
+GCR_H_INCLUDED__	gcr.h	/^#define GCR_H_INCLUDED__$/;"	d
+GCR_Init	gcr.c	/^void GCR_Init(double *v1, double *v2, double *v3, double **v4, double **v5, double *x, int ndata, int restart){$/;"	f
 GetData	io.c	/^void GetData(const char *file1, const char *file2, const char *file3, int *col, int *ptr, double *val, double *b, double *x, int N, int NZ)$/;"	f
 GetHead	io.c	/^void GetHead(const char *bx, const char *col, const char *ptr, int *n, int *nnz)$/;"	f
 INNER	start.h	/^#define INNER$/;"	d
@@ -48,6 +55,7 @@ I_FIX	start.h	/^#define I_FIX /;"	d
 I_I_MAX	start.h	/^#define I_I_MAX /;"	d
 I_KSKIP	start.h	/^#define I_KSKIP /;"	d
 I_MAX	start.h	/^#define I_MAX /;"	d
+I_RESTART	start.h	/^#define I_RESTART /;"	d
 InnerSolverSelecter	innersolvers.c	/^int InnerSolverSelecter(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix){$/;"	f
 Intger1Free	blas.c	/^void Intger1Free(int *ptr)$/;"	f
 Intger1Malloc	blas.c	/^int *Intger1Malloc(int ndata)$/;"	f
@@ -60,6 +68,7 @@ KSKIPCG_Init	kskipcg.c	/^void KSKIPCG_Init(double *v1, double *v2, double *v3, d
 KSKIPCR_CRS	kskipcr.c	/^int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix)$/;"	f
 KSKIPCR_H_INCLUDED__	kskipcr.h	/^#define KSKIPCR_H_INCLUDED__$/;"	d
 KSKIPCR_Init	kskipcr.c	/^void KSKIPCR_Init(double *v1, double *v2, double *v3, double *v4, double *v5, double *v6, double *v7, double *v8, double *v9, int ndata, int kskip)$/;"	f
+RESTART	start.h	/^#define RESTART /;"	d
 SOLVERS_H_INCLUDED__	solvers.h	/^#define SOLVERS_H_INCLUDED__$/;"	d
 SolverSelecter	solvers.c	/^int SolverSelecter(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix){$/;"	f
 THREADS	start.h	/^#define THREADS /;"	d
@@ -70,6 +79,9 @@ VPCG_Init	vpcg.c	/^void VPCG_Init(double *v1, double *v2, double *v3, double *v4
 VPCR_CRS	vpcr.c	/^int VPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max){$/;"	f
 VPCR_H_INCLUDED__	vpcr.h	/^#define VPCR_H_INCLUDED__$/;"	d
 VPCR_Init	vpcr.c	/^void VPCR_Init(double *v1, double *v2, double *v3, double *v4, double *v5, double *v6, double *x, double ndata){$/;"	f
+VPGCR_CRS	vpgcr.c	/^int VPGCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int restart){$/;"	f
+VPGCR_H_INCLUDED__	vpgcr.h	/^#define VPGCR_H_INCLUDED__$/;"	d
+VPGCR_Init	vpgcr.c	/^void VPGCR_Init(double *v1, double *v2, double *v3, double *v4, double **v5, double **v6, double *x, int ndata, int restart){$/;"	f
 bx_path	start.h	/^char bx_path[512];$/;"	v
 col_path	start.h	/^char col_path[512];$/;"	v
 error_check_CRS	blas.c	/^double error_check_CRS(double *val, const int *col, const int *ptr, double *b, double *x_new ,double *x_0, int N)$/;"	f
