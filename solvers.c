@@ -3,23 +3,23 @@
 int SolverSelecter(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix){
   int error=0;
 
-#ifdef S_CG
+if(S_CG){
   error=CG_CRS(val, col, ptr, bvec, xvec, ndata, eps, i_max);
-#elif S_CR
+}else if(S_CR){
   error=CR_CRS(val, col, ptr, bvec, xvec, ndata, eps, i_max);
-#elif K_CG
+}else if(K_CG){
   error=KSKIPCG_CRS(val, col, ptr, bvec, xvec, ndata, eps, i_max, kskip, fix);
-#elif K_CR
+}else if(K_CR){
   error=KSKIPCR_CRS(val, col, ptr, bvec, xvec, ndata, eps, i_max, kskip, fix);
-#elif VP_CG
+}else if(VP_CG){
   error=VPCG_CRS(val, col, ptr, bvec, xvec, ndata, eps, i_max);
-#elif VP_CR
+}else if(VP_CR){
   error=VPCR_CRS(val, col, ptr, bvec, xvec, ndata, eps, i_max);
-#elif VP_GCR
-  error=VPGCR_CRS(val, col, ptr, bvec, xvec, ndata, eps, i_max, RESTART);
-#elif S_GCR
-  error=GCR_CRS(val, col, ptr, bvec, xvec, ndata, eps, i_max, RESTART);
-#endif
+}else if(VP_GCR){
+  error=VPGCR_CRS(val, col, ptr, bvec, xvec, ndata, eps, i_max, restart_outer);
+}else if(S_GCR){
+  error=GCR_CRS(val, col, ptr, bvec, xvec, ndata, eps, i_max, restart_outer);
+}
 
   if(error==1){
     Display_Mes("good");

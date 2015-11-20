@@ -1,5 +1,5 @@
 #include "start.h"
-int main(int argc, char const* argv[])
+int main(int argc, char *argv[])
 {
   int error=CSR_start(argc, argv);
   if(error!=0){

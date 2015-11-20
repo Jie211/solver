@@ -12,12 +12,10 @@
 #include "../start.h"
 
 extern int 
-UsageCheck(int argc, 
-    char const*argv[]);
+UsageCheck(char *argv);
 
 extern int 
-FileFound(int argc, 
-    char const* argv[]);
+FileFound(char * argv);
 
 extern void
 GetHead(const char *bx, 

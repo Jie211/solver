@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "../start.h"
+
 extern void 
 Display_Mes(char *mes);
 

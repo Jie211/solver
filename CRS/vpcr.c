@@ -56,7 +56,7 @@ int VPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nd
 
 
   //solve z by Az=r
-  error_message=InnerSolverSelecter(val, col, ptr, rvec, zvec, ndata, I_EPS, I_I_MAX, I_KSKIP, I_FIX);
+  error_message=InnerSolverSelecter(val, col, ptr, rvec, zvec, ndata, eps_inner, loop_inner, kskip_inner, fix_inner);
   if(error_message!=0){
     printf("error in vpcr\n");
     return -1;
@@ -100,7 +100,7 @@ int VPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nd
     DoubleVecInit(zvec, 0.0, ndata);
 
     //solve z by Az=r
-    error_message=InnerSolverSelecter(val, col, ptr, rvec, zvec, ndata, I_EPS, I_I_MAX, I_KSKIP, I_FIX);
+    error_message=InnerSolverSelecter(val, col, ptr, rvec, zvec, ndata, eps_inner, loop_inner, kskip_inner, fix_inner);
     if(error_message!=0){
       printf("error in vpcr\n");
       return -1;

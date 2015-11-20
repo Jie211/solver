@@ -22,12 +22,13 @@ int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
   double rnorm, bnorm, alpha, beta, error=0.0;
   bool flag=false;
 
-#ifndef INNER
   double t_error;
-  FILE *p_x, *p_his;
-  p_x=FileInit("./output/KskipCR_x.txt", "w");
-  p_his=FileInit("./output/KskipCR_his.txt", "w");
-#endif
+  FILE *p_x=NULL, *p_his=NULL;
+
+  if(!INNER){
+    p_x=FileInit("./output/KskipCR_x.txt", "w");
+    p_his=FileInit("./output/KskipCR_his.txt", "w");
+  }
 
   Ar=Double1Malloc((2*kskip+1)*ndata);
   Ap=Double1Malloc((2*kskip+1)*ndata);
@@ -59,10 +60,10 @@ int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
   {
     rnorm=Double2Norm(rvec, ndata);
     error=rnorm/bnorm;
-#ifndef INNER
-    printf("%d %.12e\n", nloop, error);
-    fprintf(p_his, "%d %.12e\n", nloop, error);
-#endif
+    if(!INNER){
+      printf("%d %.12e\n", nloop, error);
+      fprintf(p_his, "%d %.12e\n", nloop, error);
+    }
     if(error<=eps){
       flag=true;
       break;
@@ -71,7 +72,7 @@ int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
     //Ar-> Ar^2k+1
     //Ap-> Ap^2k+1
     DoubleCalArApKCR(Ar, Ap, val, col, ptr, rvec, pvec, ndata, kskip);
-    
+
     //delta=(r,Ar)
     //eta=(A1p,Ap)
     //zeta=(r,Ap)
@@ -81,7 +82,7 @@ int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
     {
       //alpha=delta_1/eta_1
       alpha=delta[0]/eta[0];
-      
+
       //beta (delta_1 - 2*alpha*zeta_2 + alpha^2*eta[2])/delta_1
       beta=(delta[0] - 2*alpha*zeta[1] + alpha*alpha*eta[1]) / delta[0];
 
@@ -109,14 +110,14 @@ int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
       DoubleScalarxpy(pvec, beta, pvec, rvec, ndata);
     }
   }
-#ifndef INNER
-  FileOutPutVec(p_x, xvec, ndata);
-  t_error=error_check_CRS(val, col, ptr, bvec, xvec, x_0, ndata);
-  printf("|b-ax|2/|b|2=%.1f\n", t_error);
-#endif
-#ifdef INNER
-  printf("Inner %d %.12e\n",nloop,error);
-#endif
+  if(!INNER){
+    FileOutPutVec(p_x, xvec, ndata);
+    t_error=error_check_CRS(val, col, ptr, bvec, xvec, x_0, ndata);
+    printf("|b-ax|2/|b|2=%.1f\n", t_error);
+  }
+  if(INNER){
+    printf("Inner %d %.12e\n",nloop,error);
+  }
   Double1Free(Ar);
   Double1Free(Ap);
   Double1Free(delta);
@@ -126,10 +127,10 @@ int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
   Double1Free(pvec);
   Double1Free(Av);
   Double1Free(x_0);
-#ifndef INNER
-  FileClose(p_x);
-  FileClose(p_his);
-#endif
+  if(!INNER){
+    FileClose(p_x);
+    FileClose(p_his);
+  }
   if(flag){
     return 1;
   }else{

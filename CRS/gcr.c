@@ -20,26 +20,27 @@ int GCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nda
   bool out=false;
   double error=0.0;
 
-#ifndef INNER
   double t_error=0.0;
-  FILE *p_x, *p_his;
-  p_x=FileInit("./output/GCR_x.txt", "w");
-  p_his=FileInit("./output/GCR_his.txt", "w");
-#endif
+  FILE *p_x=NULL, *p_his=NULL;
+
+  if(!INNER){
+    p_x=FileInit("./output/GCR_x.txt", "w");
+    p_his=FileInit("./output/GCR_his.txt", "w");
+  }
 
   rvec=Double1Malloc(ndata);
   Av=Double1Malloc(ndata);
   x_0=Double1Malloc(ndata);
 
   qq=Double1Malloc(restart);
-#ifndef INNER
-  printf("---- restart set to %d ----\n", restart);
-#endif
+  if(!INNER){
+    printf("---- restart set to %d ----\n", restart);
+  }
   qvec=Double2Malloc(ndata, restart);
   pvec=Double2Malloc(ndata, restart);
 
   GCR_Init(rvec, Av, qq, qvec, pvec, xvec, ndata, restart);
-  
+
   DoubleVecCopy(x_0, xvec, ndata);
 
   //b 2norm
@@ -61,10 +62,10 @@ int GCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nda
     for(kloop=0;kloop<restart;kloop++){
       rnorm=Double2Norm(rvec, ndata);
       error=rnorm/bnorm;
-#ifndef INNER
-      printf("Outer %d %.12e\n",loop, error);
-      fprintf(p_his,"%d %.12e\n",loop, error);
-#endif
+      if(!INNER){
+        printf("Outer %d %.12e\n",loop, error);
+        fprintf(p_his,"%d %.12e\n",loop, error);
+      }
       if(error <= eps){
         flag=true;
         out=true;
@@ -115,24 +116,24 @@ int GCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nda
       break;
     }
   }
-#ifndef INNER
-  FileOutPutVec(p_x, xvec, ndata);
-  t_error=error_check_CRS(val, col, ptr, bvec, xvec, x_0, ndata);
-  printf("|b-ax|2/|b|2=%.1f\n", t_error);
-#endif
-#ifdef INNER
-  printf("Inner %d %.12e\n", loop, error);
-#endif
+  if(!INNER){
+    FileOutPutVec(p_x, xvec, ndata);
+    t_error=error_check_CRS(val, col, ptr, bvec, xvec, x_0, ndata);
+    printf("|b-ax|2/|b|2=%.1f\n", t_error);
+  }
+  if(INNER){
+    printf("Inner %d %.12e\n", loop, error);
+  }
   Double1Free(rvec);
   Double1Free(Av);
   Double1Free(x_0);
   Double1Free(qq);
   Double2Free(qvec, restart);
   Double2Free(pvec, restart);
-#ifndef INNER
-  FileClose(p_x);
-  FileClose(p_his);
-#endif
+  if(!INNER){
+    FileClose(p_x);
+    FileClose(p_his);
+  }
 
   if(flag){
     return 1;

@@ -24,13 +24,13 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
   bool flag=false;
   double error=0.0;
 
-#ifndef INNER
   double t_error;
-  FILE *p_x, *p_his;
-  p_x=FileInit("./output/KskipCG_x.txt", "w");
-  p_his=FileInit("./output/KskipCG_his.txt", "w");
-#endif
+  FILE *p_x=NULL, *p_his=NULL;
 
+  if(!INNER){
+    p_x=FileInit("./output/KskipCG_x.txt", "w");
+    p_his=FileInit("./output/KskipCG_his.txt", "w");
+  }
   Ar=Double1Malloc(2*kskip*ndata);
   Ap=Double1Malloc((2*kskip+2)*ndata);
   delta=Double1Malloc(2*kskip);
@@ -48,13 +48,13 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
 
   //Ax
   DoubleMVMCSR(Av, val, col, ptr, xvec, ndata);
-  
+
   //r=b-Ax
   DoubleVecSub(rvec, bvec, Av, ndata);
 
   //p=r
   DoubleVecCopy(pvec, rvec, ndata);
-  
+
   //b 2norm
   bnorm=Double2Norm(bvec, ndata);
 
@@ -62,10 +62,10 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
   {
     rnorm=Double2Norm(rvec, ndata);
     error=rnorm/bnorm;
-#ifndef INNER
-    printf("%d %.12e\n", nloop, error);
-    fprintf(p_his,"%d %.12e\n", nloop, error);
-#endif
+    if(!INNER){
+      printf("%d %.12e\n", nloop, error);
+      fprintf(p_his,"%d %.12e\n", nloop, error);
+    }
     if(error<=eps){
       flag=true;
       break;
@@ -121,14 +121,14 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
       DoubleScalarxpy(pvec, beta, pvec, rvec, ndata);
     }
   }
-#ifndef INNER
-  FileOutPutVec(p_x, xvec, ndata);
-  t_error=error_check_CRS(val, col, ptr, bvec, xvec, x_0, ndata);
-  printf("|b-ax|2/|b|2=%.1f\n", t_error);
-#endif
-#ifdef INNER
-  printf("Inner %d %.12e\n",nloop,error);
-#endif
+  if(!INNER){
+    FileOutPutVec(p_x, xvec, ndata);
+    t_error=error_check_CRS(val, col, ptr, bvec, xvec, x_0, ndata);
+    printf("|b-ax|2/|b|2=%.1f\n", t_error);
+  }
+  if(INNER){
+    printf("Inner %d %.12e\n",nloop,error);
+  }
   Double1Free(Ar);
   Double1Free(Ap);
   Double1Free(delta);
@@ -138,10 +138,10 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
   Double1Free(pvec);
   Double1Free(Av);
   Double1Free(x_0);
-#ifndef INNER
-  FileClose(p_x);
-  FileClose(p_his);
-#endif
+  if(!INNER){
+    FileClose(p_x);
+    FileClose(p_his);
+  }
   if(flag){
     return 1;
   }else{

@@ -1,16 +1,15 @@
 #include "io.h"
 #include <sys/stat.h>
 
-int UsageCheck(int argc, char const* argv[]){
-  int error = FileFound(argc, argv);
+int UsageCheck(char *argv){
+  int error = FileFound(argv);
   if(error!=0){
     printf("** error Usagecheck **\n");
     return -1;
   }
-
   return 0;
 }
-int FileFound(int argc, char const* argv[]){
+int FileFound(char *argv){
   DIR *dir;
   struct dirent *dp;
   struct stat st;
@@ -24,13 +23,8 @@ int FileFound(int argc, char const* argv[]){
   bool ptr=false;
   bool file_found=false;
 
-  if(argc!=2){
-    printf("---- Usage : ./a.out [matrix file name] ----\n");
-    return -1;
-  }else{
-    strcpy(searchname, argv[1]);
-    strcpy(path, "../Matrix/CSR/");
-  }
+  strcpy(searchname, argv);
+  strcpy(path, "../Matrix/CSR/");
 
   if((dir=opendir(path))==NULL){
     perror("** error opendir **\n");

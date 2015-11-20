@@ -7,6 +7,7 @@
 #include "./CRS/kskipcg.h"
 #include "./CRS/kskipcr.h"
 #include "./CRS/gcr.h"
+#include "start.h"
 
 extern int
 InnerSolverSelecter(double *val, 

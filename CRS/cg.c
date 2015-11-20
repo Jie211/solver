@@ -17,12 +17,13 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
 
   bool flag=false;
 
-#ifndef INNER
   double t_error=0.0;
-  FILE *p_x, *p_his;
+  FILE *p_x=NULL, *p_his=NULL;
+
+if(!INNER){
   p_x=FileInit("./output/CG_x.txt", "w");
   p_his=FileInit("./output/CG_his.txt", "w");
-#endif
+}
 
   Av=Double1Malloc(ndata);
   rvec=Double1Malloc(ndata);
@@ -55,10 +56,10 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
     //rnorm
     rnorm = Double2Norm(rvec, ndata);
     error=rnorm/bnorm;
-#ifndef INNER
+if(!INNER){
     printf("%d %.12e\n",loop, error);
     fprintf(p_his,"%d %.12e\n",loop, error);
-#endif
+}
     if(error <= eps){
       flag=true;
       break;
@@ -88,22 +89,22 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
     DoubleScalarxpy(pvec, beta, pvec, rvec, ndata);
 
   }
-#ifndef INNER
+if(!INNER){
   FileOutPutVec(p_x, xvec, ndata);
   t_error=error_check_CRS(val, col, ptr, bvec, xvec, x_0, ndata);
   printf("|b-ax|2/|b|2=%.1f\n", t_error);
-#endif
-#ifdef INNER
+}
+if(INNER)
   printf("Inner %d %.12e\n", loop, error);
-#endif
+
   Double1Free(Av);
   Double1Free(rvec);
   Double1Free(pvec);
   Double1Free(x_0);
-#ifndef INNER
+if(!INNER){
   FileClose(p_x);
   FileClose(p_his);
-#endif
+}
   if(flag){
     return 1;
   }else{
