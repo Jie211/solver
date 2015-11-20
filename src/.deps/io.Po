@@ -1,0 +1,180 @@
+io.o: functions/io.c functions/io.h /usr/include/stdio.h \
+ /usr/include/features.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-64.h \
+ /opt/rh/devtoolset-3/root/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include/stddef.h \
+ /usr/include/bits/types.h /usr/include/bits/typesizes.h \
+ /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
+ /opt/rh/devtoolset-3/root/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include/stdarg.h \
+ /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+ /usr/include/bits/stdio.h /usr/include/stdlib.h /usr/include/string.h \
+ /usr/include/bits/string.h /usr/include/bits/string2.h \
+ /usr/include/endian.h /usr/include/bits/endian.h /usr/include/dirent.h \
+ /usr/include/bits/dirent.h /usr/include/sys/types.h /usr/include/time.h \
+ /usr/include/sys/stat.h /usr/include/bits/stat.h /usr/include/unistd.h \
+ /usr/include/bits/posix_opt.h /usr/include/bits/confname.h \
+ /opt/rh/devtoolset-3/root/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include/stdbool.h \
+ functions/../start.h /usr/include/getopt.h \
+ functions/.././functions/blas.h /usr/include/math.h \
+ /usr/include/bits/huge_val.h /usr/include/bits/huge_valf.h \
+ /usr/include/bits/huge_vall.h /usr/include/bits/inf.h \
+ /usr/include/bits/nan.h /usr/include/bits/mathdef.h \
+ /usr/include/bits/mathcalls.h /usr/include/bits/mathinline.h \
+ functions/.././functions/../start.h functions/.././functions/io.h \
+ functions/../solvers.h functions/../start.h functions/.././CRS/cg.h \
+ functions/.././CRS/../functions/blas.h \
+ functions/.././CRS/../functions/io.h functions/.././CRS/../start.h \
+ functions/.././CRS/cr.h functions/.././CRS/kskipcg.h \
+ functions/.././CRS/kskipcr.h functions/.././CRS/vpcg.h \
+ functions/.././CRS/../innersolvers.h \
+ functions/.././CRS/.././functions/blas.h \
+ functions/.././CRS/.././CRS/cg.h functions/.././CRS/.././CRS/cr.h \
+ functions/.././CRS/.././CRS/kskipcg.h \
+ functions/.././CRS/.././CRS/kskipcr.h functions/.././CRS/.././CRS/gcr.h \
+ functions/.././CRS/.././CRS/../functions/blas.h \
+ functions/.././CRS/.././CRS/../functions/io.h \
+ functions/.././CRS/.././CRS/../start.h functions/.././CRS/../start.h \
+ functions/.././CRS/vpcr.h functions/.././CRS/vpgcr.h \
+ functions/.././CRS/gcr.h
+
+functions/io.h:
+
+/usr/include/stdio.h:
+
+/usr/include/features.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/gnu/stubs-64.h:
+
+/opt/rh/devtoolset-3/root/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include/stddef.h:
+
+/usr/include/bits/types.h:
+
+/usr/include/bits/typesizes.h:
+
+/usr/include/libio.h:
+
+/usr/include/_G_config.h:
+
+/usr/include/wchar.h:
+
+/opt/rh/devtoolset-3/root/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include/stdarg.h:
+
+/usr/include/bits/stdio_lim.h:
+
+/usr/include/bits/sys_errlist.h:
+
+/usr/include/bits/stdio.h:
+
+/usr/include/stdlib.h:
+
+/usr/include/string.h:
+
+/usr/include/bits/string.h:
+
+/usr/include/bits/string2.h:
+
+/usr/include/endian.h:
+
+/usr/include/bits/endian.h:
+
+/usr/include/dirent.h:
+
+/usr/include/bits/dirent.h:
+
+/usr/include/sys/types.h:
+
+/usr/include/time.h:
+
+/usr/include/sys/stat.h:
+
+/usr/include/bits/stat.h:
+
+/usr/include/unistd.h:
+
+/usr/include/bits/posix_opt.h:
+
+/usr/include/bits/confname.h:
+
+/opt/rh/devtoolset-3/root/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include/stdbool.h:
+
+functions/../start.h:
+
+/usr/include/getopt.h:
+
+functions/.././functions/blas.h:
+
+/usr/include/math.h:
+
+/usr/include/bits/huge_val.h:
+
+/usr/include/bits/huge_valf.h:
+
+/usr/include/bits/huge_vall.h:
+
+/usr/include/bits/inf.h:
+
+/usr/include/bits/nan.h:
+
+/usr/include/bits/mathdef.h:
+
+/usr/include/bits/mathcalls.h:
+
+/usr/include/bits/mathinline.h:
+
+functions/.././functions/../start.h:
+
+functions/.././functions/io.h:
+
+functions/../solvers.h:
+
+functions/../start.h:
+
+functions/.././CRS/cg.h:
+
+functions/.././CRS/../functions/blas.h:
+
+functions/.././CRS/../functions/io.h:
+
+functions/.././CRS/../start.h:
+
+functions/.././CRS/cr.h:
+
+functions/.././CRS/kskipcg.h:
+
+functions/.././CRS/kskipcr.h:
+
+functions/.././CRS/vpcg.h:
+
+functions/.././CRS/../innersolvers.h:
+
+functions/.././CRS/.././functions/blas.h:
+
+functions/.././CRS/.././CRS/cg.h:
+
+functions/.././CRS/.././CRS/cr.h:
+
+functions/.././CRS/.././CRS/kskipcg.h:
+
+functions/.././CRS/.././CRS/kskipcr.h:
+
+functions/.././CRS/.././CRS/gcr.h:
+
+functions/.././CRS/.././CRS/../functions/blas.h:
+
+functions/.././CRS/.././CRS/../functions/io.h:
+
+functions/.././CRS/.././CRS/../start.h:
+
+functions/.././CRS/../start.h:
+
+functions/.././CRS/vpcr.h:
+
+functions/.././CRS/vpgcr.h:
+
+functions/.././CRS/gcr.h:
