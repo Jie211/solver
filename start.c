@@ -13,6 +13,7 @@ char *c_kskip_outer=NULL;
 char *c_kskip_inner=NULL;
 char *c_fix_inner=NULL;
 char *c_fix_outer=NULL;
+char *c_openmp_thread=NULL;
 
 
 bool f_matrix=false;
@@ -28,6 +29,7 @@ bool f_kskip_outer=false;
 bool f_kskip_inner=false;
 bool f_fix_inner=false;
 bool f_fix_outer=false;
+bool f_f_openmp_thread=false;
 
 bool S_CG=false;
 bool S_CR=false;
@@ -58,6 +60,7 @@ int kskip_outer=K_OUT;
 int kskip_inner=K_IN;
 int fix_outer=F_OUT;
 int fix_inner=F_IN;
+int openmp_thread=THREAD;
 
 char bx_path[512];
 char ptr_path[512];
@@ -77,14 +80,15 @@ int CSR_start(int argc, char *argv[]){
     Display_Err("error in start");
     return -1;
   }
-  sprintf(setThreads, "%d", THREADS);
+  /* sprintf(setThreads, "%d", THREADS); */
+  sprintf(setThreads, "%d", openmp_thread);
   /* omp_set_num_threads(THREADS); */
   error=setenv("OMP_NUM_THREADS",setThreads,1);
   if(error!=0){
     Display_Err("set omp error in start");
     return -1;
   }
-  printf("---- OpenMP set to %d ----\n", THREADS);
+  printf("---- OpenMP set to %d ----\n", openmp_thread);
   
   error = UsageCheck(matrix);
   if(error!=0){
@@ -156,15 +160,15 @@ void InputCMD(void){
 }
 int CheckCMD(void){
   if(!f_matrix){
-    printf("must set matrix name\n");
+    Display_Mes("Must set Matrix name");
     return -1;
   }else if(!f_solver_outer){
-    printf("must set a solver\n");
+    Display_Mes("Must set a Solver");
     return -1;
   }else if(VP_CG || VP_CR || VP_GCR){
     INNER=true;
   }else if( (VP_CG || VP_CR || VP_GCR)  && ((!IS_CG) && (!IS_CR) && (!IS_GCR) && (!IK_CG) && (!IK_CR) )){
-    printf("if select VP method, please select inner method too\n");
+    Display_Mes("If VP method is selected, Please select inner method. [-OuterSolver=]");
     return -1;
   }
   return 0;
@@ -172,6 +176,7 @@ int CheckCMD(void){
 void DisplayCMD(void){
   printf("*******************************************\n");
   printf(" Matrix: %s\n", matrix);
+  printf(" OpenMPThreads: %d\n", openmp_thread);
   printf("*******************************************\n");
   printf(" OuterSolver: %s\n", solver_outer);
   printf(" OuterLoop: %d\n", loop_outer);
@@ -179,8 +184,8 @@ void DisplayCMD(void){
   printf(" OuterRestart: %d\n", restart_outer);
   printf(" OuterKskip: %d\n", kskip_outer);
   printf(" OuterFix: %d\n", fix_outer);
-  printf("*******************************************\n");
   if(f_solver_inner){
+    printf("*******************************************\n");
     printf(" InnerSolver: %s\n", solver_inner);
     printf(" InnerLoop: %d\n", loop_inner);
     printf(" InnerEPS: %.12e\n", eps_inner);
@@ -195,7 +200,7 @@ int getCMD(int argc, char *argv[])
   /* int i; */
 
   if(argc==1){
-    printf("Matrix, OuterSolver, InnerSolver, OuterLoop, InnerLoop, OuterEPS, InnerEPS, OuterRestart, InnerRestart, OuterKskip, InnerKskip, OuterFix, InnerFix\n");
+    printf("Option: Matrix, OuterSolver, InnerSolver, OuterLoop, InnerLoop, OuterEPS, InnerEPS, OuterRestart, InnerRestart, OuterKskip, InnerKskip, OuterFix, InnerFix\n");
     return -1;
   }
 
@@ -213,12 +218,13 @@ int getCMD(int argc, char *argv[])
     {"InnerKskip", optional_argument, NULL, 'k'},
     {"OuterFix", optional_argument, NULL, 'F'},
     {"InnerFix", optional_argument, NULL, 'f'},
+    {"Thread", optional_argument, NULL, 'T'},
     { 0,        0,                 0,     0  },
   };
 
   int opt;
   int longindex;
-  while((opt=getopt_long_only(argc, argv, "M:S:s:L:l:E:e:R:r:K:k:F:f::", longopts, &longindex)) != -1){
+  while((opt=getopt_long_only(argc, argv, "M:S:s:L:l:E:e:R:r:K:k:F:f:T::", longopts, &longindex)) != -1){
     switch(opt){
       case 'M':
         f_matrix=true;
@@ -284,6 +290,11 @@ int getCMD(int argc, char *argv[])
         f_fix_inner=true;
         c_fix_inner=optarg;
         fix_inner=atoi(c_fix_inner);
+        break;
+      case 'T':
+        f_f_openmp_thread=true;
+        c_openmp_thread=optarg;
+        openmp_thread=atoi(c_openmp_thread);
         break;
       default:
         printf("error \'%c\' \'%c\'\n", opt, optopt);
