@@ -115,6 +115,8 @@ extern int
 getCMD(int argc, 
     char *argv[]);
 
+extern int 
+usage(void);
 
 #endif //START_H_INCLUDED__
 
