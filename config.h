@@ -45,7 +45,7 @@
 #define HAVE__BOOL 1
 
 /* Name of package */
-#define PACKAGE "solver"
+#define PACKAGE "g2115014"
 
 /* Define to the address where bug reports for this package should be sent. */
 #define PACKAGE_BUGREPORT "jie211.jp@gmail.com"
@@ -57,7 +57,7 @@
 #define PACKAGE_STRING "solver 0.8"
 
 /* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "solver"
+#define PACKAGE_TARNAME "g2115014"
 
 /* Define to the version of this package. */
 #define PACKAGE_VERSION "0.8"

@@ -24,7 +24,9 @@ int FileFound(char *argv){
   bool file_found=false;
 
   strcpy(searchname, argv);
-  strcpy(path, "../Matrix/CSR/");
+  /* strcpy(path, "../Matrix/CSR/"); */
+  strcpy(path, "./");
+  printf("!!!!!!!!!!!!!!!!%s!!!!!!!!!!!!!!!!\n", path);
 
   if((dir=opendir(path))==NULL){
     perror("** error opendir **\n");
@@ -78,6 +80,7 @@ int FileFound(char *argv){
   strcat(bx_path, "bx.txt");
   strcat(ptr_path, "Ptr.txt");
   strcat(col_path, "ColVal.txt");
+  printf("%s\n%s\n%s\n", bx_path, ptr_path, col_path);
 
   if(!file_found){
     printf("** error Matrix file not found **\n");

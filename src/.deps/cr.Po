@@ -2,10 +2,10 @@ cr.o: CRS/cr.c CRS/cr.h CRS/../functions/blas.h /usr/include/stdio.h \
  /usr/include/features.h /usr/include/sys/cdefs.h \
  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
  /usr/include/gnu/stubs-64.h \
- /opt/rh/devtoolset-3/root/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include/stddef.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/include/stddef.h \
  /usr/include/bits/types.h /usr/include/bits/typesizes.h \
  /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
- /opt/rh/devtoolset-3/root/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include/stdarg.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/include/stdarg.h \
  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
  /usr/include/bits/stdio.h /usr/include/stdlib.h /usr/include/math.h \
  /usr/include/bits/huge_val.h /usr/include/bits/huge_valf.h \
@@ -15,7 +15,7 @@ cr.o: CRS/cr.c CRS/cr.h CRS/../functions/blas.h /usr/include/stdio.h \
  CRS/../functions/../start.h /usr/include/string.h \
  /usr/include/bits/string.h /usr/include/bits/string2.h \
  /usr/include/endian.h /usr/include/bits/endian.h /usr/include/getopt.h \
- /opt/rh/devtoolset-3/root/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include/stdbool.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/include/stdbool.h \
  CRS/../functions/.././functions/blas.h \
  CRS/../functions/.././functions/io.h /usr/include/dirent.h \
  /usr/include/bits/dirent.h /usr/include/sys/types.h /usr/include/time.h \
@@ -58,7 +58,7 @@ CRS/../functions/blas.h:
 
 /usr/include/gnu/stubs-64.h:
 
-/opt/rh/devtoolset-3/root/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include/stddef.h:
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/include/stddef.h:
 
 /usr/include/bits/types.h:
 
@@ -70,7 +70,7 @@ CRS/../functions/blas.h:
 
 /usr/include/wchar.h:
 
-/opt/rh/devtoolset-3/root/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include/stdarg.h:
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/include/stdarg.h:
 
 /usr/include/bits/stdio_lim.h:
 
@@ -112,7 +112,7 @@ CRS/../functions/../start.h:
 
 /usr/include/getopt.h:
 
-/opt/rh/devtoolset-3/root/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include/stdbool.h:
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/include/stdbool.h:
 
 CRS/../functions/.././functions/blas.h:
 

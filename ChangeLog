@@ -1,0 +1,63 @@
+2015-11-20  chen@LAB  <jie211.jp@gmail.com>
+
+	test add automake
+
+2015-11-20  chen@MP  <jie211.jp@gmail.com>
+
+	fix: bug
+
+	change: add threads set
+
+2015-11-20  chen@MM  <jie211.jp@gmail.com>
+
+	add command line option
+
+2015-11-19  chen@MP  <jie211.jp@gmail.com>
+
+	change:file struct
+
+	change:add .DS_Store to gitconf
+
+	fix: threads num
+
+	change: dont need omp.h. so replace omp_set_num_threads with OMP_NUM_THREADS by setenv function
+
+2015-11-18  chen@MP  <jie211.jp@gmail.com>
+
+	change:add README.md
+
+	change:fix vpgcr method. add gcr method. add Display_Err Display_Mes.
+
+2015-11-18  chen@MBP  <jie211.jp@gmail.com>
+
+	Merge branch 'master' of https://github.com/Jie211/solver
+
+2015-11-17  chen@MBP  <jie211.jp@gmail.com>
+
+	change:try rewrite vpcr method, backup old vpcr to vpcr.backup and vpcr.hbackup
+
+2015-11-16  chen@LAB  <jie211.jp@gmail.com>
+
+	change: fix no <output> directory problem
+
+2015-11-16  chen@MBP  <jie211.jp@gmail.com>
+
+	change:add gcr method
+
+2015-11-16  Jie211  <jie211.jp@gmail.com>
+
+	change:fix error message
+
+	try to fix vpcr but failure
+
+2015-11-15  Jie211  <jie211.jp@gmail.com>
+
+	change:gitignore rule
+
+	change: add error message. add error judgment when select VP solver and not select Inner solver in sametime
+
+	change:move Matrix to ../
+
+2015-11-13  chen  <jie211.jp@gmail.com>
+
+	init commit. change matrix dirctory to ../ but not down

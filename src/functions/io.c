@@ -1,5 +1,6 @@
 #include "io.h"
 #include <sys/stat.h>
+#include <sys/param.h>
 
 int UsageCheck(char *argv){
   int error = FileFound(argv);
@@ -24,7 +25,8 @@ int FileFound(char *argv){
   bool file_found=false;
 
   strcpy(searchname, argv);
-  strcpy(path, "../Matrix/CSR/");
+  getcwd(path, sizeof(path));
+  strcat(path, "/");
 
   if((dir=opendir(path))==NULL){
     perror("** error opendir **\n");

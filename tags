@@ -4,143 +4,613 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-BLAS_H_INCLUDED__	functions/blas.h	/^#define BLAS_H_INCLUDED__$/;"	d
+ACLOCAL	Makefile	/^ACLOCAL = ${SHELL} \/home\/chen\/solver\/config\/missing --run aclocal-1.11$/;"	m
+ACLOCAL	src/Makefile	/^ACLOCAL = ${SHELL} \/home\/chen\/solver\/config\/missing --run aclocal-1.11$/;"	m
+ACLOCAL_M4	Makefile	/^ACLOCAL_M4 = $(top_srcdir)\/aclocal.m4$/;"	m
+ACLOCAL_M4	src/Makefile	/^ACLOCAL_M4 = $(top_srcdir)\/aclocal.m4$/;"	m
+AMTAR	Makefile	/^AMTAR = ${SHELL} \/home\/chen\/solver\/config\/missing --run tar$/;"	m
+AMTAR	src/Makefile	/^AMTAR = ${SHELL} \/home\/chen\/solver\/config\/missing --run tar$/;"	m
+AM_CFLAGS	common.mk	/^AM_CFLAGS = -Wall -fopenmp -O3 -std=c99 -lm$/;"	m
+AM_CFLAGS	src/Makefile	/^AM_CFLAGS = -Wall -fopenmp -O3 -std=c99 -lm$/;"	m
+AM_RECURSIVE_TARGETS	Makefile	/^AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \\$/;"	m
+AUTOCONF	Makefile	/^AUTOCONF = ${SHELL} \/home\/chen\/solver\/config\/missing --run autoconf$/;"	m
+AUTOCONF	src/Makefile	/^AUTOCONF = ${SHELL} \/home\/chen\/solver\/config\/missing --run autoconf$/;"	m
+AUTOHEADER	Makefile	/^AUTOHEADER = ${SHELL} \/home\/chen\/solver\/config\/missing --run autoheader$/;"	m
+AUTOHEADER	src/Makefile	/^AUTOHEADER = ${SHELL} \/home\/chen\/solver\/config\/missing --run autoheader$/;"	m
+AUTOMAKE	Makefile	/^AUTOMAKE = ${SHELL} \/home\/chen\/solver\/config\/missing --run automake-1.11$/;"	m
+AUTOMAKE	src/Makefile	/^AUTOMAKE = ${SHELL} \/home\/chen\/solver\/config\/missing --run automake-1.11$/;"	m
+AWK	Makefile	/^AWK = gawk$/;"	m
+AWK	src/Makefile	/^AWK = gawk$/;"	m
+BLAS_H_INCLUDED__	functions/blas.h	2;"	d
+BLAS_H_INCLUDED__	src/functions/blas.h	2;"	d
+CC	Makefile	/^CC = gcc$/;"	m
+CC	src/Makefile	/^CC = gcc$/;"	m
+CCDEPMODE	Makefile	/^CCDEPMODE = depmode=gcc3$/;"	m
+CCDEPMODE	src/Makefile	/^CCDEPMODE = depmode=gcc3$/;"	m
+CCLD	src/Makefile	/^CCLD = $(CC)$/;"	m
+CFLAGS	Makefile	/^CFLAGS = -g -O2$/;"	m
+CFLAGS	src/Makefile	/^CFLAGS = -g -O2$/;"	m
 CG_CRS	CRS/cg.c	/^int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max){$/;"	f
-CG_H_INCLUDED__	CRS/cg.h	/^#define CG_H_INCLUDED__$/;"	d
+CG_CRS	src/CRS/cg.c	/^int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max){$/;"	f
+CG_H_INCLUDED__	CRS/cg.h	2;"	d
+CG_H_INCLUDED__	src/CRS/cg.h	2;"	d
 CG_Init	CRS/cg.c	/^void CG_Init(double *v1, double *v2, double *v3, double *x, double ndata){$/;"	f
+CG_Init	src/CRS/cg.c	/^void CG_Init(double *v1, double *v2, double *v3, double *x, double ndata){$/;"	f
+COMPILE	src/Makefile	/^COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \\$/;"	m
+CONFIG_CLEAN_FILES	Makefile	/^CONFIG_CLEAN_FILES =$/;"	m
+CONFIG_CLEAN_FILES	src/Makefile	/^CONFIG_CLEAN_FILES =$/;"	m
+CONFIG_CLEAN_VPATH_FILES	Makefile	/^CONFIG_CLEAN_VPATH_FILES =$/;"	m
+CONFIG_CLEAN_VPATH_FILES	src/Makefile	/^CONFIG_CLEAN_VPATH_FILES =$/;"	m
+CONFIG_HEADER	Makefile	/^CONFIG_HEADER = config.h$/;"	m
+CONFIG_HEADER	src/Makefile	/^CONFIG_HEADER = $(top_builddir)\/config.h$/;"	m
+CPP	Makefile	/^CPP = gcc -E$/;"	m
+CPP	src/Makefile	/^CPP = gcc -E$/;"	m
+CPPFLAGS	Makefile	/^CPPFLAGS = $/;"	m
+CPPFLAGS	src/Makefile	/^CPPFLAGS = $/;"	m
 CR_CRS	CRS/cr.c	/^int CR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max){$/;"	f
-CR_H_INCLUDED__	CRS/cr.h	/^#define CR_H_INCLUDED__$/;"	d
+CR_CRS	src/CRS/cr.c	/^int CR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max){$/;"	f
+CR_H_INCLUDED__	CRS/cr.h	2;"	d
+CR_H_INCLUDED__	src/CRS/cr.h	2;"	d
 CR_Init	CRS/cr.c	/^void CR_Init(double *v1, double *v2, double *v3, double *v4, double *x, double ndata){$/;"	f
+CR_Init	src/CRS/cr.c	/^void CR_Init(double *v1, double *v2, double *v3, double *v4, double *x, double ndata){$/;"	f
+CSR_start	src/start.c	/^int CSR_start(int argc, char *argv[]){$/;"	f
 CSR_start	start.c	/^int CSR_start(int argc, char *argv[]){$/;"	f
+CTAGS	Makefile	/^CTAGS = ctags$/;"	m
+CTAGS	src/Makefile	/^CTAGS = ctags$/;"	m
+CYGPATH_W	Makefile	/^CYGPATH_W = echo$/;"	m
+CYGPATH_W	src/Makefile	/^CYGPATH_W = echo$/;"	m
+CheckCMD	src/start.c	/^int CheckCMD(void){$/;"	f
 CheckCMD	start.c	/^int CheckCMD(void){$/;"	f
+DEFAULT_INCLUDES	src/Makefile	/^DEFAULT_INCLUDES = -I. -I$(top_builddir)$/;"	m
+DEFS	Makefile	/^DEFS = -DHAVE_CONFIG_H$/;"	m
+DEFS	src/Makefile	/^DEFS = -DHAVE_CONFIG_H$/;"	m
+DEPDIR	Makefile	/^DEPDIR = .deps$/;"	m
+DEPDIR	src/Makefile	/^DEPDIR = .deps$/;"	m
+DISTFILES	Makefile	/^DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)$/;"	m
+DISTFILES	src/Makefile	/^DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)$/;"	m
+DIST_ARCHIVES	Makefile	/^DIST_ARCHIVES = $(distdir).tar.gz$/;"	m
+DIST_COMMON	Makefile	/^DIST_COMMON = README $(am__configure_deps) $(srcdir)\/Makefile.am \\$/;"	m
+DIST_COMMON	src/Makefile	/^DIST_COMMON = $(dist_man_MANS) $(srcdir)\/Makefile.am \\$/;"	m
+DIST_SOURCES	Makefile	/^DIST_SOURCES =$/;"	m
+DIST_SOURCES	src/Makefile	/^DIST_SOURCES = $(solver_SOURCES)$/;"	m
+DIST_SUBDIRS	Makefile	/^DIST_SUBDIRS = $(SUBDIRS)$/;"	m
+DisplayCMD	src/start.c	/^void DisplayCMD(void){$/;"	f
 DisplayCMD	start.c	/^void DisplayCMD(void){$/;"	f
 Display_Err	functions/blas.c	/^void Display_Err(char *err){$/;"	f
+Display_Err	src/functions/blas.c	/^void Display_Err(char *err){$/;"	f
 Display_Mes	functions/blas.c	/^void Display_Mes(char *mes){$/;"	f
+Display_Mes	src/functions/blas.c	/^void Display_Mes(char *mes){$/;"	f
 Double1Free	functions/blas.c	/^void Double1Free(double *ptr)$/;"	f
+Double1Free	src/functions/blas.c	/^void Double1Free(double *ptr)$/;"	f
 Double1Malloc	functions/blas.c	/^double *Double1Malloc(int ndata)$/;"	f
+Double1Malloc	src/functions/blas.c	/^double *Double1Malloc(int ndata)$/;"	f
 Double1Norm	functions/blas.c	/^double Double1Norm(double *x, int ndata)$/;"	f
+Double1Norm	src/functions/blas.c	/^double Double1Norm(double *x, int ndata)$/;"	f
 Double2Free	functions/blas.c	/^void Double2Free(double **ptr, int ndatay)$/;"	f
+Double2Free	src/functions/blas.c	/^void Double2Free(double **ptr, int ndatay)$/;"	f
 Double2Malloc	functions/blas.c	/^double **Double2Malloc(int ndatax, int ndatay)$/;"	f
+Double2Malloc	src/functions/blas.c	/^double **Double2Malloc(int ndatax, int ndatay)$/;"	f
 Double2Norm	functions/blas.c	/^double Double2Norm(double *x, int ndata)$/;"	f
+Double2Norm	src/functions/blas.c	/^double Double2Norm(double *x, int ndata)$/;"	f
 Double2VecInit	functions/blas.c	/^void Double2VecInit(double **vec, double val, int ndatax, int ndatay)$/;"	f
+Double2VecInit	src/functions/blas.c	/^void Double2VecInit(double **vec, double val, int ndatax, int ndatay)$/;"	f
 DoubleCalArApKCG	functions/blas.c	/^void DoubleCalArApKCG(double *Ar, double *Ap, double *val, int *col, int *ptr, double *rvec, double *pvec, int ndata, int kskip)$/;"	f
+DoubleCalArApKCG	src/functions/blas.c	/^void DoubleCalArApKCG(double *Ar, double *Ap, double *val, int *col, int *ptr, double *rvec, double *pvec, int ndata, int kskip)$/;"	f
 DoubleCalArApKCR	functions/blas.c	/^void DoubleCalArApKCR(double *Ar, double *Ap, double *val, int *col, int *ptr, double *rvec, double *pvec, int ndata, int kskip)$/;"	f
+DoubleCalArApKCR	src/functions/blas.c	/^void DoubleCalArApKCR(double *Ar, double *Ap, double *val, int *col, int *ptr, double *rvec, double *pvec, int ndata, int kskip)$/;"	f
 DoubleCalDeltaEtaZetaKCG	functions/blas.c	/^void DoubleCalDeltaEtaZetaKCG(double *delta, double *eta, double *zeta, double *Ar, double *Ap, double *rvec, double *pvec, int ndata, int kskip)$/;"	f
+DoubleCalDeltaEtaZetaKCG	src/functions/blas.c	/^void DoubleCalDeltaEtaZetaKCG(double *delta, double *eta, double *zeta, double *Ar, double *Ap, double *rvec, double *pvec, int ndata, int kskip)$/;"	f
 DoubleCalDeltaEtaZetaKCR	functions/blas.c	/^void DoubleCalDeltaEtaZetaKCR(double *delta, double *eta, double *zeta, double *Ar, double *Ap, double *rvec, int ndata, int kskip)$/;"	f
+DoubleCalDeltaEtaZetaKCR	src/functions/blas.c	/^void DoubleCalDeltaEtaZetaKCR(double *delta, double *eta, double *zeta, double *Ar, double *Ap, double *rvec, int ndata, int kskip)$/;"	f
 DoubleDot	functions/blas.c	/^double DoubleDot(double *x, double *y, int ndata)$/;"	f
+DoubleDot	src/functions/blas.c	/^double DoubleDot(double *x, double *y, int ndata)$/;"	f
 DoubleMVMCSR	functions/blas.c	/^void DoubleMVMCSR(double *out, double *val, int *col, int *ptr, double *vec, int ndata)$/;"	f
+DoubleMVMCSR	src/functions/blas.c	/^void DoubleMVMCSR(double *out, double *val, int *col, int *ptr, double *vec, int ndata)$/;"	f
 DoubleMaxNorm	functions/blas.c	/^double DoubleMaxNorm(double *x, int ndata)$/;"	f
+DoubleMaxNorm	src/functions/blas.c	/^double DoubleMaxNorm(double *x, int ndata)$/;"	f
 DoubleScalar	functions/blas.c	/^void DoubleScalar(double *out, double a, double *x, int ndata)$/;"	f
+DoubleScalar	src/functions/blas.c	/^void DoubleScalar(double *out, double a, double *x, int ndata)$/;"	f
 DoubleScalarxpy	functions/blas.c	/^void DoubleScalarxpy(double *out, double a, double *x, double *y, int ndata)$/;"	f
+DoubleScalarxpy	src/functions/blas.c	/^void DoubleScalarxpy(double *out, double a, double *x, double *y, int ndata)$/;"	f
 DoubleVecAdd	functions/blas.c	/^void DoubleVecAdd(double *out, double *x, double *y, int ndata)$/;"	f
+DoubleVecAdd	src/functions/blas.c	/^void DoubleVecAdd(double *out, double *x, double *y, int ndata)$/;"	f
 DoubleVecCopy	functions/blas.c	/^void DoubleVecCopy(double *a, double *b, int ndata)$/;"	f
+DoubleVecCopy	src/functions/blas.c	/^void DoubleVecCopy(double *a, double *b, int ndata)$/;"	f
 DoubleVecInit	functions/blas.c	/^void DoubleVecInit(double *vec, double val, int ndata)$/;"	f
+DoubleVecInit	src/functions/blas.c	/^void DoubleVecInit(double *vec, double val, int ndata)$/;"	f
 DoubleVecMul	functions/blas.c	/^void DoubleVecMul(double *out, double *x, double *y, int ndata)$/;"	f
+DoubleVecMul	src/functions/blas.c	/^void DoubleVecMul(double *out, double *x, double *y, int ndata)$/;"	f
 DoubleVecSub	functions/blas.c	/^void DoubleVecSub(double *out, double *x, double *y, int ndata)$/;"	f
-E_IN	start.h	/^#define E_IN /;"	d
-E_OUT	start.h	/^#define E_OUT /;"	d
-F_IN	start.h	/^#define F_IN /;"	d
-F_OUT	start.h	/^#define F_OUT /;"	d
+DoubleVecSub	src/functions/blas.c	/^void DoubleVecSub(double *out, double *x, double *y, int ndata)$/;"	f
+ECHO_C	Makefile	/^ECHO_C = $/;"	m
+ECHO_C	src/Makefile	/^ECHO_C = $/;"	m
+ECHO_N	Makefile	/^ECHO_N = -n$/;"	m
+ECHO_N	src/Makefile	/^ECHO_N = -n$/;"	m
+ECHO_T	Makefile	/^ECHO_T = $/;"	m
+ECHO_T	src/Makefile	/^ECHO_T = $/;"	m
+EGREP	Makefile	/^EGREP = \/bin\/grep -E$/;"	m
+EGREP	src/Makefile	/^EGREP = \/bin\/grep -E$/;"	m
+ETAGS	Makefile	/^ETAGS = etags$/;"	m
+ETAGS	src/Makefile	/^ETAGS = etags$/;"	m
+EXEEXT	Makefile	/^EXEEXT = $/;"	m
+EXEEXT	src/Makefile	/^EXEEXT = $/;"	m
+E_IN	src/start.h	19;"	d
+E_IN	start.h	19;"	d
+E_OUT	src/start.h	18;"	d
+E_OUT	start.h	18;"	d
+F_IN	src/start.h	25;"	d
+F_IN	start.h	25;"	d
+F_OUT	src/start.h	24;"	d
+F_OUT	start.h	24;"	d
 FileClose	functions/io.c	/^void FileClose(FILE *fp){$/;"	f
+FileClose	src/functions/io.c	/^void FileClose(FILE *fp){$/;"	f
 FileFound	functions/io.c	/^int FileFound(char *argv){$/;"	f
+FileFound	src/functions/io.c	/^int FileFound(char *argv){$/;"	f
 FileInit	functions/io.c	/^FILE* FileInit(char *name, char *mode){$/;"	f
+FileInit	src/functions/io.c	/^FILE* FileInit(char *name, char *mode){$/;"	f
 FileOutPutVec	functions/io.c	/^void FileOutPutVec(FILE *fp, double *vec, int ndata){$/;"	f
+FileOutPutVec	src/functions/io.c	/^void FileOutPutVec(FILE *fp, double *vec, int ndata){$/;"	f
 GCR_CRS	CRS/gcr.c	/^int GCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int restart){$/;"	f
-GCR_H_INCLUDED__	CRS/gcr.h	/^#define GCR_H_INCLUDED__$/;"	d
+GCR_CRS	src/CRS/gcr.c	/^int GCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int restart){$/;"	f
+GCR_H_INCLUDED__	CRS/gcr.h	2;"	d
+GCR_H_INCLUDED__	src/CRS/gcr.h	2;"	d
 GCR_Init	CRS/gcr.c	/^void GCR_Init(double *v1, double *v2, double *v3, double **v4, double **v5, double *x, int ndata, int restart){$/;"	f
+GCR_Init	src/CRS/gcr.c	/^void GCR_Init(double *v1, double *v2, double *v3, double **v4, double **v5, double *x, int ndata, int restart){$/;"	f
+GREP	Makefile	/^GREP = \/bin\/grep$/;"	m
+GREP	src/Makefile	/^GREP = \/bin\/grep$/;"	m
+GZIP_ENV	Makefile	/^GZIP_ENV = --best$/;"	m
 GetData	functions/io.c	/^void GetData(const char *file1, const char *file2, const char *file3, int *col, int *ptr, double *val, double *b, double *x, int N, int NZ)$/;"	f
+GetData	src/functions/io.c	/^void GetData(const char *file1, const char *file2, const char *file3, int *col, int *ptr, double *val, double *b, double *x, int N, int NZ)$/;"	f
 GetHead	functions/io.c	/^void GetHead(const char *bx, const char *col, const char *ptr, int *n, int *nnz)$/;"	f
+GetHead	src/functions/io.c	/^void GetHead(const char *bx, const char *col, const char *ptr, int *n, int *nnz)$/;"	f
+HAVE_INTTYPES_H	config.h	5;"	d
+HAVE_INTTYPES_H	src/config.h	5;"	d
+HAVE_MALLOC	config.h	9;"	d
+HAVE_MALLOC	src/config.h	9;"	d
+HAVE_MEMORY_H	config.h	12;"	d
+HAVE_MEMORY_H	src/config.h	12;"	d
+HAVE_SETENV	config.h	15;"	d
+HAVE_SETENV	src/config.h	15;"	d
+HAVE_STDBOOL_H	config.h	21;"	d
+HAVE_STDBOOL_H	src/config.h	21;"	d
+HAVE_STDINT_H	config.h	24;"	d
+HAVE_STDINT_H	src/config.h	24;"	d
+HAVE_STDLIB_H	config.h	27;"	d
+HAVE_STDLIB_H	src/config.h	27;"	d
+HAVE_STRINGS_H	config.h	30;"	d
+HAVE_STRINGS_H	src/config.h	30;"	d
+HAVE_STRING_H	config.h	33;"	d
+HAVE_STRING_H	src/config.h	33;"	d
+HAVE_SYS_STAT_H	config.h	36;"	d
+HAVE_SYS_STAT_H	src/config.h	36;"	d
+HAVE_SYS_TYPES_H	config.h	39;"	d
+HAVE_SYS_TYPES_H	src/config.h	39;"	d
+HAVE_UNISTD_H	config.h	42;"	d
+HAVE_UNISTD_H	src/config.h	42;"	d
+HAVE__BOOL	config.h	45;"	d
+HAVE__BOOL	src/config.h	45;"	d
+IK_CG	src/start.c	/^bool IK_CG=false;$/;"	v
 IK_CG	start.c	/^bool IK_CG=false;$/;"	v
+IK_CR	src/start.c	/^bool IK_CR=false;$/;"	v
 IK_CR	start.c	/^bool IK_CR=false;$/;"	v
+INNER	src/start.c	/^bool INNER=false;$/;"	v
 INNER	start.c	/^bool INNER=false;$/;"	v
-INNERSOLVERS_H_INCLUDED__	innersolvers.h	/^#define INNERSOLVERS_H_INCLUDED__$/;"	d
-IO_H_INCLUDED__	functions/io.h	/^#define IO_H_INCLUDED__$/;"	d
+INNERSOLVERS_H_INCLUDED__	innersolvers.h	2;"	d
+INNERSOLVERS_H_INCLUDED__	src/innersolvers.h	2;"	d
+INSTALL	Makefile	/^INSTALL = \/usr\/bin\/install -c$/;"	m
+INSTALL	src/Makefile	/^INSTALL = \/usr\/bin\/install -c$/;"	m
+INSTALL_DATA	Makefile	/^INSTALL_DATA = ${INSTALL} -m 644$/;"	m
+INSTALL_DATA	src/Makefile	/^INSTALL_DATA = ${INSTALL} -m 644$/;"	m
+INSTALL_HEADER	Makefile	/^INSTALL_HEADER = $(INSTALL_DATA)$/;"	m
+INSTALL_HEADER	src/Makefile	/^INSTALL_HEADER = $(INSTALL_DATA)$/;"	m
+INSTALL_PROGRAM	Makefile	/^INSTALL_PROGRAM = ${INSTALL}$/;"	m
+INSTALL_PROGRAM	src/Makefile	/^INSTALL_PROGRAM = ${INSTALL}$/;"	m
+INSTALL_SCRIPT	Makefile	/^INSTALL_SCRIPT = ${INSTALL}$/;"	m
+INSTALL_SCRIPT	src/Makefile	/^INSTALL_SCRIPT = ${INSTALL}$/;"	m
+INSTALL_STRIP_PROGRAM	Makefile	/^INSTALL_STRIP_PROGRAM = $(install_sh) -c -s$/;"	m
+INSTALL_STRIP_PROGRAM	src/Makefile	/^INSTALL_STRIP_PROGRAM = $(install_sh) -c -s$/;"	m
+IO_H_INCLUDED__	functions/io.h	2;"	d
+IO_H_INCLUDED__	src/functions/io.h	2;"	d
+IS_CG	src/start.c	/^bool IS_CG=false;$/;"	v
 IS_CG	start.c	/^bool IS_CG=false;$/;"	v
+IS_CR	src/start.c	/^bool IS_CR=false;$/;"	v
 IS_CR	start.c	/^bool IS_CR=false;$/;"	v
+IS_GCR	src/start.c	/^bool IS_GCR=false;$/;"	v
 IS_GCR	start.c	/^bool IS_GCR=false;$/;"	v
 InnerSolverSelecter	innersolvers.c	/^int InnerSolverSelecter(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix){$/;"	f
+InnerSolverSelecter	src/innersolvers.c	/^int InnerSolverSelecter(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix){$/;"	f
+InputCMD	src/start.c	/^void InputCMD(void){$/;"	f
 InputCMD	start.c	/^void InputCMD(void){$/;"	f
 Intger1Free	functions/blas.c	/^void Intger1Free(int *ptr)$/;"	f
+Intger1Free	src/functions/blas.c	/^void Intger1Free(int *ptr)$/;"	f
 Intger1Malloc	functions/blas.c	/^int *Intger1Malloc(int ndata)$/;"	f
+Intger1Malloc	src/functions/blas.c	/^int *Intger1Malloc(int ndata)$/;"	f
 Intger2Free	functions/blas.c	/^void Intger2Free(int **ptr, int ndata)$/;"	f
+Intger2Free	src/functions/blas.c	/^void Intger2Free(int **ptr, int ndata)$/;"	f
 Intger2Malloc	functions/blas.c	/^int **Intger2Malloc(int ndatax, int ndatay)$/;"	f
+Intger2Malloc	src/functions/blas.c	/^int **Intger2Malloc(int ndatax, int ndatay)$/;"	f
 KSKIPCG_CRS	CRS/kskipcg.c	/^int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix)$/;"	f
-KSKIPCG_H_INCLUDED__	CRS/kskipcg.h	/^#define KSKIPCG_H_INCLUDED__$/;"	d
+KSKIPCG_CRS	src/CRS/kskipcg.c	/^int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix)$/;"	f
+KSKIPCG_H_INCLUDED__	CRS/kskipcg.h	2;"	d
+KSKIPCG_H_INCLUDED__	src/CRS/kskipcg.h	2;"	d
 KSKIPCG_Init	CRS/kskipcg.c	/^void KSKIPCG_Init(double *v1, double *v2, double *v3, double *v4, double *v5, double *v6, double *v7, double *v8, double *v9, int ndata, int kskip)$/;"	f
+KSKIPCG_Init	src/CRS/kskipcg.c	/^void KSKIPCG_Init(double *v1, double *v2, double *v3, double *v4, double *v5, double *v6, double *v7, double *v8, double *v9, int ndata, int kskip)$/;"	f
 KSKIPCR_CRS	CRS/kskipcr.c	/^int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix)$/;"	f
-KSKIPCR_H_INCLUDED__	CRS/kskipcr.h	/^#define KSKIPCR_H_INCLUDED__$/;"	d
+KSKIPCR_CRS	src/CRS/kskipcr.c	/^int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix)$/;"	f
+KSKIPCR_H_INCLUDED__	CRS/kskipcr.h	2;"	d
+KSKIPCR_H_INCLUDED__	src/CRS/kskipcr.h	2;"	d
 KSKIPCR_Init	CRS/kskipcr.c	/^void KSKIPCR_Init(double *v1, double *v2, double *v3, double *v4, double *v5, double *v6, double *v7, double *v8, double *v9, int ndata, int kskip)$/;"	f
+KSKIPCR_Init	src/CRS/kskipcr.c	/^void KSKIPCR_Init(double *v1, double *v2, double *v3, double *v4, double *v5, double *v6, double *v7, double *v8, double *v9, int ndata, int kskip)$/;"	f
+K_CG	src/start.c	/^bool K_CG=false;$/;"	v
 K_CG	start.c	/^bool K_CG=false;$/;"	v
+K_CR	src/start.c	/^bool K_CR=false;$/;"	v
 K_CR	start.c	/^bool K_CR=false;$/;"	v
-K_IN	start.h	/^#define K_IN /;"	d
-K_OUT	start.h	/^#define K_OUT /;"	d
-L_IN	start.h	/^#define L_IN /;"	d
-L_OUT	start.h	/^#define L_OUT /;"	d
-R_IN	start.h	/^#define R_IN /;"	d
-R_OUT	start.h	/^#define R_OUT /;"	d
-SOLVERS_H_INCLUDED__	solvers.h	/^#define SOLVERS_H_INCLUDED__$/;"	d
-START_H_INCLUDED__	start.h	/^#define START_H_INCLUDED__$/;"	d
+K_IN	src/start.h	23;"	d
+K_IN	start.h	23;"	d
+K_OUT	src/start.h	22;"	d
+K_OUT	start.h	22;"	d
+LDFLAGS	Makefile	/^LDFLAGS = $/;"	m
+LDFLAGS	src/Makefile	/^LDFLAGS = $/;"	m
+LIBOBJS	Makefile	/^LIBOBJS = $/;"	m
+LIBOBJS	src/Makefile	/^LIBOBJS = $/;"	m
+LIBS	Makefile	/^LIBS = $/;"	m
+LIBS	src/Makefile	/^LIBS = $/;"	m
+LINK	src/Makefile	/^LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@$/;"	m
+LTLIBOBJS	Makefile	/^LTLIBOBJS = $/;"	m
+LTLIBOBJS	src/Makefile	/^LTLIBOBJS = $/;"	m
+L_IN	src/start.h	17;"	d
+L_IN	start.h	17;"	d
+L_OUT	src/start.h	16;"	d
+L_OUT	start.h	16;"	d
+MAKEINFO	Makefile	/^MAKEINFO = ${SHELL} \/home\/chen\/solver\/config\/missing --run makeinfo$/;"	m
+MAKEINFO	src/Makefile	/^MAKEINFO = ${SHELL} \/home\/chen\/solver\/config\/missing --run makeinfo$/;"	m
+MANS	src/Makefile	/^MANS = $(dist_man_MANS)$/;"	m
+MKDIR_P	Makefile	/^MKDIR_P = \/bin\/mkdir -p$/;"	m
+MKDIR_P	src/Makefile	/^MKDIR_P = \/bin\/mkdir -p$/;"	m
+NORMAL_INSTALL	Makefile	/^NORMAL_INSTALL = :$/;"	m
+NORMAL_INSTALL	src/Makefile	/^NORMAL_INSTALL = :$/;"	m
+NORMAL_UNINSTALL	Makefile	/^NORMAL_UNINSTALL = :$/;"	m
+NORMAL_UNINSTALL	src/Makefile	/^NORMAL_UNINSTALL = :$/;"	m
+NROFF	src/Makefile	/^NROFF = nroff$/;"	m
+OBJEXT	Makefile	/^OBJEXT = o$/;"	m
+OBJEXT	src/Makefile	/^OBJEXT = o$/;"	m
+PACKAGE	Makefile	/^PACKAGE = g2115014$/;"	m
+PACKAGE	config.h	48;"	d
+PACKAGE	src/Makefile	/^PACKAGE = g2115014$/;"	m
+PACKAGE	src/config.h	48;"	d
+PACKAGE_BUGREPORT	Makefile	/^PACKAGE_BUGREPORT = jie211.jp@gmail.com$/;"	m
+PACKAGE_BUGREPORT	config.h	51;"	d
+PACKAGE_BUGREPORT	src/Makefile	/^PACKAGE_BUGREPORT = jie211.jp@gmail.com$/;"	m
+PACKAGE_BUGREPORT	src/config.h	51;"	d
+PACKAGE_NAME	Makefile	/^PACKAGE_NAME = solver$/;"	m
+PACKAGE_NAME	config.h	54;"	d
+PACKAGE_NAME	src/Makefile	/^PACKAGE_NAME = solver$/;"	m
+PACKAGE_NAME	src/config.h	54;"	d
+PACKAGE_STRING	Makefile	/^PACKAGE_STRING = solver 0.8$/;"	m
+PACKAGE_STRING	config.h	57;"	d
+PACKAGE_STRING	src/Makefile	/^PACKAGE_STRING = solver 0.8$/;"	m
+PACKAGE_STRING	src/config.h	57;"	d
+PACKAGE_TARNAME	Makefile	/^PACKAGE_TARNAME = g2115014$/;"	m
+PACKAGE_TARNAME	config.h	60;"	d
+PACKAGE_TARNAME	src/Makefile	/^PACKAGE_TARNAME = g2115014$/;"	m
+PACKAGE_TARNAME	src/config.h	60;"	d
+PACKAGE_VERSION	Makefile	/^PACKAGE_VERSION = 0.8$/;"	m
+PACKAGE_VERSION	config.h	63;"	d
+PACKAGE_VERSION	src/Makefile	/^PACKAGE_VERSION = 0.8$/;"	m
+PACKAGE_VERSION	src/config.h	63;"	d
+PATH_SEPARATOR	Makefile	/^PATH_SEPARATOR = :$/;"	m
+PATH_SEPARATOR	src/Makefile	/^PATH_SEPARATOR = :$/;"	m
+POST_INSTALL	Makefile	/^POST_INSTALL = :$/;"	m
+POST_INSTALL	src/Makefile	/^POST_INSTALL = :$/;"	m
+POST_UNINSTALL	Makefile	/^POST_UNINSTALL = :$/;"	m
+POST_UNINSTALL	src/Makefile	/^POST_UNINSTALL = :$/;"	m
+PRE_INSTALL	Makefile	/^PRE_INSTALL = :$/;"	m
+PRE_INSTALL	src/Makefile	/^PRE_INSTALL = :$/;"	m
+PRE_UNINSTALL	Makefile	/^PRE_UNINSTALL = :$/;"	m
+PRE_UNINSTALL	src/Makefile	/^PRE_UNINSTALL = :$/;"	m
+PROGRAMS	src/Makefile	/^PROGRAMS = $(bin_PROGRAMS)$/;"	m
+RECURSIVE_CLEAN_TARGETS	Makefile	/^RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\\$/;"	m
+RECURSIVE_TARGETS	Makefile	/^RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \\$/;"	m
+R_IN	src/start.h	21;"	d
+R_IN	start.h	21;"	d
+R_OUT	src/start.h	20;"	d
+R_OUT	start.h	20;"	d
+SET_MAKE	Makefile	/^SET_MAKE = $/;"	m
+SET_MAKE	src/Makefile	/^SET_MAKE = $/;"	m
+SHELL	Makefile	/^SHELL = \/bin\/sh$/;"	m
+SHELL	src/Makefile	/^SHELL = \/bin\/sh$/;"	m
+SOLVERS_H_INCLUDED__	solvers.h	2;"	d
+SOLVERS_H_INCLUDED__	src/solvers.h	2;"	d
+SOURCES	Makefile	/^SOURCES =$/;"	m
+SOURCES	src/Makefile	/^SOURCES = $(solver_SOURCES)$/;"	m
+START_H_INCLUDED__	src/start.h	2;"	d
+START_H_INCLUDED__	start.h	2;"	d
+STDC_HEADERS	config.h	66;"	d
+STDC_HEADERS	src/config.h	66;"	d
+STRIP	Makefile	/^STRIP = $/;"	m
+STRIP	src/Makefile	/^STRIP = $/;"	m
+SUBDIRS	Makefile	/^SUBDIRS = src$/;"	m
+S_CG	src/start.c	/^bool S_CG=false;$/;"	v
 S_CG	start.c	/^bool S_CG=false;$/;"	v
+S_CR	src/start.c	/^bool S_CR=false;$/;"	v
 S_CR	start.c	/^bool S_CR=false;$/;"	v
+S_GCR	src/start.c	/^bool S_GCR=false;$/;"	v
 S_GCR	start.c	/^bool S_GCR=false;$/;"	v
-S_IN	start.h	/^#define S_IN /;"	d
+S_IN	src/start.h	15;"	d
+S_IN	start.h	15;"	d
 SolverSelecter	solvers.c	/^int SolverSelecter(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix){$/;"	f
-THREADS	start.h	/^#define THREADS /;"	d
+SolverSelecter	src/solvers.c	/^int SolverSelecter(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix){$/;"	f
+THREAD	src/start.h	26;"	d
+THREAD	start.h	26;"	d
 UsageCheck	functions/io.c	/^int UsageCheck(char *argv){$/;"	f
+UsageCheck	src/functions/io.c	/^int UsageCheck(char *argv){$/;"	f
+VERSION	Makefile	/^VERSION = 0.8$/;"	m
+VERSION	config.h	69;"	d
+VERSION	src/Makefile	/^VERSION = 0.8$/;"	m
+VERSION	src/config.h	69;"	d
 VPCG_CRS	CRS/vpcg.c	/^int VPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max){$/;"	f
-VPCG_H_INCLUDED__	CRS/vpcg.h	/^#define VPCG_H_INCLUDED__$/;"	d
+VPCG_CRS	src/CRS/vpcg.c	/^int VPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max){$/;"	f
+VPCG_H_INCLUDED__	CRS/vpcg.h	2;"	d
+VPCG_H_INCLUDED__	src/CRS/vpcg.h	2;"	d
 VPCG_Init	CRS/vpcg.c	/^void VPCG_Init(double *v1, double *v2, double *v3, double *v4, double *x, double ndata){$/;"	f
+VPCG_Init	src/CRS/vpcg.c	/^void VPCG_Init(double *v1, double *v2, double *v3, double *v4, double *x, double ndata){$/;"	f
 VPCR_CRS	CRS/vpcr.c	/^int VPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max){$/;"	f
-VPCR_H_INCLUDED__	CRS/vpcr.h	/^#define VPCR_H_INCLUDED__$/;"	d
+VPCR_CRS	src/CRS/vpcr.c	/^int VPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max){$/;"	f
+VPCR_H_INCLUDED__	CRS/vpcr.h	2;"	d
+VPCR_H_INCLUDED__	src/CRS/vpcr.h	2;"	d
 VPCR_Init	CRS/vpcr.c	/^void VPCR_Init(double *v1, double *v2, double *v3, double *v4, double *v5, double *v6, double *x, double ndata){$/;"	f
+VPCR_Init	src/CRS/vpcr.c	/^void VPCR_Init(double *v1, double *v2, double *v3, double *v4, double *v5, double *v6, double *x, double ndata){$/;"	f
 VPGCR_CRS	CRS/vpgcr.c	/^int VPGCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int restart){$/;"	f
-VPGCR_H_INCLUDED__	CRS/vpgcr.h	/^#define VPGCR_H_INCLUDED__$/;"	d
+VPGCR_CRS	src/CRS/vpgcr.c	/^int VPGCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int restart){$/;"	f
+VPGCR_H_INCLUDED__	CRS/vpgcr.h	2;"	d
+VPGCR_H_INCLUDED__	src/CRS/vpgcr.h	2;"	d
 VPGCR_Init	CRS/vpgcr.c	/^void VPGCR_Init(double *v1, double *v2, double *v3, double *v4, double **v5, double **v6, double *x, int ndata, int restart){$/;"	f
+VPGCR_Init	src/CRS/vpgcr.c	/^void VPGCR_Init(double *v1, double *v2, double *v3, double *v4, double **v5, double **v6, double *x, int ndata, int restart){$/;"	f
+VP_CG	src/start.c	/^bool VP_CG=false;$/;"	v
 VP_CG	start.c	/^bool VP_CG=false;$/;"	v
+VP_CR	src/start.c	/^bool VP_CR=false;$/;"	v
 VP_CR	start.c	/^bool VP_CR=false;$/;"	v
+VP_GCR	src/start.c	/^bool VP_GCR=false;$/;"	v
 VP_GCR	start.c	/^bool VP_GCR=false;$/;"	v
+abs_builddir	Makefile	/^abs_builddir = \/home\/chen\/solver$/;"	m
+abs_builddir	src/Makefile	/^abs_builddir = \/home\/chen\/solver\/src$/;"	m
+abs_srcdir	Makefile	/^abs_srcdir = \/home\/chen\/solver$/;"	m
+abs_srcdir	src/Makefile	/^abs_srcdir = \/home\/chen\/solver\/src$/;"	m
+abs_top_builddir	Makefile	/^abs_top_builddir = \/home\/chen\/solver$/;"	m
+abs_top_builddir	src/Makefile	/^abs_top_builddir = \/home\/chen\/solver$/;"	m
+abs_top_srcdir	Makefile	/^abs_top_srcdir = \/home\/chen\/solver$/;"	m
+abs_top_srcdir	src/Makefile	/^abs_top_srcdir = \/home\/chen\/solver$/;"	m
+ac_ct_CC	Makefile	/^ac_ct_CC = gcc$/;"	m
+ac_ct_CC	src/Makefile	/^ac_ct_CC = gcc$/;"	m
+am__CONFIG_DISTCLEAN_FILES	Makefile	/^am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \\$/;"	m
+am__aclocal_m4_deps	Makefile	/^am__aclocal_m4_deps = $(top_srcdir)\/configure.ac$/;"	m
+am__aclocal_m4_deps	src/Makefile	/^am__aclocal_m4_deps = $(top_srcdir)\/configure.ac$/;"	m
+am__base_list	src/Makefile	/^am__base_list = \\$/;"	m
+am__cd	Makefile	/^am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd$/;"	m
+am__cd	src/Makefile	/^am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd$/;"	m
+am__configure_deps	Makefile	/^am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \\$/;"	m
+am__configure_deps	src/Makefile	/^am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \\$/;"	m
+am__depfiles_maybe	src/Makefile	/^am__depfiles_maybe = depfiles$/;"	m
+am__include	Makefile	/^am__include = include$/;"	m
+am__include	src/Makefile	/^am__include = include$/;"	m
+am__install_max	src/Makefile	/^am__install_max = 40$/;"	m
+am__installdirs	src/Makefile	/^am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(man1dir)"$/;"	m
+am__leading_dot	Makefile	/^am__leading_dot = .$/;"	m
+am__leading_dot	src/Makefile	/^am__leading_dot = .$/;"	m
+am__mv	src/Makefile	/^am__mv = mv -f$/;"	m
+am__nobase_list	src/Makefile	/^am__nobase_list = $(am__nobase_strip_setup); \\$/;"	m
+am__nobase_strip	src/Makefile	/^am__nobase_strip = \\$/;"	m
+am__nobase_strip_setup	src/Makefile	/^am__nobase_strip_setup = \\$/;"	m
+am__quote	Makefile	/^am__quote = $/;"	m
+am__quote	src/Makefile	/^am__quote = $/;"	m
+am__relativize	Makefile	/^am__relativize = \\$/;"	m
+am__remove_distdir	Makefile	/^am__remove_distdir = \\$/;"	m
+am__strip_dir	src/Makefile	/^am__strip_dir = f=`echo $$p | sed -e 's|^.*\/||'`;$/;"	m
+am__tar	Makefile	/^am__tar = ${AMTAR} chof - "$$tardir"$/;"	m
+am__tar	src/Makefile	/^am__tar = ${AMTAR} chof - "$$tardir"$/;"	m
+am__untar	Makefile	/^am__untar = ${AMTAR} xf -$/;"	m
+am__untar	src/Makefile	/^am__untar = ${AMTAR} xf -$/;"	m
+am__vpath_adj	src/Makefile	/^am__vpath_adj = case $$p in \\$/;"	m
+am__vpath_adj_setup	src/Makefile	/^am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;$/;"	m
+am_solver_OBJECTS	src/Makefile	/^am_solver_OBJECTS = innersolvers.$(OBJEXT) main.$(OBJEXT) \\$/;"	m
+as_func_failure	configure	/^as_func_failure () {$/;"	f
+as_func_ret_failure	configure	/^as_func_ret_failure () {$/;"	f
+as_func_ret_success	configure	/^as_func_ret_success () {$/;"	f
+as_func_success	configure	/^as_func_success () {$/;"	f
+bin_PROGRAMS	src/Makefile	/^bin_PROGRAMS = solver$(EXEEXT)$/;"	m
+bindir	Makefile	/^bindir = ${exec_prefix}\/bin$/;"	m
+bindir	src/Makefile	/^bindir = ${exec_prefix}\/bin$/;"	m
+build_alias	Makefile	/^build_alias = $/;"	m
+build_alias	src/Makefile	/^build_alias = $/;"	m
+builddir	Makefile	/^builddir = .$/;"	m
+builddir	src/Makefile	/^builddir = .$/;"	m
+bx_path	src/start.c	/^char bx_path[512];$/;"	v
 bx_path	start.c	/^char bx_path[512];$/;"	v
+c_eps_inner	src/start.c	/^char *c_eps_inner=NULL;$/;"	v
 c_eps_inner	start.c	/^char *c_eps_inner=NULL;$/;"	v
+c_eps_outer	src/start.c	/^char *c_eps_outer=NULL;$/;"	v
 c_eps_outer	start.c	/^char *c_eps_outer=NULL;$/;"	v
+c_fix_inner	src/start.c	/^char *c_fix_inner=NULL;$/;"	v
 c_fix_inner	start.c	/^char *c_fix_inner=NULL;$/;"	v
+c_fix_outer	src/start.c	/^char *c_fix_outer=NULL;$/;"	v
 c_fix_outer	start.c	/^char *c_fix_outer=NULL;$/;"	v
+c_kskip_inner	src/start.c	/^char *c_kskip_inner=NULL;$/;"	v
 c_kskip_inner	start.c	/^char *c_kskip_inner=NULL;$/;"	v
+c_kskip_outer	src/start.c	/^char *c_kskip_outer=NULL;$/;"	v
 c_kskip_outer	start.c	/^char *c_kskip_outer=NULL;$/;"	v
+c_loop_inner	src/start.c	/^char *c_loop_inner=NULL;$/;"	v
 c_loop_inner	start.c	/^char *c_loop_inner=NULL;$/;"	v
+c_loop_outer	src/start.c	/^char *c_loop_outer=NULL;$/;"	v
 c_loop_outer	start.c	/^char *c_loop_outer=NULL;$/;"	v
+c_matrix	src/start.c	/^char *c_matrix=NULL;$/;"	v
 c_matrix	start.c	/^char *c_matrix=NULL;$/;"	v
+c_openmp_thread	src/start.c	/^char *c_openmp_thread=NULL;$/;"	v
+c_openmp_thread	start.c	/^char *c_openmp_thread=NULL;$/;"	v
+c_restart_inner	src/start.c	/^char *c_restart_inner=NULL;$/;"	v
 c_restart_inner	start.c	/^char *c_restart_inner=NULL;$/;"	v
+c_restart_outer	src/start.c	/^char *c_restart_outer=NULL;$/;"	v
 c_restart_outer	start.c	/^char *c_restart_outer=NULL;$/;"	v
+c_solver_inner	src/start.c	/^char *c_solver_inner=NULL;$/;"	v
 c_solver_inner	start.c	/^char *c_solver_inner=NULL;$/;"	v
+c_solver_outer	src/start.c	/^char *c_solver_outer=NULL;$/;"	v
 c_solver_outer	start.c	/^char *c_solver_outer=NULL;$/;"	v
+col_path	src/start.c	/^char col_path[512];$/;"	v
 col_path	start.c	/^char col_path[512];$/;"	v
+datadir	Makefile	/^datadir = ${datarootdir}$/;"	m
+datadir	src/Makefile	/^datadir = ${datarootdir}$/;"	m
+datarootdir	Makefile	/^datarootdir = ${prefix}\/share$/;"	m
+datarootdir	src/Makefile	/^datarootdir = ${prefix}\/share$/;"	m
+depcomp	src/Makefile	/^depcomp = $(SHELL) $(top_srcdir)\/config\/depcomp$/;"	m
+dist_man_MANS	src/Makefile	/^dist_man_MANS = solver.1$/;"	m
+distcleancheck_listfiles	Makefile	/^distcleancheck_listfiles = find . -type f -print$/;"	m
+distdir	Makefile	/^distdir = $(PACKAGE)-$(VERSION)$/;"	m
+distuninstallcheck_listfiles	Makefile	/^distuninstallcheck_listfiles = find . -type f -print$/;"	m
+docdir	Makefile	/^docdir = ${datarootdir}\/doc\/${PACKAGE_TARNAME}$/;"	m
+docdir	src/Makefile	/^docdir = ${datarootdir}\/doc\/${PACKAGE_TARNAME}$/;"	m
+dvidir	Makefile	/^dvidir = ${docdir}$/;"	m
+dvidir	src/Makefile	/^dvidir = ${docdir}$/;"	m
+eps_inner	src/start.c	/^double eps_inner=E_IN;$/;"	v
 eps_inner	start.c	/^double eps_inner=E_IN;$/;"	v
+eps_outer	src/start.c	/^double eps_outer=E_OUT;$/;"	v
 eps_outer	start.c	/^double eps_outer=E_OUT;$/;"	v
 error_check_CRS	functions/blas.c	/^double error_check_CRS(double *val, const int *col, const int *ptr, double *b, double *x_new ,double *x_0, int N)$/;"	f
+error_check_CRS	src/functions/blas.c	/^double error_check_CRS(double *val, const int *col, const int *ptr, double *b, double *x_new ,double *x_0, int N)$/;"	f
+exec_prefix	Makefile	/^exec_prefix = ${prefix}$/;"	m
+exec_prefix	src/Makefile	/^exec_prefix = ${prefix}$/;"	m
+f_eps_inner	src/start.c	/^bool f_eps_inner=false;$/;"	v
 f_eps_inner	start.c	/^bool f_eps_inner=false;$/;"	v
+f_eps_outer	src/start.c	/^bool f_eps_outer=false;$/;"	v
 f_eps_outer	start.c	/^bool f_eps_outer=false;$/;"	v
+f_f_openmp_thread	src/start.c	/^bool f_f_openmp_thread=false;$/;"	v
+f_f_openmp_thread	start.c	/^bool f_f_openmp_thread=false;$/;"	v
+f_fix_inner	src/start.c	/^bool f_fix_inner=false;$/;"	v
 f_fix_inner	start.c	/^bool f_fix_inner=false;$/;"	v
+f_fix_outer	src/start.c	/^bool f_fix_outer=false;$/;"	v
 f_fix_outer	start.c	/^bool f_fix_outer=false;$/;"	v
+f_kskip_inner	src/start.c	/^bool f_kskip_inner=false;$/;"	v
 f_kskip_inner	start.c	/^bool f_kskip_inner=false;$/;"	v
+f_kskip_outer	src/start.c	/^bool f_kskip_outer=false;$/;"	v
 f_kskip_outer	start.c	/^bool f_kskip_outer=false;$/;"	v
+f_loop_inner	src/start.c	/^bool f_loop_inner=false;$/;"	v
 f_loop_inner	start.c	/^bool f_loop_inner=false;$/;"	v
+f_loop_outer	src/start.c	/^bool f_loop_outer=false;$/;"	v
 f_loop_outer	start.c	/^bool f_loop_outer=false;$/;"	v
+f_matrix	src/start.c	/^bool f_matrix=false;$/;"	v
 f_matrix	start.c	/^bool f_matrix=false;$/;"	v
+f_restart_inner	src/start.c	/^bool f_restart_inner=false;$/;"	v
 f_restart_inner	start.c	/^bool f_restart_inner=false;$/;"	v
+f_restart_outer	src/start.c	/^bool f_restart_outer=false;$/;"	v
 f_restart_outer	start.c	/^bool f_restart_outer=false;$/;"	v
+f_solver_inner	src/start.c	/^bool f_solver_inner=false;$/;"	v
 f_solver_inner	start.c	/^bool f_solver_inner=false;$/;"	v
+f_solver_outer	src/start.c	/^bool f_solver_outer=false;$/;"	v
 f_solver_outer	start.c	/^bool f_solver_outer=false;$/;"	v
+fix_inner	src/start.c	/^int fix_inner=F_IN;$/;"	v
 fix_inner	start.c	/^int fix_inner=F_IN;$/;"	v
+fix_outer	src/start.c	/^int fix_outer=F_OUT;$/;"	v
 fix_outer	start.c	/^int fix_outer=F_OUT;$/;"	v
+getCMD	src/start.c	/^int getCMD(int argc, char *argv[])$/;"	f
 getCMD	start.c	/^int getCMD(int argc, char *argv[])$/;"	f
+host_alias	Makefile	/^host_alias = $/;"	m
+host_alias	src/Makefile	/^host_alias = $/;"	m
+htmldir	Makefile	/^htmldir = ${docdir}$/;"	m
+htmldir	src/Makefile	/^htmldir = ${docdir}$/;"	m
+includedir	Makefile	/^includedir = ${prefix}\/include$/;"	m
+includedir	src/Makefile	/^includedir = ${prefix}\/include$/;"	m
+infodir	Makefile	/^infodir = ${datarootdir}\/info$/;"	m
+infodir	src/Makefile	/^infodir = ${datarootdir}\/info$/;"	m
+install_sh	Makefile	/^install_sh = ${SHELL} \/home\/chen\/solver\/config\/install-sh$/;"	m
+install_sh	src/Makefile	/^install_sh = ${SHELL} \/home\/chen\/solver\/config\/install-sh$/;"	m
+install_sh_DATA	Makefile	/^install_sh_DATA = $(install_sh) -c -m 644$/;"	m
+install_sh_DATA	src/Makefile	/^install_sh_DATA = $(install_sh) -c -m 644$/;"	m
+install_sh_PROGRAM	Makefile	/^install_sh_PROGRAM = $(install_sh) -c$/;"	m
+install_sh_PROGRAM	src/Makefile	/^install_sh_PROGRAM = $(install_sh) -c$/;"	m
+install_sh_SCRIPT	Makefile	/^install_sh_SCRIPT = $(install_sh) -c$/;"	m
+install_sh_SCRIPT	src/Makefile	/^install_sh_SCRIPT = $(install_sh) -c$/;"	m
+kskip_inner	src/start.c	/^int kskip_inner=K_IN;$/;"	v
 kskip_inner	start.c	/^int kskip_inner=K_IN;$/;"	v
+kskip_outer	src/start.c	/^int kskip_outer=K_OUT;$/;"	v
 kskip_outer	start.c	/^int kskip_outer=K_OUT;$/;"	v
+libdir	Makefile	/^libdir = ${exec_prefix}\/lib$/;"	m
+libdir	src/Makefile	/^libdir = ${exec_prefix}\/lib$/;"	m
+libexecdir	Makefile	/^libexecdir = ${exec_prefix}\/libexec$/;"	m
+libexecdir	src/Makefile	/^libexecdir = ${exec_prefix}\/libexec$/;"	m
+localedir	Makefile	/^localedir = ${datarootdir}\/locale$/;"	m
+localedir	src/Makefile	/^localedir = ${datarootdir}\/locale$/;"	m
+localstatedir	Makefile	/^localstatedir = ${prefix}\/var$/;"	m
+localstatedir	src/Makefile	/^localstatedir = ${prefix}\/var$/;"	m
+loop_inner	src/start.c	/^int loop_inner=L_IN;$/;"	v
 loop_inner	start.c	/^int loop_inner=L_IN;$/;"	v
+loop_outer	src/start.c	/^int loop_outer=L_OUT;$/;"	v
 loop_outer	start.c	/^int loop_outer=L_OUT;$/;"	v
 main	main.c	/^int main(int argc, char *argv[])$/;"	f
+main	src/main.c	/^int main(int argc, char *argv[])$/;"	f
+man1dir	src/Makefile	/^man1dir = $(mandir)\/man1$/;"	m
+mandir	Makefile	/^mandir = ${datarootdir}\/man$/;"	m
+mandir	src/Makefile	/^mandir = ${datarootdir}\/man$/;"	m
+matrix	src/start.c	/^char *matrix=NULL;$/;"	v
 matrix	start.c	/^char *matrix=NULL;$/;"	v
+mkdir_p	Makefile	/^mkdir_p = \/bin\/mkdir -p$/;"	m
+mkdir_p	src/Makefile	/^mkdir_p = \/bin\/mkdir -p$/;"	m
+mkinstalldirs	Makefile	/^mkinstalldirs = $(install_sh) -d$/;"	m
+mkinstalldirs	src/Makefile	/^mkinstalldirs = $(install_sh) -d$/;"	m
+oldincludedir	Makefile	/^oldincludedir = \/usr\/include$/;"	m
+oldincludedir	src/Makefile	/^oldincludedir = \/usr\/include$/;"	m
+openmp_thread	src/start.c	/^int openmp_thread=THREAD;$/;"	v
+openmp_thread	start.c	/^int openmp_thread=THREAD;$/;"	v
+pdfdir	Makefile	/^pdfdir = ${docdir}$/;"	m
+pdfdir	src/Makefile	/^pdfdir = ${docdir}$/;"	m
+pkgdatadir	Makefile	/^pkgdatadir = $(datadir)\/g2115014$/;"	m
+pkgdatadir	src/Makefile	/^pkgdatadir = $(datadir)\/g2115014$/;"	m
+pkgincludedir	Makefile	/^pkgincludedir = $(includedir)\/g2115014$/;"	m
+pkgincludedir	src/Makefile	/^pkgincludedir = $(includedir)\/g2115014$/;"	m
+pkglibdir	Makefile	/^pkglibdir = $(libdir)\/g2115014$/;"	m
+pkglibdir	src/Makefile	/^pkglibdir = $(libdir)\/g2115014$/;"	m
+pkglibexecdir	Makefile	/^pkglibexecdir = $(libexecdir)\/g2115014$/;"	m
+pkglibexecdir	src/Makefile	/^pkglibexecdir = $(libexecdir)\/g2115014$/;"	m
+prefix	Makefile	/^prefix = \/usr\/local$/;"	m
+prefix	src/Makefile	/^prefix = \/usr\/local$/;"	m
+program_transform_name	Makefile	/^program_transform_name = s,x,x,$/;"	m
+program_transform_name	src/Makefile	/^program_transform_name = s,x,x,$/;"	m
+prototypes	configure	/^   function prototypes and stuff, but not '\\xHH' hex character constants.$/;"	f
+psdir	Makefile	/^psdir = ${docdir}$/;"	m
+psdir	src/Makefile	/^psdir = ${docdir}$/;"	m
+ptr_path	src/start.c	/^char ptr_path[512];$/;"	v
 ptr_path	start.c	/^char ptr_path[512];$/;"	v
+restart_inner	src/start.c	/^int restart_inner=R_IN;$/;"	v
 restart_inner	start.c	/^int restart_inner=R_IN;$/;"	v
+restart_outer	src/start.c	/^int restart_outer=R_OUT;$/;"	v
 restart_outer	start.c	/^int restart_outer=R_OUT;$/;"	v
+sbindir	Makefile	/^sbindir = ${exec_prefix}\/sbin$/;"	m
+sbindir	src/Makefile	/^sbindir = ${exec_prefix}\/sbin$/;"	m
+sharedstatedir	Makefile	/^sharedstatedir = ${prefix}\/com$/;"	m
+sharedstatedir	src/Makefile	/^sharedstatedir = ${prefix}\/com$/;"	m
+solver_LDADD	src/Makefile	/^solver_LDADD = $(LDADD)$/;"	m
+solver_OBJECTS	src/Makefile	/^solver_OBJECTS = $(am_solver_OBJECTS)$/;"	m
+solver_SOURCES	src/Makefile	/^solver_SOURCES = .\/innersolvers.c .\/main.c .\/solvers.c .\/start.c .\/CRS\/cg.c .\/CRS\/cr.c .\/CRS\/gcr.c .\/CRS\/kskipcg.c .\/CRS\/kskipcr.c .\/CRS\/vpcg.c .\/CRS\/vpcr.c .\/CRS\/vpgcr.c .\/functions\/blas.c .\/functions\/io.c $/;"	m
+solver_inner	src/start.c	/^char *solver_inner=S_IN;$/;"	v
 solver_inner	start.c	/^char *solver_inner=S_IN;$/;"	v
+solver_outer	src/start.c	/^char *solver_outer=NULL;$/;"	v
 solver_outer	start.c	/^char *solver_outer=NULL;$/;"	v
+srcdir	Makefile	/^srcdir = .$/;"	m
+srcdir	src/Makefile	/^srcdir = .$/;"	m
+subdir	Makefile	/^subdir = .$/;"	m
+subdir	src/Makefile	/^subdir = src$/;"	m
+sysconfdir	Makefile	/^sysconfdir = ${prefix}\/etc$/;"	m
+sysconfdir	src/Makefile	/^sysconfdir = ${prefix}\/etc$/;"	m
+tardir	Makefile	/^	tardir=$(distdir) && $(am__tar) | GZIP=$(GZIP_ENV) gzip -c >$(distdir).tar.gz$/;"	m
+tardir	Makefile	/^	tardir=$(distdir) && $(am__tar) | bzip2 -9 -c >$(distdir).tar.bz2$/;"	m
+tardir	Makefile	/^	tardir=$(distdir) && $(am__tar) | compress -c >$(distdir).tar.Z$/;"	m
+tardir	Makefile	/^	tardir=$(distdir) && $(am__tar) | lzma -9 -c >$(distdir).tar.lzma$/;"	m
+tardir	Makefile	/^	tardir=$(distdir) && $(am__tar) | xz -c >$(distdir).tar.xz$/;"	m
+target_alias	Makefile	/^target_alias = $/;"	m
+target_alias	src/Makefile	/^target_alias = $/;"	m
+top_build_prefix	Makefile	/^top_build_prefix = $/;"	m
+top_build_prefix	src/Makefile	/^top_build_prefix = ..\/$/;"	m
+top_builddir	Makefile	/^top_builddir = .$/;"	m
+top_builddir	src/Makefile	/^top_builddir = ..$/;"	m
+top_distdir	Makefile	/^top_distdir = $(distdir)$/;"	m
+top_srcdir	Makefile	/^top_srcdir = .$/;"	m
+top_srcdir	src/Makefile	/^top_srcdir = ..$/;"	m
+transform	Makefile	/^transform = $(program_transform_name)$/;"	m
+transform	src/Makefile	/^transform = $(program_transform_name)$/;"	m
