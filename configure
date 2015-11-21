@@ -595,7 +595,7 @@ SHELL=${CONFIG_SHELL-/bin/sh}
 
 # Identity of this package.
 PACKAGE_NAME='solver'
-PACKAGE_TARNAME='solver'
+PACKAGE_TARNAME='g2115014'
 PACKAGE_VERSION='0.8'
 PACKAGE_STRING='solver 0.8'
 PACKAGE_BUGREPORT='jie211.jp@gmail.com'
@@ -1334,7 +1334,7 @@ Fine tuning of the installation directories:
   --infodir=DIR           info documentation [DATAROOTDIR/info]
   --localedir=DIR         locale-dependent data [DATAROOTDIR/locale]
   --mandir=DIR            man documentation [DATAROOTDIR/man]
-  --docdir=DIR            documentation root [DATAROOTDIR/doc/solver]
+  --docdir=DIR            documentation root [DATAROOTDIR/doc/g2115014]
   --htmldir=DIR           html documentation [DOCDIR]
   --dvidir=DIR            dvi documentation [DOCDIR]
   --pdfdir=DIR            pdf documentation [DOCDIR]
@@ -1855,6 +1855,8 @@ ac_config_sub="$SHELL $ac_aux_dir/config.sub"  # Please don't use this var.
 ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 
 
+ac_config_commands="$ac_config_commands output"
+
 am__api_version='1.11'
 
 # Find a good install program.  We prefer a C program (faster),
@@ -2304,7 +2306,7 @@ fi
 
 
 # Define the identity of the package.
- PACKAGE='solver'
+ PACKAGE='g2115014'
  VERSION='0.8'
 
 
@@ -5553,6 +5555,7 @@ for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
     "config.h") CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
+    "output") CONFIG_COMMANDS="$CONFIG_COMMANDS output" ;;
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
@@ -6210,6 +6213,7 @@ $as_echo "$as_me: executing $ac_file commands" >&6;}
 
 
   case $ac_file$ac_mode in
+    "output":C) mkdir output ;;
     "depfiles":C) test x"$AMDEP_TRUE" != x"" || {
   # Autoconf 2.62 quotes --file arguments for eval, but not when files
   # are listed without --file.  Let's play safe and only enable the eval

@@ -1,0 +1,110 @@
+.TH solver 1 "November 21, 2015" "SOLVER" "Solver Document"
+
+.SH NAME
+.B solver
+.R -- Krylov Subspace method Solver Collection
+
+.SH SYNOPSIS
+.B solver
+.BI [-Matrix =matrixfile_name ]
+.BI [-OuterSolver =solver_name ]
+.BI [-InnerSolver =solver_name ]
+.BI [-OuterLoop =loop_time ]
+.BI [-InnerLoop =loop_time ]
+.BI [-OuterEPS =max_epsilon ]
+.BI [-InnerEPS =max_epsilon ]
+.BI [-OuterRestart =restart_time ]
+.BI [-InnerRestart =restart_time ]
+.BI [-OuterKskip =kskip_time ]
+.BI [-InnerKskip =kskip_time ]
+.BI [-OuterFix =fix_plan ]
+.BI [-InnerFix =fix_plan ]
+.BI [-Thread =OpenMP_thread ]
+
+.SH DESCRIPTION
+.B solver
+.R Iterative Krylov Subspace Solver Collection for
+.I large system
+.R of linear equations.
+.R Support
+.I CRS Format
+.R Matrixfile
+.I Only.
+.R CRS Format Matrixfile
+.I must
+.R save in
+.I Matrix
+.R directory.
+
+.SH OPTIONS
+.TP
+.B --Matrix matrixfile_name
+Specify the Matrixfile to solve. The Matrixfile
+.I must
+.R save in
+.I Matrix
+.R directory.
+.TP
+.B --OuterSolver solver_name
+Specify the solver that use to solve target matrix. If select the Variable Preconditioned method, need to select an
+.I OuterSolver
+.R and an 
+.I InnerSolver.
+.R Then you need to use
+.I --InnerSolver
+.R option to select OuterSolver in sametime.
+.TP
+.B --InnerSolver solver_name
+Specify the solver when you want use an Variable Preconditioned method as an OuterSolver. 
+.I DO NOT
+.R use a Variable Preconditioned method as a InnerSolver when you select an Variable Preconditioned as OuterSolver in sametime.
+.TP
+.B --Thread OpenMP_thread
+Specift the OpenMP thread number to parallel process the solvers.
+.TP
+.B --OuterEPS max_epsilon
+Specify the offset max epsilon value in OuterSolver.
+.TP
+.B --InnerEPS max_epsilon
+Specify the offset max epsilon value in InnerSolver.
+.TP
+.B --outerloop loop_time
+specify the loop max looptime in outersolver.
+.TP
+.B --Innerloop loop_time
+specify the loop max looptime in innersolver.
+.TP
+.B --OuterRestart restart_time
+Specify the restart_time when you select GCR method as OuterSolver.
+.TP
+.B --InnerRestart restart_time
+Specify the restart_time when you select GCR method as InnerSolver.
+.TP
+.B --OuterKskip kskip_time
+Specify the skip-iterates time when you select kskip-CG or kskip-CR as OuterSolver.
+.TP
+.B --InnerKskip kskip_time
+Specify the skip-iterates time when you select kskip-CG or kskip-CR as InnerSolver.
+.TP
+.B --OuterFix fix_plan
+Specify the fix_plan to use, when you select kskip-CG or kskip-CR as OuterSolver.
+.TP
+.B --InnerFix fix_plan
+Specify the fix_plan to use, when you select kskip-CG or kskip-CR as InnerSolver.
+
+.SH
+ENVIRONMENT VARIABLE
+.TP
+.B OMP_NUM_THREADS
+solver use OpenMP to parallelization. OpenMP use environment variable
+.I OMP_NUM_THREADS
+.R to set theads number.
+
+.SH SEE ALSO
+GCC(1)
+
+.SH
+AUTHOR
+Create by Gong Chen (<jie211.jp@gmail.com>). 
+
+
