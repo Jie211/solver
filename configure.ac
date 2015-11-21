@@ -6,6 +6,7 @@ AC_INIT([solver], [0.8], [jie211.jp@gmail.com], [g2115014])
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR([config])
+AC_CONFIG_COMMANDS([output], [mkdir output])
 AM_INIT_AUTOMAKE
 
 # Checks for programs.
