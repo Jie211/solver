@@ -1,10 +1,33 @@
+2015-11-21  chen@LAB  <jie211.jp@gmail.com>
+
+	Merge branch 'makefile' of https://github.com/Jie211/solver into makefile
+
+2015-11-21  jie211@VM  <jie211.jp@gmail.com>
+
+	change:rewrite Makfile.am configure.ac
+
+2015-11-21  功 陳  <chen@localhost.localdomain>
+
+	clean
+	Author:   jie211@VM <jie211.jp@gmail.com>
+
+2015-11-21  jie211  <jie211.jp@gmail.com>
+
+	deleted dist file
+
+	delect old file
+
+	add document file , fix filepath
+
 2015-11-20  chen@LAB  <jie211.jp@gmail.com>
+
+	fix git rm
 
 	test add automake
 
 2015-11-20  chen@MP  <jie211.jp@gmail.com>
 
-	fix: bug
+	fix
 
 	change: add threads set
 

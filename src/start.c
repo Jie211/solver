@@ -195,13 +195,17 @@ void DisplayCMD(void){
   }
   printf("*******************************************\n");
 }
+int usage(void){
+  printf("usage: solver [-Matrix matrixname] [-OuterSolver solvername] [-OuterLoop looptime] [-OuterEPS maxeps] [-OuterKskip skiptime] [-OuterRestart restarttime]\tor: or use with [-InnerSolver]\n");
+  return -1;
+}
 int getCMD(int argc, char *argv[])
 {
   /* int i; */
 
   if(argc==1){
-    printf("Option: Matrix, OuterSolver, InnerSolver, OuterLoop, InnerLoop, OuterEPS, InnerEPS, OuterRestart, InnerRestart, OuterKskip, InnerKskip, OuterFix, InnerFix\n");
-    return -1;
+    usage();
+    exit(1);
   }
 
   struct option longopts[] = {
@@ -219,12 +223,13 @@ int getCMD(int argc, char *argv[])
     {"OuterFix", optional_argument, NULL, 'F'},
     {"InnerFix", optional_argument, NULL, 'f'},
     {"Thread", optional_argument, NULL, 'T'},
+    {"help", no_argument, NULL, 'h'},
     { 0,        0,                 0,     0  },
   };
 
   int opt;
   int longindex;
-  while((opt=getopt_long_only(argc, argv, "M:S:s:L:l:E:e:R:r:K:k:F:f:T::", longopts, &longindex)) != -1){
+  while((opt=getopt_long_only(argc, argv, "hM:S:s:L:l:E:e:R:r:K:k:F:f:T::", longopts, &longindex)) != -1){
     switch(opt){
       case 'M':
         f_matrix=true;
@@ -296,9 +301,12 @@ int getCMD(int argc, char *argv[])
         c_openmp_thread=optarg;
         openmp_thread=atoi(c_openmp_thread);
         break;
+      case 'h':
+        usage();
+        exit(1);
       default:
-        printf("error \'%c\' \'%c\'\n", opt, optopt);
-        return 1;
+        Display_Err("Worng arg");
+        return usage();;
     }
   }
 
