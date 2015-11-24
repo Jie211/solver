@@ -16,6 +16,12 @@ Iterative Krylov-Subspace Solvers for large systems of linear equations.
 	- VP Conjugate Residual method(VPCR).
 	- VP Generalized Conjugate Residual method(VPGCR).
 
+## How to Use
+1.solve sample matrix "bcsstk14" by CG method
+$ solver -Matrix=bcsstk14 -OuterSolver=cg
+2.solve sample matrix "bcsstk14" by VPGCR method+CG method
+$ solver -Matrix=bcsstk14 -OuterSolver=vpgcr -InnerSolver=cg
+
 ## Requirement
 GCC compiler.
 
