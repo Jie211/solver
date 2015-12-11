@@ -25,11 +25,14 @@ int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
   double t_error;
   FILE *p_x=NULL, *p_his=NULL;
 
+  double st, et, t1;
+
   if(!INNER){
     p_x=FileInit("./output/KskipCR_x.txt", "w");
     p_his=FileInit("./output/KskipCR_his.txt", "w");
   }
 
+  st=gettimeofday_sec();
   Ar=Double1Malloc((2*kskip+1)*ndata);
   Ap=Double1Malloc((2*kskip+1)*ndata);
   delta=Double1Malloc((2*kskip+1)*ndata);
@@ -61,7 +64,9 @@ int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
     rnorm=Double2Norm(rvec, ndata);
     error=rnorm/bnorm;
     if(!INNER){
-      printf("%d %.12e\n", nloop, error);
+      if(verbose){
+        printf("%d %.12e\n", nloop, error);
+      }
       fprintf(p_his, "%d %.12e\n", nloop, error);
     }
     if(error<=eps){
@@ -110,10 +115,14 @@ int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
       DoubleScalarxpy(pvec, beta, pvec, rvec, ndata);
     }
   }
+  et=gettimeofday_sec();
+  t1=et-st;
+
   if(!INNER){
     FileOutPutVec(p_x, xvec, ndata);
     t_error=error_check_CRS(val, col, ptr, bvec, xvec, x_0, ndata);
     printf("|b-ax|2/|b|2=%.1f\n", t_error);
+    printf("Execution Time=%lf s\n", t1);
   }
   if(INNER){
     printf("Inner %d %.12e\n",nloop,error);

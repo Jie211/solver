@@ -14,6 +14,7 @@ char *c_kskip_inner=NULL;
 char *c_fix_inner=NULL;
 char *c_fix_outer=NULL;
 char *c_openmp_thread=NULL;
+char *c_verbose=NULL;
 
 
 bool f_matrix=false;
@@ -29,7 +30,8 @@ bool f_kskip_outer=false;
 bool f_kskip_inner=false;
 bool f_fix_inner=false;
 bool f_fix_outer=false;
-bool f_f_openmp_thread=false;
+bool f_openmp_thread=false;
+bool f_verbose=false;
 
 bool S_CG=false;
 bool S_CR=false;
@@ -61,6 +63,7 @@ int kskip_inner=K_IN;
 int fix_outer=F_OUT;
 int fix_inner=F_IN;
 int openmp_thread=THREAD;
+bool verbose=VERBOSE;
 
 char bx_path[512];
 char ptr_path[512];
@@ -115,8 +118,9 @@ int CSR_start(int argc, char *argv[]){
     return(-1);
   }
 
-  DisplayCMD();
-
+  if(verbose){
+    DisplayCMD();
+  }
   Double1Free(bvec);
   Double1Free(xvec);
   Double1Free(val);
@@ -177,6 +181,7 @@ void DisplayCMD(void){
   printf("*******************************************\n");
   printf(" Matrix: %s\n", matrix);
   printf(" OpenMPThreads: %d\n", openmp_thread);
+  printf(" Verbose: %d\n", verbose);
   printf("*******************************************\n");
   printf(" OuterSolver: %s\n", solver_outer);
   printf(" OuterLoop: %d\n", loop_outer);
@@ -219,12 +224,13 @@ int getCMD(int argc, char *argv[])
     {"OuterFix", optional_argument, NULL, 'F'},
     {"InnerFix", optional_argument, NULL, 'f'},
     {"Thread", optional_argument, NULL, 'T'},
+    {"Verbose", optional_argument, NULL, 'V'},
     { 0,        0,                 0,     0  },
   };
 
   int opt;
   int longindex;
-  while((opt=getopt_long_only(argc, argv, "M:S:s:L:l:E:e:R:r:K:k:F:f:T::", longopts, &longindex)) != -1){
+  while((opt=getopt_long_only(argc, argv, "M:S:s:L:l:E:e:R:r:K:k:F:f:T:V::", longopts, &longindex)) != -1){
     switch(opt){
       case 'M':
         f_matrix=true;
@@ -292,9 +298,18 @@ int getCMD(int argc, char *argv[])
         fix_inner=atoi(c_fix_inner);
         break;
       case 'T':
-        f_f_openmp_thread=true;
+        f_openmp_thread=true;
         c_openmp_thread=optarg;
         openmp_thread=atoi(c_openmp_thread);
+        break;
+      case 'V':
+        f_verbose=true;
+        c_verbose=optarg;
+        verbose=atoi(c_verbose);
+        /* if(verbose!=true || verbose!=false){ */
+        /*   verbose=0; */
+        /*   Display_Err("verbose must set to 0 or 1"); */
+        /* } */
         break;
       default:
         printf("error \'%c\' \'%c\'\n", opt, optopt);

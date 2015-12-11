@@ -23,17 +23,21 @@ int GCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nda
   double t_error=0.0;
   FILE *p_x=NULL, *p_his=NULL;
 
+  double st, et, t1;
+
   if(!INNER){
     p_x=FileInit("./output/GCR_x.txt", "w");
     p_his=FileInit("./output/GCR_his.txt", "w");
   }
+
+  st=gettimeofday_sec();
 
   rvec=Double1Malloc(ndata);
   Av=Double1Malloc(ndata);
   x_0=Double1Malloc(ndata);
 
   qq=Double1Malloc(restart);
-  if(!INNER){
+  if(!INNER && verbose){
     printf("---- restart set to %d ----\n", restart);
   }
   qvec=Double2Malloc(ndata, restart);
@@ -62,8 +66,10 @@ int GCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nda
     for(kloop=0;kloop<restart;kloop++){
       rnorm=Double2Norm(rvec, ndata);
       error=rnorm/bnorm;
-      if(!INNER){
-        printf("Outer %d %.12e\n",loop, error);
+      if(!INNER ){
+        if(verbose){
+          printf("Outer %d %.12e\n",loop, error);
+        }
         fprintf(p_his,"%d %.12e\n",loop, error);
       }
       if(error <= eps){
@@ -116,12 +122,15 @@ int GCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nda
       break;
     }
   }
+  et=gettimeofday_sec();
+  t1=et-st;
   if(!INNER){
     FileOutPutVec(p_x, xvec, ndata);
     t_error=error_check_CRS(val, col, ptr, bvec, xvec, x_0, ndata);
     printf("|b-ax|2/|b|2=%.1f\n", t_error);
+    printf("Execution Time=%lf s\n", t1);
   }
-  if(INNER){
+  if(INNER && verbose){
     printf("Inner %d %.12e\n", loop, error);
   }
   Double1Free(rvec);

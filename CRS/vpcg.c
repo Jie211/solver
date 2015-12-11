@@ -19,9 +19,13 @@ int VPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nd
   double t_error=0.0;
   int error_message;
 
+  double st, et, t1;
+
   FILE *p_x, *p_his;
   p_x=FileInit("./output/VPCG_x.txt", "w");
   p_his=FileInit("./output/VPCG_his.txt", "w");
+
+  st=gettimeofday_sec();
 
   Av=Double1Malloc(ndata);
   rvec=Double1Malloc(ndata);
@@ -60,7 +64,9 @@ int VPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nd
     //rnorm
     rnorm = Double2Norm(rvec, ndata);
     error=rnorm/bnorm;
-    printf("Outer %d %.12e\n",loop, error);
+    if(verbose){
+      printf("Outer %d %.12e\n",loop, error);
+    }
     fprintf(p_his,"%d %.12e\n",loop, error);
     if(error <= eps){
       flag=true;
@@ -100,9 +106,14 @@ int VPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nd
     DoubleScalarxpy(pvec, beta, pvec, zvec, ndata);
 
   }
+
+  et=gettimeofday_sec();
+  t1=et-st;
+
   FileOutPutVec(p_x, xvec, ndata);
   t_error=error_check_CRS(val, col, ptr, bvec, xvec, x_0, ndata);
   printf("|b-ax|2/|b|2=%.1f\n", t_error);
+  printf("Execution Time=%lf s\n", t1);
 
   Double1Free(Av);
   Double1Free(rvec);

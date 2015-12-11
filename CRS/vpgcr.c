@@ -23,9 +23,13 @@ int VPGCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int n
   int error_message;
   double error=0.0;
 
+  double st, et, t1;
+
   FILE *p_x, *p_his;
   p_x=FileInit("./output/VPGCR_x.txt", "w");
   p_his=FileInit("./output/VPGCR_his.txt", "w");
+
+  st=gettimeofday_sec();
 
   rvec=Double1Malloc(ndata);
   zvec=Double1Malloc(ndata);
@@ -33,8 +37,9 @@ int VPGCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int n
   x_0=Double1Malloc(ndata);
 
   qq=Double1Malloc(restart);
-  printf("---- restart set to %d ----\n", restart);
-  
+  if(verbose){
+    printf("---- restart set to %d ----\n", restart);
+  }
   qvec=Double2Malloc(ndata, restart);
   pvec=Double2Malloc(ndata, restart);
 
@@ -67,7 +72,9 @@ int VPGCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int n
     for(kloop=0;kloop<restart;kloop++){
       rnorm=Double2Norm(rvec, ndata);
       error=rnorm/bnorm;
-      printf("Outer %d %.12e\n",loop, error);
+      if(verbose){
+        printf("Outer %d %.12e\n",loop, error);
+      }
       fprintf(p_his,"%d %.12e\n",loop, error);
       if(error <= eps){
         flag=true;
@@ -128,9 +135,14 @@ int VPGCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int n
       break;
     }
   }
+
+  et=gettimeofday_sec();
+  t1=et-st;
+
   FileOutPutVec(p_x, xvec, ndata);
   t_error=error_check_CRS(val, col, ptr, bvec, xvec, x_0, ndata);
   printf("|b-ax|2/|b|2=%.1f\n", t_error);
+  printf("Execution Time=%lf", t1);
 
   Double1Free(rvec);
   Double1Free(zvec);

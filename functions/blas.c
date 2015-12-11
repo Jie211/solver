@@ -5,6 +5,11 @@ void Display_Mes(char *mes){
 void Display_Err(char *err){
   printf("** %s **\n", err);
 }
+double gettimeofday_sec(){
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  return tv.tv_sec + (double)tv.tv_usec*1e-6;
+}
 double *Double1Malloc(int ndata)
 {
   double *tmp;

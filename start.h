@@ -24,6 +24,7 @@
 #define F_OUT 2
 #define F_IN 2
 #define THREAD 8
+#define VERBOSE 0
 
 extern char *c_matrix;
 extern char *c_solver_outer;
@@ -39,6 +40,7 @@ extern char *c_kskip_inner;
 extern char *c_fix_inner;
 extern char *c_fix_outer;
 extern char *c_openmp_thread;
+extern char *c_verbose;
 
 
 extern bool f_matrix;
@@ -55,6 +57,7 @@ extern bool f_kskip_inner;
 extern bool f_fix_inner;
 extern bool f_fix_outer;
 extern bool f_openmp_thread;
+extern bool f_verbose;;
 
 extern bool S_CG;
 extern bool S_CR;
@@ -86,6 +89,7 @@ extern int kskip_inner;
 extern int fix_outer;
 extern int fix_inner;
 extern int openmp_thread;
+extern bool verbose;
 
 extern char bx_path[512];
 extern char ptr_path[512];

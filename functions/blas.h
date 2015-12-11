@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
+#include <sys/time.h>
 #include "../start.h"
 
 extern void 
@@ -11,6 +13,9 @@ Display_Mes(char *mes);
 
 extern void 
 Display_Err(char *err);
+
+extern double
+gettimeofday_sec();
 
 extern double *
 Double1Malloc(int ndata);
