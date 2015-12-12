@@ -15,6 +15,7 @@ char *c_fix_inner=NULL;
 char *c_fix_outer=NULL;
 char *c_openmp_thread=NULL;
 char *c_verbose=NULL;
+char *c_cuda=NULL;
 
 
 bool f_matrix=false;
@@ -32,6 +33,7 @@ bool f_fix_inner=false;
 bool f_fix_outer=false;
 bool f_openmp_thread=false;
 bool f_verbose=false;
+bool f_cuda=false;
 
 bool S_CG=false;
 bool S_CR=false;
@@ -64,6 +66,7 @@ int fix_outer=F_OUT;
 int fix_inner=F_IN;
 int openmp_thread=THREAD;
 bool verbose=VERBOSE;
+bool cuda=CUDA;
 
 char bx_path[512];
 char ptr_path[512];
@@ -111,7 +114,7 @@ int CSR_start(int argc, char *argv[]){
   GetData(col_path, ptr_path, bx_path, col, ptr, val, bvec, xvec, N, NNZ);
 
 
-  error = SolverSelecter(val, col, ptr, bvec, xvec, N, eps_outer, loop_outer, kskip_outer, fix_outer);
+  error = SolverSelecter(val, col, ptr, bvec, xvec, N, NNZ, eps_outer, loop_outer, kskip_outer, fix_outer);
 
   if(error!=0){
     Display_Err("error in start");
@@ -182,6 +185,7 @@ void DisplayCMD(void){
   printf(" Matrix: %s\n", matrix);
   printf(" OpenMPThreads: %d\n", openmp_thread);
   printf(" Verbose: %d\n", verbose);
+  printf(" CUDA: %d\n", cuda);
   printf("*******************************************\n");
   printf(" OuterSolver: %s\n", solver_outer);
   printf(" OuterLoop: %d\n", loop_outer);
@@ -225,12 +229,13 @@ int getCMD(int argc, char *argv[])
     {"InnerFix", optional_argument, NULL, 'f'},
     {"Thread", optional_argument, NULL, 'T'},
     {"Verbose", optional_argument, NULL, 'V'},
+    {"Cuda", optional_argument, NULL, 'C'},
     { 0,        0,                 0,     0  },
   };
 
   int opt;
   int longindex;
-  while((opt=getopt_long_only(argc, argv, "M:S:s:L:l:E:e:R:r:K:k:F:f:T:V::", longopts, &longindex)) != -1){
+  while((opt=getopt_long_only(argc, argv, "M:S:s:L:l:E:e:R:r:K:k:F:f:T:V:C::", longopts, &longindex)) != -1){
     switch(opt){
       case 'M':
         f_matrix=true;
@@ -311,6 +316,12 @@ int getCMD(int argc, char *argv[])
         /*   Display_Err("verbose must set to 0 or 1"); */
         /* } */
         break;
+      case 'C':
+        f_cuda=true;
+        c_cuda=optarg;
+        cuda=atoi(c_cuda);
+        break;
+
       default:
         printf("error \'%c\' \'%c\'\n", opt, optopt);
         return 1;

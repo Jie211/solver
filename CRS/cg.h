@@ -3,6 +3,7 @@
 
 #include "../functions/blas.h"
 #include "../functions/io.h"
+#include "../functions/cudafunc.h"
 #include "../start.h"
 
 extern int 
@@ -12,6 +13,7 @@ CG_CRS(double *val,
     double *bvec, 
     double *xvec, 
     int ndata, 
+    int nnz,
     double eps, 
     int i_max);
 

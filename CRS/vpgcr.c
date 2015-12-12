@@ -10,7 +10,7 @@ void VPGCR_Init(double *v1, double *v2, double *v3, double *v4, double **v5, dou
   DoubleVecInit(x,0.0,ndata);
 }
 
-int VPGCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int restart){
+int VPGCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, int nnz, double eps, int i_max, int restart){
 
   int loop=0, kloop, iloop;
 
@@ -60,7 +60,7 @@ int VPGCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int n
     //init pvec[0]
     DoubleVecInit(pvec[0], 0.0, ndata);
     //solve p by Ap[0]=r
-    error_message=InnerSolverSelecter(val, col, ptr, rvec, pvec[0], ndata, eps_inner, loop_inner, kskip_inner, fix_inner);
+    error_message=InnerSolverSelecter(val, col, ptr, rvec, pvec[0], ndata, nnz, eps_inner, loop_inner, kskip_inner, fix_inner);
     if(error_message!=0){
       printf("** error in vpgcr.c **\n");
       return -1;
@@ -104,7 +104,7 @@ int VPGCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int n
       //init z
       DoubleVecInit(zvec, 0.0, ndata);
       //Az=r
-      error_message=InnerSolverSelecter(val, col, ptr, rvec, zvec, ndata, eps_inner, loop_inner, kskip_inner, fix_inner);
+      error_message=InnerSolverSelecter(val, col, ptr, rvec, zvec, ndata, nnz, eps_inner, loop_inner, kskip_inner, fix_inner);
       if(error_message!=0){
         printf("** error in vpgcr **\n");
         return -1;

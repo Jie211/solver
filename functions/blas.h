@@ -151,5 +151,6 @@ DoubleCalDeltaEtaZetaKCR(double *delta,
     int ndata, 
     int kskip);
 
+
 #endif //BLAS_H_INCLUDED__
 

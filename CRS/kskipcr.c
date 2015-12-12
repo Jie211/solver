@@ -13,7 +13,7 @@ void KSKIPCR_Init(double *v1, double *v2, double *v3, double *v4, double *v5, do
   DoubleVecInit(v9, 0.0, ndata);
 }
 
-int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix)
+int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, int nnz, double eps, int i_max, int kskip, int fix)
 {
   int nloop, iloop, jloop;
 

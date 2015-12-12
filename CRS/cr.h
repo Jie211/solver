@@ -12,6 +12,7 @@ CR_CRS(double *val,
     double *bvec, 
     double *xvec, 
     int ndata, 
+    int nnz,
     double eps, 
     int i_max);
 

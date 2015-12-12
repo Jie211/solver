@@ -8,7 +8,7 @@ void CR_Init(double *v1, double *v2, double *v3, double *v4, double *x, double n
   DoubleVecInit(x,0.0,ndata);
 }
 
-int CR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max){
+int CR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, int nnz, double eps, int i_max){
   /* int i, j, k, n; */
   int loop;
   

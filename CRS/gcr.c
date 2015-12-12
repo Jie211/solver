@@ -9,7 +9,7 @@ void GCR_Init(double *v1, double *v2, double *v3, double **v4, double **v5, doub
   DoubleVecInit(x,0.0,ndata);
 }
 
-int GCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int restart){
+int GCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, int nnz, double eps, int i_max, int restart){
 
   int loop=0, kloop, iloop;
 

@@ -7,7 +7,7 @@ void CG_Init(double *v1, double *v2, double *v3, double *x, double ndata){
   DoubleVecInit(x,0.0,ndata);
 }
 
-int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max){
+int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, int nnz, double eps, int i_max){
   /* int i, j, k, n; */
   int loop;
   
@@ -28,6 +28,12 @@ if(!INNER){
 }
 
   st=gettimeofday_sec();
+
+  /* if(cuda){ */
+  /*   double *d_val, *d_col, *d_ptr, *d_Av, *d_xvec; */
+  /*   DoubleCudaMalloc(d_val, nnz);  */
+  /*   cudaFree(d_val); */
+  /* } */
 
   Av=Double1Malloc(ndata);
   rvec=Double1Malloc(ndata);

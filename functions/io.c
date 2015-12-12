@@ -153,6 +153,7 @@ void GetHead(const char *bx, const char *col, const char *ptr, int *n, int *nnz)
 void GetData(const char *file1, const char *file2, const char *file3, int *col, int *ptr, double *val, double *b, double *x, int N, int NZ)
 {
   FILE *in1,*in2,*in3;
+  int i;
   if((in1 = fopen(file1, "r")) == NULL)
   {
     printf("** error %s file open **", file1);
@@ -177,20 +178,20 @@ void GetData(const char *file1, const char *file2, const char *file3, int *col, 
   fscanf(in1, "%d %d %d\n", &skip1, &skip2, &skip3);
   fscanf(in2, "%d %d %d\n", &skip1, &skip2, &skip3);
   fscanf(in3, "%d %d %d\n", &skip1, &skip2, &skip3);
-  for(int i=0;i<NZ;i++)
+  for(i=0;i<NZ;i++)
   {
     fscanf(in1,"%d %le\n",&getint,&getdouble);
     col[i] = getint;
     val[i] = getdouble;
   }
 
-  for(int i=0;i<N+1;i++)
+  for(i=0;i<N+1;i++)
   {
     fscanf(in2,"%d\n",&getint);
     ptr[i] = getint;
   }
 
-  for(int i=0;i<N;i++)
+  for(i=0;i<N;i++)
   {
     fscanf(in3,"%le %le\n",&getdouble,&getdouble2);
     b[i] = getdouble;
