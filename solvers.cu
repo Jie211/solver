@@ -19,6 +19,8 @@ int SolverSelecter(double *val, int *col, int *ptr, double *bvec, double *xvec, 
     error=VPGCR_CRS(val, col, ptr, bvec, xvec, ndata, nnz, eps, i_max, restart_outer);
   }else if(S_GCR){
     error=GCR_CRS(val, col, ptr, bvec, xvec, ndata, nnz, eps, i_max, restart_outer);
+  }else{
+    error=-1;
   }
 
   if(error==1){
@@ -26,7 +28,7 @@ int SolverSelecter(double *val, int *col, int *ptr, double *bvec, double *xvec, 
   }else if(error==2){
     Display_Mes("bad");
   }else if(error==-1){
-    Display_Err("erro in solver.c");
+    Display_Err("error in solver.c");
     return -1;
   }
   return 0;

@@ -9,10 +9,10 @@
 #include "../start.h"
 
 extern void 
-Display_Mes(char *mes);
+Display_Mes(const char *mes);
 
 extern void 
-Display_Err(char *err);
+Display_Err(const char *err);
 
 extern double
 gettimeofday_sec();

@@ -3,8 +3,12 @@
 
 #include "../functions/blas.h"
 #include "../functions/io.h"
-#include "../functions/cudafunc.h"
+#include "../functions/cudafunc.cuh"
 #include "../start.h"
+#include <cuda_runtime.h>
+#include <helper_cuda.h>
+#include <helper_functions.h>
+
 
 extern int 
 CG_CRS(double *val, 

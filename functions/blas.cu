@@ -1,8 +1,8 @@
 #include "blas.h"
-void Display_Mes(char *mes){
+void Display_Mes(const char *mes){
   printf("---- %s ----\n", mes);
 }
-void Display_Err(char *err){
+void Display_Err(const char *err){
   printf("** %s **\n", err);
 }
 double gettimeofday_sec(){

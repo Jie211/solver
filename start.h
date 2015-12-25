@@ -6,9 +6,15 @@
 #include <string.h>
 #include <getopt.h>
 #include <stdbool.h>
+#include <omp.h>
 #include "./functions/blas.h"
 #include "./functions/io.h"
 #include "solvers.h"
+#include <cuda_runtime.h>
+#include <helper_cuda.h>
+#include <helper_functions.h>
+
+
 
 // #define THREADS 8
 

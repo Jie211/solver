@@ -23,5 +23,14 @@ extern void DoubleMemCpyD2H(double *host,
 extern void IntgerMemCpyD2H(int *host, 
     int *device, 
     int size);
+extern __global__ void
+DoubleCudaMVMCSR(int n, double *val, int *col, int *ptr, double *b, double *c);
+
+extern __global__ void
+DoubleCudaMVMCSR2(int n, double *val, int *col, int *ptr, double *b, double *c);
+
+extern __global__ void  
+DoubleCudaDot(double *out, double *x, double *y, int ndata);
+
 #endif //CUDAFUNC_H_INCLUDED__
 

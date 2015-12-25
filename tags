@@ -4,143 +4,30 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-BLAS_H_INCLUDED__	functions/blas.h	/^#define BLAS_H_INCLUDED__$/;"	d
-CG_CRS	CRS/cg.c	/^int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max){$/;"	f
-CG_H_INCLUDED__	CRS/cg.h	/^#define CG_H_INCLUDED__$/;"	d
-CG_Init	CRS/cg.c	/^void CG_Init(double *v1, double *v2, double *v3, double *x, double ndata){$/;"	f
-CR_CRS	CRS/cr.c	/^int CR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max){$/;"	f
-CR_H_INCLUDED__	CRS/cr.h	/^#define CR_H_INCLUDED__$/;"	d
-CR_Init	CRS/cr.c	/^void CR_Init(double *v1, double *v2, double *v3, double *v4, double *x, double ndata){$/;"	f
-CSR_start	start.c	/^int CSR_start(int argc, char *argv[]){$/;"	f
-CheckCMD	start.c	/^int CheckCMD(void){$/;"	f
-DisplayCMD	start.c	/^void DisplayCMD(void){$/;"	f
-Display_Err	functions/blas.c	/^void Display_Err(char *err){$/;"	f
-Display_Mes	functions/blas.c	/^void Display_Mes(char *mes){$/;"	f
-Double1Free	functions/blas.c	/^void Double1Free(double *ptr)$/;"	f
-Double1Malloc	functions/blas.c	/^double *Double1Malloc(int ndata)$/;"	f
-Double1Norm	functions/blas.c	/^double Double1Norm(double *x, int ndata)$/;"	f
-Double2Free	functions/blas.c	/^void Double2Free(double **ptr, int ndatay)$/;"	f
-Double2Malloc	functions/blas.c	/^double **Double2Malloc(int ndatax, int ndatay)$/;"	f
-Double2Norm	functions/blas.c	/^double Double2Norm(double *x, int ndata)$/;"	f
-Double2VecInit	functions/blas.c	/^void Double2VecInit(double **vec, double val, int ndatax, int ndatay)$/;"	f
-DoubleCalArApKCG	functions/blas.c	/^void DoubleCalArApKCG(double *Ar, double *Ap, double *val, int *col, int *ptr, double *rvec, double *pvec, int ndata, int kskip)$/;"	f
-DoubleCalArApKCR	functions/blas.c	/^void DoubleCalArApKCR(double *Ar, double *Ap, double *val, int *col, int *ptr, double *rvec, double *pvec, int ndata, int kskip)$/;"	f
-DoubleCalDeltaEtaZetaKCG	functions/blas.c	/^void DoubleCalDeltaEtaZetaKCG(double *delta, double *eta, double *zeta, double *Ar, double *Ap, double *rvec, double *pvec, int ndata, int kskip)$/;"	f
-DoubleCalDeltaEtaZetaKCR	functions/blas.c	/^void DoubleCalDeltaEtaZetaKCR(double *delta, double *eta, double *zeta, double *Ar, double *Ap, double *rvec, int ndata, int kskip)$/;"	f
-DoubleDot	functions/blas.c	/^double DoubleDot(double *x, double *y, int ndata)$/;"	f
-DoubleMVMCSR	functions/blas.c	/^void DoubleMVMCSR(double *out, double *val, int *col, int *ptr, double *vec, int ndata)$/;"	f
-DoubleMaxNorm	functions/blas.c	/^double DoubleMaxNorm(double *x, int ndata)$/;"	f
-DoubleScalar	functions/blas.c	/^void DoubleScalar(double *out, double a, double *x, int ndata)$/;"	f
-DoubleScalarxpy	functions/blas.c	/^void DoubleScalarxpy(double *out, double a, double *x, double *y, int ndata)$/;"	f
-DoubleVecAdd	functions/blas.c	/^void DoubleVecAdd(double *out, double *x, double *y, int ndata)$/;"	f
-DoubleVecCopy	functions/blas.c	/^void DoubleVecCopy(double *a, double *b, int ndata)$/;"	f
-DoubleVecInit	functions/blas.c	/^void DoubleVecInit(double *vec, double val, int ndata)$/;"	f
-DoubleVecMul	functions/blas.c	/^void DoubleVecMul(double *out, double *x, double *y, int ndata)$/;"	f
-DoubleVecSub	functions/blas.c	/^void DoubleVecSub(double *out, double *x, double *y, int ndata)$/;"	f
-E_IN	start.h	/^#define E_IN /;"	d
-E_OUT	start.h	/^#define E_OUT /;"	d
-F_IN	start.h	/^#define F_IN /;"	d
-F_OUT	start.h	/^#define F_OUT /;"	d
-FileClose	functions/io.c	/^void FileClose(FILE *fp){$/;"	f
-FileFound	functions/io.c	/^int FileFound(char *argv){$/;"	f
-FileInit	functions/io.c	/^FILE* FileInit(char *name, char *mode){$/;"	f
-FileOutPutVec	functions/io.c	/^void FileOutPutVec(FILE *fp, double *vec, int ndata){$/;"	f
-GCR_CRS	CRS/gcr.c	/^int GCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int restart){$/;"	f
-GCR_H_INCLUDED__	CRS/gcr.h	/^#define GCR_H_INCLUDED__$/;"	d
-GCR_Init	CRS/gcr.c	/^void GCR_Init(double *v1, double *v2, double *v3, double **v4, double **v5, double *x, int ndata, int restart){$/;"	f
-GetData	functions/io.c	/^void GetData(const char *file1, const char *file2, const char *file3, int *col, int *ptr, double *val, double *b, double *x, int N, int NZ)$/;"	f
-GetHead	functions/io.c	/^void GetHead(const char *bx, const char *col, const char *ptr, int *n, int *nnz)$/;"	f
-IK_CG	start.c	/^bool IK_CG=false;$/;"	v
-IK_CR	start.c	/^bool IK_CR=false;$/;"	v
-INNER	start.c	/^bool INNER=false;$/;"	v
-INNERSOLVERS_H_INCLUDED__	innersolvers.h	/^#define INNERSOLVERS_H_INCLUDED__$/;"	d
-IO_H_INCLUDED__	functions/io.h	/^#define IO_H_INCLUDED__$/;"	d
-IS_CG	start.c	/^bool IS_CG=false;$/;"	v
-IS_CR	start.c	/^bool IS_CR=false;$/;"	v
-IS_GCR	start.c	/^bool IS_GCR=false;$/;"	v
-InnerSolverSelecter	innersolvers.c	/^int InnerSolverSelecter(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix){$/;"	f
-InputCMD	start.c	/^void InputCMD(void){$/;"	f
-Intger1Free	functions/blas.c	/^void Intger1Free(int *ptr)$/;"	f
-Intger1Malloc	functions/blas.c	/^int *Intger1Malloc(int ndata)$/;"	f
-Intger2Free	functions/blas.c	/^void Intger2Free(int **ptr, int ndata)$/;"	f
-Intger2Malloc	functions/blas.c	/^int **Intger2Malloc(int ndatax, int ndatay)$/;"	f
-KSKIPCG_CRS	CRS/kskipcg.c	/^int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix)$/;"	f
-KSKIPCG_H_INCLUDED__	CRS/kskipcg.h	/^#define KSKIPCG_H_INCLUDED__$/;"	d
-KSKIPCG_Init	CRS/kskipcg.c	/^void KSKIPCG_Init(double *v1, double *v2, double *v3, double *v4, double *v5, double *v6, double *v7, double *v8, double *v9, int ndata, int kskip)$/;"	f
-KSKIPCR_CRS	CRS/kskipcr.c	/^int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix)$/;"	f
-KSKIPCR_H_INCLUDED__	CRS/kskipcr.h	/^#define KSKIPCR_H_INCLUDED__$/;"	d
-KSKIPCR_Init	CRS/kskipcr.c	/^void KSKIPCR_Init(double *v1, double *v2, double *v3, double *v4, double *v5, double *v6, double *v7, double *v8, double *v9, int ndata, int kskip)$/;"	f
-K_CG	start.c	/^bool K_CG=false;$/;"	v
-K_CR	start.c	/^bool K_CR=false;$/;"	v
-K_IN	start.h	/^#define K_IN /;"	d
-K_OUT	start.h	/^#define K_OUT /;"	d
-L_IN	start.h	/^#define L_IN /;"	d
-L_OUT	start.h	/^#define L_OUT /;"	d
-R_IN	start.h	/^#define R_IN /;"	d
-R_OUT	start.h	/^#define R_OUT /;"	d
-SOLVERS_H_INCLUDED__	solvers.h	/^#define SOLVERS_H_INCLUDED__$/;"	d
-START_H_INCLUDED__	start.h	/^#define START_H_INCLUDED__$/;"	d
-S_CG	start.c	/^bool S_CG=false;$/;"	v
-S_CR	start.c	/^bool S_CR=false;$/;"	v
-S_GCR	start.c	/^bool S_GCR=false;$/;"	v
-S_IN	start.h	/^#define S_IN /;"	d
-SolverSelecter	solvers.c	/^int SolverSelecter(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int kskip, int fix){$/;"	f
-THREADS	start.h	/^#define THREADS /;"	d
-UsageCheck	functions/io.c	/^int UsageCheck(char *argv){$/;"	f
-VPCG_CRS	CRS/vpcg.c	/^int VPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max){$/;"	f
-VPCG_H_INCLUDED__	CRS/vpcg.h	/^#define VPCG_H_INCLUDED__$/;"	d
-VPCG_Init	CRS/vpcg.c	/^void VPCG_Init(double *v1, double *v2, double *v3, double *v4, double *x, double ndata){$/;"	f
-VPCR_CRS	CRS/vpcr.c	/^int VPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max){$/;"	f
-VPCR_H_INCLUDED__	CRS/vpcr.h	/^#define VPCR_H_INCLUDED__$/;"	d
-VPCR_Init	CRS/vpcr.c	/^void VPCR_Init(double *v1, double *v2, double *v3, double *v4, double *v5, double *v6, double *x, double ndata){$/;"	f
-VPGCR_CRS	CRS/vpgcr.c	/^int VPGCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, double eps, int i_max, int restart){$/;"	f
-VPGCR_H_INCLUDED__	CRS/vpgcr.h	/^#define VPGCR_H_INCLUDED__$/;"	d
-VPGCR_Init	CRS/vpgcr.c	/^void VPGCR_Init(double *v1, double *v2, double *v3, double *v4, double **v5, double **v6, double *x, int ndata, int restart){$/;"	f
-VP_CG	start.c	/^bool VP_CG=false;$/;"	v
-VP_CR	start.c	/^bool VP_CR=false;$/;"	v
-VP_GCR	start.c	/^bool VP_GCR=false;$/;"	v
-bx_path	start.c	/^char bx_path[512];$/;"	v
-c_eps_inner	start.c	/^char *c_eps_inner=NULL;$/;"	v
-c_eps_outer	start.c	/^char *c_eps_outer=NULL;$/;"	v
-c_fix_inner	start.c	/^char *c_fix_inner=NULL;$/;"	v
-c_fix_outer	start.c	/^char *c_fix_outer=NULL;$/;"	v
-c_kskip_inner	start.c	/^char *c_kskip_inner=NULL;$/;"	v
-c_kskip_outer	start.c	/^char *c_kskip_outer=NULL;$/;"	v
-c_loop_inner	start.c	/^char *c_loop_inner=NULL;$/;"	v
-c_loop_outer	start.c	/^char *c_loop_outer=NULL;$/;"	v
-c_matrix	start.c	/^char *c_matrix=NULL;$/;"	v
-c_restart_inner	start.c	/^char *c_restart_inner=NULL;$/;"	v
-c_restart_outer	start.c	/^char *c_restart_outer=NULL;$/;"	v
-c_solver_inner	start.c	/^char *c_solver_inner=NULL;$/;"	v
-c_solver_outer	start.c	/^char *c_solver_outer=NULL;$/;"	v
-col_path	start.c	/^char col_path[512];$/;"	v
-eps_inner	start.c	/^double eps_inner=E_IN;$/;"	v
-eps_outer	start.c	/^double eps_outer=E_OUT;$/;"	v
-error_check_CRS	functions/blas.c	/^double error_check_CRS(double *val, const int *col, const int *ptr, double *b, double *x_new ,double *x_0, int N)$/;"	f
-f_eps_inner	start.c	/^bool f_eps_inner=false;$/;"	v
-f_eps_outer	start.c	/^bool f_eps_outer=false;$/;"	v
-f_fix_inner	start.c	/^bool f_fix_inner=false;$/;"	v
-f_fix_outer	start.c	/^bool f_fix_outer=false;$/;"	v
-f_kskip_inner	start.c	/^bool f_kskip_inner=false;$/;"	v
-f_kskip_outer	start.c	/^bool f_kskip_outer=false;$/;"	v
-f_loop_inner	start.c	/^bool f_loop_inner=false;$/;"	v
-f_loop_outer	start.c	/^bool f_loop_outer=false;$/;"	v
-f_matrix	start.c	/^bool f_matrix=false;$/;"	v
-f_restart_inner	start.c	/^bool f_restart_inner=false;$/;"	v
-f_restart_outer	start.c	/^bool f_restart_outer=false;$/;"	v
-f_solver_inner	start.c	/^bool f_solver_inner=false;$/;"	v
-f_solver_outer	start.c	/^bool f_solver_outer=false;$/;"	v
-fix_inner	start.c	/^int fix_inner=F_IN;$/;"	v
-fix_outer	start.c	/^int fix_outer=F_OUT;$/;"	v
-getCMD	start.c	/^int getCMD(int argc, char *argv[])$/;"	f
-kskip_inner	start.c	/^int kskip_inner=K_IN;$/;"	v
-kskip_outer	start.c	/^int kskip_outer=K_OUT;$/;"	v
-loop_inner	start.c	/^int loop_inner=L_IN;$/;"	v
-loop_outer	start.c	/^int loop_outer=L_OUT;$/;"	v
-main	main.c	/^int main(int argc, char *argv[])$/;"	f
-matrix	start.c	/^char *matrix=NULL;$/;"	v
-ptr_path	start.c	/^char ptr_path[512];$/;"	v
-restart_inner	start.c	/^int restart_inner=R_IN;$/;"	v
-restart_outer	start.c	/^int restart_outer=R_OUT;$/;"	v
-solver_inner	start.c	/^char *solver_inner=S_IN;$/;"	v
-solver_outer	start.c	/^char *solver_outer=NULL;$/;"	v
+BLAS_H_INCLUDED__	functions/blas.h	2;"	d
+CG_H_INCLUDED__	CRS/cg.h	2;"	d
+CR_H_INCLUDED__	CRS/cr.h	2;"	d
+CUDA	start.h	34;"	d
+E_IN	start.h	25;"	d
+E_OUT	start.h	24;"	d
+F_IN	start.h	31;"	d
+F_OUT	start.h	30;"	d
+GCR_H_INCLUDED__	CRS/gcr.h	2;"	d
+INNERSOLVERS_H_INCLUDED__	innersolvers.h	2;"	d
+IO_H_INCLUDED__	functions/io.h	2;"	d
+KSKIPCG_H_INCLUDED__	CRS/kskipcg.h	2;"	d
+KSKIPCR_H_INCLUDED__	CRS/kskipcr.h	2;"	d
+K_IN	start.h	29;"	d
+K_OUT	start.h	28;"	d
+L_IN	start.h	23;"	d
+L_OUT	start.h	22;"	d
+R_IN	start.h	27;"	d
+R_OUT	start.h	26;"	d
+SOLVERS_H_INCLUDED__	solvers.h	2;"	d
+START_H_INCLUDED__	start.h	2;"	d
+S_IN	start.h	21;"	d
+THREAD	start.h	32;"	d
+VERBOSE	start.h	33;"	d
+VPCG_H_INCLUDED__	CRS/vpcg.h	2;"	d
+VPCR_H_INCLUDED__	CRS/vpcr.h	2;"	d
+VPGCR_H_INCLUDED__	CRS/vpgcr.h	2;"	d

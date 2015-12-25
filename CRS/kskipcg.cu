@@ -155,9 +155,6 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
   }
   if(flag){
     return 1;
-  }else{
-    return 2;
   }
-
-  return 0;
+  return 2;
 }

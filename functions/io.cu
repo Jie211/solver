@@ -203,7 +203,7 @@ void GetData(const char *file1, const char *file2, const char *file3, int *col, 
   fclose(in2);
   fclose(in3);
 }
-FILE* FileInit(char *name, char *mode){
+FILE* FileInit(const char *name, const char *mode){
   FILE *tmp;
   if((tmp = fopen(name, mode))==NULL){
     perror("** error File init **\n");

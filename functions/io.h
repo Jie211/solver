@@ -36,8 +36,8 @@ GetData(const char *file1,
     int NZ);
 
 extern FILE* 
-FileInit(char *name, 
-    char *mode);
+FileInit(const char *name, 
+    const char *mode);
 
 extern void 
 FileClose(FILE *fp);

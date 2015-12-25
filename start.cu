@@ -53,7 +53,7 @@ bool INNER=false;
 
 char *matrix=NULL;
 char *solver_outer=NULL;
-char *solver_inner=S_IN;
+char *solver_inner=NULL;
 int loop_outer=L_OUT;
 int loop_inner=L_IN;
 double eps_outer=E_OUT;
@@ -90,6 +90,7 @@ int CSR_start(int argc, char *argv[]){
   sprintf(setThreads, "%d", openmp_thread);
   /* omp_set_num_threads(THREADS); */
   error=setenv("OMP_NUM_THREADS",setThreads,1);
+  omp_set_num_threads(atoi(setThreads));
   if(error!=0){
     Display_Err("set omp error in start");
     return -1;
@@ -111,6 +112,7 @@ int CSR_start(int argc, char *argv[]){
   col=Intger1Malloc(NNZ);
   ptr=Intger1Malloc(N+1);
 
+
   GetData(col_path, ptr_path, bx_path, col, ptr, val, bvec, xvec, N, NNZ);
 
 
@@ -129,6 +131,12 @@ int CSR_start(int argc, char *argv[]){
   Double1Free(val);
   Intger1Free(col);
   Intger1Free(ptr);
+
+  cudaFree(bvec);
+  cudaFree(xvec);
+  cudaFree(val);
+  cudaFree(col);
+  cudaFree(ptr);
 
   return 0;
 }
@@ -209,7 +217,7 @@ int getCMD(int argc, char *argv[])
   /* int i; */
 
   if(argc==1){
-    printf("Option: Matrix, OuterSolver, InnerSolver, OuterLoop, InnerLoop, OuterEPS, InnerEPS, OuterRestart, InnerRestart, OuterKskip, InnerKskip, OuterFix, InnerFix\n");
+    printf("Option: Matrix, OuterSolver, InnerSolver, OuterLoop, InnerLoop, OuterEPS, InnerEPS, OuterRestart, InnerRestart, OuterKskip, InnerKskip, OuterFix, InnerFix, Verbose, Cuda\n");
     return -1;
   }
 
