@@ -29,8 +29,9 @@ DoubleCudaMVMCSR(int n, double *val, int *col, int *ptr, double *b, double *c);
 extern __global__ void
 DoubleCudaMVMCSR2(int n, double *val, int *col, int *ptr, double *b, double *c);
 
-extern __global__ void  
-DoubleCudaDot(double *out, double *x, double *y, int ndata);
+extern __global__ void
+DoubleCudaDot(int n, int ThreadPerBlock, double *a, double *b, double *c);
+
 
 #endif //CUDAFUNC_H_INCLUDED__
 

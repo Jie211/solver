@@ -355,3 +355,25 @@ void DoubleCalDeltaEtaZetaKCR(double *delta, double *eta, double *zeta, double *
   }
 }
 
+double DoubleCudaDot_Host(int N, double *a, double *b, int BlockPerGrid, int ThreadPerBlock){
+  int i;
+  double sum=0.0;
+
+  double *tmp_h, *tmp_d;
+
+  tmp_h=(double *)malloc(sizeof(double)*BlockPerGrid);
+  checkCudaErrors( cudaMalloc((void **)&tmp_d, sizeof(double)*BlockPerGrid) );
+
+  DoubleCudaDot<<<BlockPerGrid, ThreadPerBlock, sizeof(double)*ThreadPerBlock+16>>>(N, ThreadPerBlock, a, b, tmp_d);
+
+  checkCudaErrors( cudaMemcpy(tmp_h, tmp_d, sizeof(double)*BlockPerGrid, cudaMemcpyDeviceToHost) );
+
+  for(i=0;i<BlockPerGrid;i++){
+    sum+=tmp_h[i];
+  }
+
+  free(tmp_h);
+  checkCudaErrors( cudaFree(tmp_d) );
+
+  return sum;
+}

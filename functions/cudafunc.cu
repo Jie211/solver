@@ -75,32 +75,37 @@ DoubleCudaMVMCSR2(int n, double *val, int *col, int *ptr, double *b, double *c)
   /* __syncthreads(); */
 }
 
-__global__ void 
-DoubleCudaDot(double *out, double *x, double *y, int ndata){
-  extern __shared__ double tmp[];
-  int t = blockDim.x * blockIdx.x + threadIdx.x;
-  int loc_t = threadIdx.x;
-  int block_sz = blockDim.x;
+__global__ void
+DoubleCudaDot(int n, int ThreadPerBlock, double *a, double *b, double *c) {
+  extern __shared__ double share[];
 
-  if (t < ndata) tmp[loc_t] = x[t]*y[t];
-  __syncthreads();
+    int i = blockDim.x * blockIdx.x + threadIdx.x;
+    int j;
 
-  for (int stride = blockDim.x/2; stride > 32; stride /= 2) {
-    if (loc_t < stride)
-      tmp[loc_t] += tmp[loc_t + stride];
+    if(i < n)
+      share[threadIdx.x] = a[i] * b[i];
+    else
+      share[threadIdx.x] = 0.0;
     __syncthreads();
-  }
 
-  if (loc_t < 32) {
-    if (block_sz >= 64) tmp[loc_t] += tmp[loc_t + 32];
-    if (block_sz >= 32) tmp[loc_t] += tmp[loc_t + 16];
-    if (block_sz >= 16) tmp[loc_t] += tmp[loc_t + 8];
-    if (block_sz >= 8) tmp[loc_t] += tmp[loc_t + 4];
-    if (block_sz >= 4) tmp[loc_t] += tmp[loc_t + 2];
-    if (block_sz >= 2) tmp[loc_t] += tmp[loc_t + 1];
-  }
+    for(j=ThreadPerBlock/2; j>31; j>>=1){
+      if(threadIdx.x < j)
+        share[threadIdx.x] += share[threadIdx.x + j];
+      __syncthreads();
+    }
+    if(threadIdx.x < 16){
+      share[threadIdx.x] += share[threadIdx.x + 16];
+      __syncthreads();
+      share[threadIdx.x] += share[threadIdx.x + 8];
+      __syncthreads();
+      share[threadIdx.x] += share[threadIdx.x + 4];
+      __syncthreads();
+      share[threadIdx.x] += share[threadIdx.x + 2];
+      __syncthreads();
+      share[threadIdx.x] += share[threadIdx.x + 1];
+    }
+    __syncthreads();
 
-  if (threadIdx.x == 0) {
-    out[blockIdx.x] = tmp[0];
-  }
+    if(threadIdx.x == 0)
+      c[blockIdx.x] = share[0];
 }

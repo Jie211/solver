@@ -150,7 +150,12 @@ DoubleCalDeltaEtaZetaKCR(double *delta,
     double *rvec, 
     int ndata, 
     int kskip);
-
+extern double
+DoubleCudaDot_Host(int N, 
+    double *a, 
+    double *b, 
+    int BlockPerGrid, 
+    int ThreadPerBlock);
 
 #endif //BLAS_H_INCLUDED__
 

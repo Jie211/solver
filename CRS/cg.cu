@@ -11,7 +11,7 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
   /* int i, j, k, n; */
   int loop;
 
-  double *rvec, *pvec, *Av, *x_0, *dot, error=0.0;
+  double *rvec, *pvec, *Av, *x_0, dot, error=0.0;
   double alpha, beta, bnorm, rnorm;
   double rr, rr2;
 
@@ -34,12 +34,10 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
   rvec=Double1Malloc(ndata);
   pvec=Double1Malloc(ndata);
   x_0=Double1Malloc(ndata);
-  dot=Double1Malloc(1);
 
 
   double *d_val=NULL, *d_Av=NULL, *d_xvec=NULL, *d_pvec=NULL;
   int *d_col=NULL, *d_ptr=NULL;
-  double *d_dot=NULL;
   double *d_rvec=NULL;
 
   int ThreadPerBlock=128;
@@ -58,7 +56,6 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
   checkCudaErrors( cudaMalloc((void **)&d_pvec, sizeof(double)*ndata) );
   checkCudaErrors( cudaMalloc((void **)&d_xvec, sizeof(double)*ndata) );
   checkCudaErrors( cudaMalloc((void **)&d_rvec, sizeof(double)*ndata) );
-  checkCudaErrors( cudaMalloc((void **)&d_dot, sizeof(double)) );
 
   }
 
@@ -152,15 +149,11 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
 
     //alpha=(r,r)/(p,ap)
     if(cuda){
-      checkCudaErrors( cudaMemset(d_dot, 0, sizeof(double)) );
-
-      DoubleCudaDot<<<DotBlockPerGrid, DotThreadPerBlock, sizeof(double)*(DotThreadPerBlock+32)>>>(d_dot, d_pvec, d_Av, ndata);
-
-      checkCudaErrors( cudaMemcpy(dot, d_dot, sizeof(double), cudaMemcpyDeviceToHost)  );
+      dot=DoubleCudaDot_Host(ndata, d_pvec, d_Av, DotBlockPerGrid, DotThreadPerBlock);
     }else{
-      dot[0]=DoubleDot(pvec, Av, ndata);
+      dot=DoubleDot(pvec, Av, ndata);
     }
-    alpha = rr / dot[0];
+    alpha = rr / dot;
 
     //x=x+alpha*pvec
     DoubleScalarxpy(xvec, alpha, pvec, xvec, ndata);
@@ -170,14 +163,10 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
 
     //(r,r)
     if(cuda){
-      /* checkCudaErrors( cudaMemcpy(d_rvec, rvec, sizeof(double)*ndata, cudaMemcpyHostToDevice) ); */
-      /* checkCudaErrors( cudaMemset(d_dot, 0, sizeof(double)) ); */
-      /*  */
-      /* DoubleCudaDot<<<DotBlockPerGrid, DotThreadPerBlock, sizeof(double)*(DotThreadPerBlock)>>>(d_dot, d_rvec, d_rvec, ndata); */
-      /*  */
-      /* checkCudaErrors( cudaMemcpy(dot, d_dot, sizeof(double), cudaMemcpyDeviceToHost)  ); */
-      /* rr2=dot[0]; */
-      rr2=DoubleDot(rvec, rvec, ndata);
+
+      checkCudaErrors( cudaMemcpy(d_rvec, rvec, sizeof(double)*ndata, cudaMemcpyHostToDevice) );
+      rr2=DoubleCudaDot_Host(ndata, d_rvec, d_rvec, DotBlockPerGrid, DotThreadPerBlock);
+
     }else{
       rr2=DoubleDot(rvec, rvec, ndata);
     }
@@ -216,7 +205,6 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
     checkCudaErrors( cudaFree(d_xvec) );
     checkCudaErrors( cudaFree(d_pvec) );
     checkCudaErrors( cudaFree(d_Av) );
-    checkCudaErrors( cudaFree(d_dot) );
     checkCudaErrors( cudaFree(d_rvec) );
   }
 
@@ -224,7 +212,6 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
   cudaFree(rvec);
   cudaFree(pvec);
   cudaFree(x_0);
-  cudaFree(dot);
   if(!INNER){
     FileClose(p_x);
     FileClose(p_his);
