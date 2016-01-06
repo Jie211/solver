@@ -235,7 +235,9 @@ void Double2VecInit(double **vec, double val, int ndatax, int ndatay)
     }
   }
 }
-void DoubleCalArApKCG(double *Ar, double *Ap, double *val, int *col, int *ptr, double *rvec, double *pvec, int ndata, int kskip)
+/* void DoubleCalArApKCG(double *Ar, double *Ap, double *val, int *col, int *ptr, double *rvec, double *pvec, int ndata, int kskip) */
+/* void DoubleCalArApKCG(double *Ar, double **Ap, double *val, int *col, int *ptr, double *rvec, double *pvec, int ndata, int kskip) */
+void DoubleCalArApKCG(double **Ar, double **Ap, double *val, int *col, int *ptr, double *rvec, double *pvec, int ndata, int kskip)
 {
   int i, j, ii;
   double tmp1=0.0;
@@ -248,8 +250,10 @@ void DoubleCalArApKCG(double *Ar, double *Ap, double *val, int *col, int *ptr, d
       tmp1 += val[j]*rvec[col[j]];
       tmp2 += val[j]*pvec[col[j]];
     }
-    Ar[0*ndata+i]=tmp1;
-    Ap[0*ndata+i]=tmp2;
+    /* Ar[0*ndata+i]=tmp1; */
+    Ar[0][i]=tmp1;
+    /* Ap[0*ndata+i]=tmp2; */
+    Ap[0][i]=tmp2;
   }
   for(ii=1;ii<2*kskip+2;ii++){
 #pragma omp parallel for private(i, j) reduction(+:tmp1, tmp2) schedule(static) firstprivate(Ar, Ap, val) lastprivate(Ar, Ap)
@@ -258,18 +262,24 @@ void DoubleCalArApKCG(double *Ar, double *Ap, double *val, int *col, int *ptr, d
       tmp2=0.0;
       for(j=ptr[i];j<ptr[i+1];j++){
         if(ii<2*kskip){
-          tmp1 += val[j]*Ar[(ii-1)*ndata+col[j]];
+          /* tmp1 += val[j]*Ar[(ii-1)*ndata+col[j]]; */
+          tmp1 += val[j]*Ar[(ii-1)][col[j]];
         }
-        tmp2 += val[j]*Ap[(ii-1)*ndata+col[j]];
+        /* tmp2 += val[j]*Ap[(ii-1)*ndata+col[j]]; */
+        tmp2 += val[j]*Ap[(ii-1)][col[j]];
       }
       if(ii<2*kskip){
-        Ar[ii*ndata+i]=tmp1;
+        /* Ar[ii*ndata+i]=tmp1; */
+        Ar[ii][i]=tmp1;
       }
-      Ap[ii*ndata+i]=tmp2;
+      /* Ap[ii*ndata+i]=tmp2; */
+      Ap[ii][i]=tmp2;
     }
   }
 }
-void DoubleCalDeltaEtaZetaKCG(double *delta, double *eta, double *zeta, double *Ar, double *Ap, double *rvec, double *pvec, int ndata, int kskip)
+/* void DoubleCalDeltaEtaZetaKCG(double *delta, double *eta, double *zeta, double *Ar, double *Ap, double *rvec, double *pvec, int ndata, int kskip) */
+/* void DoubleCalDeltaEtaZetaKCG(double *delta, double *eta, double *zeta, double *Ar, double **Ap, double *rvec, double *pvec, int ndata, int kskip) */
+void DoubleCalDeltaEtaZetaKCG(double *delta, double *eta, double *zeta, double **Ar, double **Ap, double *rvec, double *pvec, int ndata, int kskip)
 {
   int i, j;
   double tmp1=0.0;
@@ -282,12 +292,15 @@ void DoubleCalDeltaEtaZetaKCG(double *delta, double *eta, double *zeta, double *
     tmp3=0.0;
     for(j=0;j<ndata;j++){
       if(i<2*kskip){
-        tmp1 += rvec[j]*Ar[i*ndata+j];
+        /* tmp1 += rvec[j]*Ar[i*ndata+j]; */
+        tmp1 += rvec[j]*Ar[i][j];
       }
       if(i<2*kskip+1){
-        tmp2 += rvec[j]*Ap[i*ndata+j];
+        /* tmp2 += rvec[j]*Ap[i*ndata+j]; */
+        tmp2 += rvec[j]*Ap[i][j];
       }
-      tmp3 += pvec[j]*Ap[i*ndata+j];
+      /* tmp3 += pvec[j]*Ap[i*ndata+j]; */
+      tmp3 += pvec[j]*Ap[i][j];
     }
     if(i<2*kskip){
       delta[i]=tmp1;
@@ -377,4 +390,5 @@ double DoubleCudaDot_Host(int N, double *a, double *b, int BlockPerGrid, int Thr
 
   return sum;
 }
+
 

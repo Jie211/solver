@@ -1,9 +1,13 @@
 #include "kskipcg.h"
 
-void KSKIPCG_Init(double *v1, double *v2, double *v3, double *v4, double *v5, double *v6, double *v7, double *v8, double *v9, int ndata, int kskip)
+/* void KSKIPCG_Init(double *v1, double *v2, double *v3, double *v4, double *v5, double *v6, double *v7, double *v8, double *v9, int ndata, int kskip) */
+/* void KSKIPCG_Init(double *v1, double **v2, double *v3, double *v4, double *v5, double *v6, double *v7, double *v8, double *v9, int ndata, int kskip) */
+void KSKIPCG_Init(double **v1, double **v2, double *v3, double *v4, double *v5, double *v6, double *v7, double *v8, double *v9, int ndata, int kskip)
 {
-  DoubleVecInit(v1, 0.0, 2*kskip*ndata);
-  DoubleVecInit(v2, 0.0, (2*kskip+2)*ndata);
+  /* DoubleVecInit(v1, 0.0, 2*kskip*ndata); */
+  Double2VecInit(v1, 0.0, ndata, 2*kskip);
+  /* DoubleVecInit(v2, 0.0, (2*kskip+2)*ndata); */
+  Double2VecInit(v2, 0.0, ndata, (2*kskip+2));
   DoubleVecInit(v3, 0.0, 2*kskip);
   DoubleVecInit(v4, 0.0, 2*kskip+1);
   DoubleVecInit(v5, 0.0, 2*kskip+2);
@@ -18,7 +22,11 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
 {
   int nloop, iloop, jloop;
 
-  double *Ar, *Ap, *delta, *eta, *zeta;
+  double *delta, *eta, *zeta;
+  double **Ap;
+  /* double *Ap; */
+  double **Ar;
+  /* double *Ar; */
   double *rvec, *pvec, *Av, *x_0;
   double rnorm, bnorm, alpha, beta, gamma;
   bool flag=false;
@@ -36,8 +44,11 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
 
   st=gettimeofday_sec();
 
-  Ar=Double1Malloc(2*kskip*ndata);
-  Ap=Double1Malloc((2*kskip+2)*ndata);
+  /* Ar=Double1Malloc(2*kskip*ndata); */
+  Ar=Double2Malloc(ndata, 2*kskip);
+  /* Ap=Double1Malloc((2*kskip+2)*ndata); */
+  Ap=Double2Malloc(ndata, (2*kskip+2));
+
   delta=Double1Malloc(2*kskip);
   eta=Double1Malloc(2*kskip+1);
   zeta=Double1Malloc(2*kskip+2);
@@ -140,8 +151,10 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
   if(INNER){
     printf("Inner %d %.12e\n",nloop,error);
   }
-  Double1Free(Ar);
-  Double1Free(Ap);
+  /* Double1Free(Ar); */
+  Double2Free(Ar,2*kskip);
+  /* Double1Free(Ap); */
+  Double2Free(Ap,2*kskip+2);
   Double1Free(delta);
   Double1Free(eta);
   Double1Free(zeta);

@@ -112,8 +112,10 @@ Double2VecInit(double **vec,
     int ndatax, 
     int ndatay);
 extern void 
-DoubleCalArApKCG(double *Ar, 
-    double *Ap, 
+DoubleCalArApKCG(double **Ar, 
+// DoubleCalArApKCG(double *Ar, 
+    // double *Ap, 
+    double **Ap, 
     double *val, 
     int *col, 
     int *ptr, 
@@ -125,12 +127,15 @@ extern void
 DoubleCalDeltaEtaZetaKCG(double *delta, 
     double *eta, 
     double *zeta, 
-    double *Ar, 
-    double *Ap, 
+    // double *Ar, 
+    double **Ar, 
+    // double *Ap, 
+    double **Ap, 
     double *rvec, 
     double *pvec, 
     int ndata, 
     int kskip);
+
 extern void 
 DoubleCalArApKCR(double *Ar, 
     double *Ap, 

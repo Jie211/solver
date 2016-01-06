@@ -7,8 +7,10 @@
 
 
 extern void 
-KSKIPCG_Init(double *v1, 
-    double *v2, 
+// KSKIPCG_Init(double *v1, 
+KSKIPCG_Init(double **v1, 
+    // double *v2, 
+    double **v2, 
     double *v3, 
     double *v4, 
     double *v5, 
