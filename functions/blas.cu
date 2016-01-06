@@ -377,3 +377,4 @@ double DoubleCudaDot_Host(int N, double *a, double *b, int BlockPerGrid, int Thr
 
   return sum;
 }
+

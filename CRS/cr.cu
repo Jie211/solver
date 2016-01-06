@@ -20,7 +20,8 @@ int CR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
   double t_error=0.0;
   FILE *p_x=NULL, *p_his=NULL;
 
-  double st, et, t1;
+  double st, et, t1=0.0;
+  double st2, et2, t2=0.0;
 
   if(!INNER){
     p_x=FileInit("./output/CR_x.txt", "w");
@@ -35,6 +36,23 @@ int CR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
   svec=Double1Malloc(ndata);
   x_0=Double1Malloc(ndata);
 
+  double *d_qvec, *d_xvec, *d_pvec, *d_svec, *d_rvec;
+
+  int ThreadPerBlock=128;
+  int BlockPerGrid=(ndata-1)/(ThreadPerBlock/32)+1;
+  /* BlockPerGrid=ceil((double)ndata/(double)ThreadPerBlock); */
+
+  int DotThreadPerBlock=128;
+  int DotBlockPerGrid=ceil((double)ndata/(double)ThreadPerBlock);
+
+  if(cuda){
+    checkCudaErrors( cudaMalloc((void **)&d_qvec, sizeof(double)*ndata)  );
+    checkCudaErrors( cudaMalloc((void **)&d_xvec, sizeof(double)*ndata)  );
+    checkCudaErrors( cudaMalloc((void **)&d_pvec, sizeof(double)*ndata)  );
+    checkCudaErrors( cudaMalloc((void **)&d_svec, sizeof(double)*ndata)  );
+    checkCudaErrors( cudaMalloc((void **)&d_rvec, sizeof(double)*ndata)  );
+  }
+
   //init vectory
   CR_Init(rvec, pvec, qvec, svec, xvec, ndata);
 
@@ -44,7 +62,24 @@ int CR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
   bnorm = Double2Norm(bvec, ndata);
 
   //Ax
-  DoubleMVMCSR(qvec, val, col, ptr, xvec, ndata);
+  if(cuda){
+    /* checkCudaErrors( cudaDeviceSynchronize() ); */
+    st2=gettimeofday_sec();
+
+    checkCudaErrors( cudaMemcpy(d_xvec, xvec, sizeof(double)*ndata, cudaMemcpyHostToDevice) );
+    checkCudaErrors( cudaMemset(d_qvec, 0, sizeof(double)*ndata)  );
+    
+    DoubleCudaMVMCSR<<<BlockPerGrid, ThreadPerBlock, sizeof(double)*(ThreadPerBlock+16)>>>(ndata, d_val, d_col, d_ptr, d_xvec, d_qvec);
+
+    checkCudaErrors( cudaPeekAtLastError()  );
+
+    checkCudaErrors( cudaMemcpy(qvec, d_qvec, sizeof(double)*ndata, cudaMemcpyDeviceToHost) );
+    /* checkCudaErrors(cudaDeviceSynchronize()); */
+    et2=gettimeofday_sec();
+    t2+=et2-st2;
+  }else{
+    DoubleMVMCSR(qvec, val, col, ptr, xvec, ndata);
+  }
 
   //r=b-Ax
   DoubleVecSub(rvec, bvec, qvec, ndata);
@@ -53,13 +88,41 @@ int CR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
   DoubleVecCopy(pvec, rvec, ndata);
 
   //q=Ap
-  DoubleMVMCSR(qvec, val, col, ptr, pvec, ndata);
+  if(cuda){
+    /* checkCudaErrors( cudaDeviceSynchronize() ); */
+    st2=gettimeofday_sec();
+
+    checkCudaErrors( cudaMemcpy(d_pvec, pvec, sizeof(double)*ndata, cudaMemcpyHostToDevice) );
+    checkCudaErrors( cudaMemset(d_qvec, 0, sizeof(double)*ndata)  );
+
+    DoubleCudaMVMCSR<<<BlockPerGrid, ThreadPerBlock, sizeof(double)*(ThreadPerBlock+16)>>>(ndata, d_val, d_col, d_ptr, d_pvec, d_qvec);
+
+    checkCudaErrors( cudaPeekAtLastError()  );
+
+    checkCudaErrors( cudaMemcpy(qvec, d_qvec, sizeof(double)*ndata, cudaMemcpyDeviceToHost) );
+    /* checkCudaErrors(cudaDeviceSynchronize()); */
+    et2=gettimeofday_sec();
+    t2+=et2-st2;
+  }else{
+    DoubleMVMCSR(qvec, val, col, ptr, pvec, ndata);
+  }
 
   //s=q
   DoubleVecCopy(svec, qvec, ndata);
 
   // (r,s)
-  rs=DoubleDot(rvec, svec, ndata); 
+  if(cuda){
+    /* checkCudaErrors( cudaDeviceSynchronize()  ); */
+    st2=gettimeofday_sec();
+    checkCudaErrors( cudaMemcpy(d_rvec, rvec, sizeof(double)*ndata, cudaMemcpyHostToDevice)  );
+    checkCudaErrors( cudaMemcpy(d_svec, svec, sizeof(double)*ndata, cudaMemcpyHostToDevice)  );
+    rs=DoubleCudaDot_Host(ndata, d_rvec, d_svec, DotBlockPerGrid, DotThreadPerBlock);
+    /* checkCudaErrors( cudaDeviceSynchronize()  ); */
+    et2=gettimeofday_sec();
+    t2+=et2-st2;
+  }else{
+    rs=DoubleDot(rvec, svec, ndata); 
+  }
 
   for(loop=0;loop<i_max;loop++){
     //rnorm
@@ -87,10 +150,38 @@ int CR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
     DoubleScalarxpy(rvec, -alpha, qvec, rvec, ndata);
 
     //s=Ar
-    DoubleMVMCSR(svec, val, col, ptr, rvec, ndata);
+    if(cuda){
+    /* checkCudaErrors( cudaDeviceSynchronize() ); */
+    st2=gettimeofday_sec();
+
+    checkCudaErrors( cudaMemcpy(d_rvec, rvec, sizeof(double)*ndata, cudaMemcpyHostToDevice) );
+    checkCudaErrors( cudaMemset(d_svec, 0, sizeof(double)*ndata)  );
+
+    DoubleCudaMVMCSR<<<BlockPerGrid, ThreadPerBlock, sizeof(double)*(ThreadPerBlock+16)>>>(ndata, d_val, d_col, d_ptr, d_rvec, d_svec);
+
+    checkCudaErrors( cudaPeekAtLastError()  );
+
+    checkCudaErrors( cudaMemcpy(svec, d_svec, sizeof(double)*ndata, cudaMemcpyDeviceToHost) );
+    /* checkCudaErrors(cudaDeviceSynchronize()); */
+    et2=gettimeofday_sec();
+    t2+=et2-st2;
+
+    }else{
+      DoubleMVMCSR(svec, val, col, ptr, rvec, ndata);
+    }
 
     //(r,s)
-    rs2=DoubleDot(rvec, svec, ndata);
+    if(cuda){
+      /* checkCudaErrors( cudaDeviceSynchronize()  ); */
+      st2=gettimeofday_sec();
+      rs2=DoubleCudaDot_Host(ndata, d_rvec, d_svec, DotBlockPerGrid, DotThreadPerBlock);
+      /* checkCudaErrors( cudaDeviceSynchronize()  ); */
+      et2=gettimeofday_sec();
+      t2+=et2-st2;
+
+    }else{
+      rs2=DoubleDot(rvec, svec, ndata);
+    }
 
     //beta=(r_new,s_new)/(r,s)
     beta = rs2/rs;
@@ -112,9 +203,20 @@ int CR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
     t_error=error_check_CRS(val, col, ptr, bvec, xvec, x_0, ndata);
     printf("|b-ax|2/|b|2=%.1f\n", t_error);
     printf("Execution Time=%lf s\n", t1);
+    if(cuda){
+      printf("->Copy Time=%lf s\n", t2);
+    }
   }
   if(INNER && verbose){
     printf("Inner %d %.12e\n", loop, error);
+  }
+
+  if(cuda){
+    checkCudaErrors(cudaFree(d_xvec));
+    checkCudaErrors(cudaFree(d_qvec));
+    checkCudaErrors(cudaFree(d_pvec));
+    checkCudaErrors(cudaFree(d_svec));
+    checkCudaErrors(cudaFree(d_rvec));
   }
 
   Double1Free(rvec);

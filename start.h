@@ -105,6 +105,11 @@ extern char bx_path[512];
 extern char ptr_path[512];
 extern char col_path[512];
 
+extern double *d_val;
+extern int *d_col;
+extern int *d_ptr;
+
+
 extern int 
 CSR_start(int argc, 
     char *argv[]);

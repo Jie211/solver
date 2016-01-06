@@ -36,9 +36,10 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
   x_0=Double1Malloc(ndata);
 
 
-  double *d_val=NULL, *d_Av=NULL, *d_xvec=NULL, *d_pvec=NULL;
-  int *d_col=NULL, *d_ptr=NULL;
+  double *d_Av=NULL, *d_xvec=NULL, *d_pvec=NULL;
   double *d_rvec=NULL;
+  /* double *d_val=NULL; */
+  /* int *d_col=NULL, *d_ptr=NULL; */
 
   int ThreadPerBlock=128;
   int BlockPerGrid=(ndata-1)/(ThreadPerBlock/32)+1;
@@ -49,9 +50,6 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
 
   if(cuda){
 
-  checkCudaErrors( cudaMalloc((void **)&d_val, sizeof(double)*nnz) );
-  checkCudaErrors( cudaMalloc((void **)&d_col, sizeof(int)*nnz) );
-  checkCudaErrors( cudaMalloc((void **)&d_ptr, sizeof(int)*(ndata+1)) );
   checkCudaErrors( cudaMalloc((void **)&d_Av, sizeof(double)*ndata) );
   checkCudaErrors( cudaMalloc((void **)&d_pvec, sizeof(double)*ndata) );
   checkCudaErrors( cudaMalloc((void **)&d_xvec, sizeof(double)*ndata) );
@@ -72,14 +70,11 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
   //Ax
   if(cuda){
 
-    checkCudaErrors(cudaDeviceSynchronize());
+    /* checkCudaErrors(cudaDeviceSynchronize()); */
 
     st2=gettimeofday_sec();
 
 
-    checkCudaErrors( cudaMemcpy(d_val, val, sizeof(double)*nnz, cudaMemcpyHostToDevice) );
-    checkCudaErrors( cudaMemcpy(d_col, col, sizeof(int)*nnz, cudaMemcpyHostToDevice) );
-    checkCudaErrors( cudaMemcpy(d_ptr, ptr, sizeof(int)*(ndata+1), cudaMemcpyHostToDevice) );
     checkCudaErrors( cudaMemcpy(d_xvec, xvec, sizeof(double)*ndata, cudaMemcpyHostToDevice) );
     checkCudaErrors( cudaMemset(d_Av, 0, sizeof(double)*ndata) );
 
@@ -90,7 +85,7 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
 
     checkCudaErrors( cudaMemcpy(Av, d_Av, sizeof(double)*ndata, cudaMemcpyDeviceToHost) );
 
-    checkCudaErrors(cudaDeviceSynchronize());
+    /* checkCudaErrors(cudaDeviceSynchronize()); */
     et2=gettimeofday_sec();
     t2+=et2-st2;
 
@@ -126,7 +121,7 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
 
     //Ap
     if(cuda){
-      checkCudaErrors(cudaDeviceSynchronize());
+      /* checkCudaErrors(cudaDeviceSynchronize()); */
 
       st2=gettimeofday_sec();
 
@@ -139,7 +134,7 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
 
       checkCudaErrors( cudaMemcpy(Av, d_Av, sizeof(double)*ndata, cudaMemcpyDeviceToHost) );
 
-      checkCudaErrors(cudaDeviceSynchronize());
+      /* checkCudaErrors(cudaDeviceSynchronize()); */
       et2=gettimeofday_sec();
       t2+=et2-st2;
 
@@ -149,7 +144,17 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
 
     //alpha=(r,r)/(p,ap)
     if(cuda){
+      
+      /* checkCudaErrors(cudaDeviceSynchronize()); */
+
+      st2=gettimeofday_sec();
+
       dot=DoubleCudaDot_Host(ndata, d_pvec, d_Av, DotBlockPerGrid, DotThreadPerBlock);
+      
+      /* checkCudaErrors(cudaDeviceSynchronize()); */
+      et2=gettimeofday_sec();
+      t2+=et2-st2;
+
     }else{
       dot=DoubleDot(pvec, Av, ndata);
     }
@@ -164,8 +169,16 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
     //(r,r)
     if(cuda){
 
+      /* checkCudaErrors(cudaDeviceSynchronize()); */
+
+      st2=gettimeofday_sec();
+
       checkCudaErrors( cudaMemcpy(d_rvec, rvec, sizeof(double)*ndata, cudaMemcpyHostToDevice) );
       rr2=DoubleCudaDot_Host(ndata, d_rvec, d_rvec, DotBlockPerGrid, DotThreadPerBlock);
+
+      /* checkCudaErrors(cudaDeviceSynchronize()); */
+      et2=gettimeofday_sec();
+      t2+=et2-st2;
 
     }else{
       rr2=DoubleDot(rvec, rvec, ndata);
@@ -199,19 +212,23 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
 
   if(cuda){
 
-    checkCudaErrors( cudaFree(d_val) );
-    checkCudaErrors( cudaFree(d_col) );
-    checkCudaErrors( cudaFree(d_ptr) );
+    /* checkCudaErrors( cudaFree(d_val) ); */
+    /* checkCudaErrors( cudaFree(d_col) ); */
+    /* checkCudaErrors( cudaFree(d_ptr) ); */
     checkCudaErrors( cudaFree(d_xvec) );
     checkCudaErrors( cudaFree(d_pvec) );
     checkCudaErrors( cudaFree(d_Av) );
     checkCudaErrors( cudaFree(d_rvec) );
   }
 
-  cudaFree(Av);
-  cudaFree(rvec);
-  cudaFree(pvec);
-  cudaFree(x_0);
+  /* cudaFree(Av); */
+  /* cudaFree(rvec); */
+  /* cudaFree(pvec); */
+  /* cudaFree(x_0); */
+  Double1Free(Av);
+  Double1Free(rvec);
+  Double1Free(pvec);
+  Double1Free(x_0);
   if(!INNER){
     FileClose(p_x);
     FileClose(p_his);

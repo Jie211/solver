@@ -33,5 +33,6 @@ extern __global__ void
 DoubleCudaDot(int n, int ThreadPerBlock, double *a, double *b, double *c);
 
 
+
 #endif //CUDAFUNC_H_INCLUDED__
 

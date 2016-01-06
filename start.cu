@@ -72,6 +72,8 @@ char bx_path[512];
 char ptr_path[512];
 char col_path[512];
 
+double *d_val=NULL;
+int *d_col=NULL, *d_ptr=NULL;
 
 int CSR_start(int argc, char *argv[]){
   int N, NNZ;
@@ -115,8 +117,20 @@ int CSR_start(int argc, char *argv[]){
 
   GetData(col_path, ptr_path, bx_path, col, ptr, val, bvec, xvec, N, NNZ);
 
+  checkCudaErrors( cudaMalloc((void **)&d_val, sizeof(double)*NNZ) );
+  checkCudaErrors( cudaMalloc((void **)&d_col, sizeof(int)*NNZ) );
+  checkCudaErrors( cudaMalloc((void **)&d_ptr, sizeof(int)*(N+1)) );
+    checkCudaErrors( cudaMemcpy(d_val, val, sizeof(double)*NNZ, cudaMemcpyHostToDevice) );
+    checkCudaErrors( cudaMemcpy(d_col, col, sizeof(int)*NNZ, cudaMemcpyHostToDevice) );
+    checkCudaErrors( cudaMemcpy(d_ptr, ptr, sizeof(int)*(N+1), cudaMemcpyHostToDevice) );
+
 
   error = SolverSelecter(val, col, ptr, bvec, xvec, N, NNZ, eps_outer, loop_outer, kskip_outer, fix_outer);
+
+
+  checkCudaErrors( cudaFree(d_val) );
+  checkCudaErrors( cudaFree(d_col) );
+  checkCudaErrors( cudaFree(d_ptr) );
 
   if(error!=0){
     Display_Err("error in start");
@@ -132,11 +146,11 @@ int CSR_start(int argc, char *argv[]){
   Intger1Free(col);
   Intger1Free(ptr);
 
-  cudaFree(bvec);
-  cudaFree(xvec);
-  cudaFree(val);
-  cudaFree(col);
-  cudaFree(ptr);
+  /* cudaFree(bvec); */
+  /* cudaFree(xvec); */
+  /* cudaFree(val); */
+  /* cudaFree(col); */
+  /* cudaFree(ptr); */
 
   return 0;
 }
@@ -343,3 +357,4 @@ int getCMD(int argc, char *argv[])
 
   return 0;
 }
+

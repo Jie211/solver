@@ -19,6 +19,8 @@ void IntgerMemCpyD2H(int *host, int *device, int size){
   cudaMemcpy(host, device, sizeof(int)*size, cudaMemcpyDeviceToHost);
 }
 
+
+
 __global__ void
 DoubleCudaMVMCSR(int n, double *val, int *col, int *ptr, double *b, double *c){
   extern __shared__ double vals[];
