@@ -15,6 +15,8 @@ void KSKIPCR_Init(double *v1, double *v2, double *v3, double *v4, double *v5, do
 
 int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, int nnz, double eps, int i_max, int kskip, int fix)
 {
+
+  printf("get %d loop\n", i_max);
   int nloop, iloop, jloop;
 
   double *Ar, *Ap, *delta, *eta, *zeta;

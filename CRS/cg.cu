@@ -102,7 +102,16 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
   /* // r 2norm */
   /* rnorm = Double2Norm(rvec, ndata); */
   // (r,r)
-  rr=DoubleDot(rvec, rvec, ndata); 
+  if(cuda){
+    st2=gettimeofday_sec();
+    checkCudaErrors( cudaMemcpy(d_rvec, rvec, sizeof(double)*ndata, cudaMemcpyHostToDevice) );
+    dot=DoubleCudaDot_Host(ndata, d_rvec, d_rvec, DotBlockPerGrid, DotThreadPerBlock);
+    et2=gettimeofday_sec();
+    t2=et2-st2;
+    rr=dot;
+  }else{
+    rr=DoubleDot(rvec, rvec, ndata); 
+  }
 
   for(loop=0;loop<i_max;loop++){
     //rnorm

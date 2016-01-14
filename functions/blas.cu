@@ -243,7 +243,7 @@ void DoubleCalArApKCG(double **Ar, double **Ap, double *val, int *col, int *ptr,
   double tmp1=0.0;
   double tmp2=0.0;
 #pragma omp parallel for private(j) reduction(+:tmp1, tmp2) schedule(static) firstprivate(Ar, Ap, val, pvec, rvec) lastprivate(Ar, Ap)
-  for(i=0;i<ndata;i++){
+for(i=0;i<ndata;i++){
     tmp1=0.0;
     tmp2=0.0;
     for(j=ptr[i];j<ptr[i+1];j++){
@@ -390,5 +390,4 @@ double DoubleCudaDot_Host(int N, double *a, double *b, int BlockPerGrid, int Thr
 
   return sum;
 }
-
 
