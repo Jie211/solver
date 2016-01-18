@@ -5,7 +5,7 @@
 void KSKIPCG_Init(double **v1, double **v2, double *v3, double *v4, double *v5, double *v6, double *v7, double *v8, double *v9, int ndata, int kskip)
 {
   /* DoubleVecInit(v1, 0.0, 2*kskip*ndata); */
-  Double2VecInit(v1, 0.0, ndata, 2*kskip);
+  Double2VecInit(v1, 0.0, ndata, 2*kskip+1);
   /* DoubleVecInit(v2, 0.0, (2*kskip+2)*ndata); */
   Double2VecInit(v2, 0.0, ndata, (2*kskip+2));
   DoubleVecInit(v3, 0.0, 2*kskip);
@@ -50,7 +50,7 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
   st=gettimeofday_sec();
 
   /* Ar=Double1Malloc(2*kskip*ndata); */
-  Ar=Double2Malloc(ndata, 2*kskip);
+  Ar=Double2Malloc(ndata, 2*kskip+1);
   /* Ap=Double1Malloc((2*kskip+2)*ndata); */
   Ap=Double2Malloc(ndata, (2*kskip+2));
 
@@ -306,7 +306,7 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
   }
 
   /* Double1Free(Ar); */
-  Double2Free(Ar,2*kskip);
+  Double2Free(Ar,2*kskip+1);
   /* Double1Free(Ap); */
   Double2Free(Ap,2*kskip+2);
   Double1Free(delta);

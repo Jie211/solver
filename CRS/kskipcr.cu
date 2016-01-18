@@ -6,6 +6,10 @@ void KSKIPCR_Init(double *v1, double *v2, double *v3, double *v4, double *v5, do
   DoubleVecInit(v3, 0.0, (2*kskip+1)*ndata);
   DoubleVecInit(v4, 0.0, (2*kskip+1)*ndata);
   DoubleVecInit(v5, 0.0, (2*kskip+1)*ndata);
+  /* DoubleVecInit(v3, 0.0, (2*kskip+1)); */
+  /* DoubleVecInit(v4, 0.0, (2*kskip+1)); */
+  /* DoubleVecInit(v5, 0.0, (2*kskip+1)); */
+
 
   DoubleVecInit(v6, 0.0, ndata);
   DoubleVecInit(v7, 0.0, ndata);
@@ -40,6 +44,10 @@ int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
   delta=Double1Malloc((2*kskip+1)*ndata);
   eta=Double1Malloc((2*kskip+1)*ndata);
   zeta=Double1Malloc((2*kskip+1)*ndata);
+  /* delta=Double1Malloc((2*kskip+1)); */
+  /* eta=Double1Malloc((2*kskip+1)); */
+  /* zeta=Double1Malloc((2*kskip+1)); */
+
 
   rvec=Double1Malloc(ndata);
   pvec=Double1Malloc(ndata);
@@ -98,7 +106,7 @@ int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
       {
         double delta2=0.0;
         delta[jloop] = delta[jloop] - 2*alpha*zeta[jloop+1] + alpha*alpha*eta[jloop+1];
-        delta2=delta[jloop] - 2*alpha*zeta[jloop+1] + alpha*alpha*eta[jloop+1];
+        delta2=delta[jloop+1] - 2*alpha*zeta[jloop+2] + alpha*alpha*eta[jloop+2];
         /* eta[jloop] = delta[jloop+1] + 2*beta*(zeta[jloop+1]-alpha*eta[jloop+1]) + beta*beta*eta[jloop]; */
         eta[jloop] = delta2 + 2*beta*(zeta[jloop+1]-alpha*eta[jloop+1]) + beta*beta*eta[jloop];
         zeta[jloop] = delta[jloop] - alpha*zeta[jloop+1] - alpha*(zeta[jloop+1]-alpha*eta[jloop+1]) + beta*zeta[jloop] - alpha*beta*eta[jloop];

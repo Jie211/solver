@@ -1,0 +1,11 @@
+CR
+mvm->qvec xvec | qvec pvec | svec rvec
+dot->rvec svec *2
+
+GCR
+mvm->Av xvec | qvec[0] pvec[0] | Av rvec |
+dot->qvec[kloop] qvec[kloop] | qvec[kloop] rvec | Av qvec[iloop]
+
+KskipCG
+mvm->Av xvec | Ar Ap rvec pvec | 
+dot->rvec rvec |
