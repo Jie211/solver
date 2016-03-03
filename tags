@@ -31,3 +31,4 @@ VERBOSE	start.h	33;"	d
 VPCG_H_INCLUDED__	CRS/vpcg.h	2;"	d
 VPCR_H_INCLUDED__	CRS/vpcr.h	2;"	d
 VPGCR_H_INCLUDED__	CRS/vpgcr.h	2;"	d
+cache	start.h	/^__shared__ double cache[16];$/;"	v

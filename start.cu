@@ -75,6 +75,10 @@ char col_path[512];
 double *d_val=NULL;
 int *d_col=NULL, *d_ptr=NULL;
 
+/* __device__ unsigned int count ; */
+/* __shared__ double cache[16]; */
+
+
 int CSR_start(int argc, char *argv[]){
   int N, NNZ;
  
@@ -82,6 +86,9 @@ int CSR_start(int argc, char *argv[]){
   double *bvec,*xvec, *val;
   int *col, *ptr;
   int error;
+
+  double ost1, oet1, ot1;
+  double ost2, oet2, ot2;
   
   error=getCMD(argc, argv);
   if(error!=0){
@@ -105,25 +112,38 @@ int CSR_start(int argc, char *argv[]){
     return -1;
   }
   
+  ost1=gettimeofday_sec();
+
   GetHead(col_path, ptr_path, bx_path, &N, &NNZ);
   
-  bvec=Double1Malloc(N);
-  xvec=Double1Malloc(N);
+  /* bvec=Double1Malloc(N); */
+  /* xvec=Double1Malloc(N); */
+  /*  */
+  /* val=Double1Malloc(NNZ); */
+  /* col=Intger1Malloc(NNZ); */
+  /* ptr=Intger1Malloc(N+1); */
 
-  val=Double1Malloc(NNZ);
-  col=Intger1Malloc(NNZ);
-  ptr=Intger1Malloc(N+1);
+  checkCudaErrors(cudaMallocHost((void **)&bvec, sizeof(double)*N));
+  checkCudaErrors(cudaMallocHost((void **)&xvec, sizeof(double)*N));
+
+  checkCudaErrors(cudaMallocHost((void **)&val, sizeof(double)*NNZ));
+  checkCudaErrors(cudaMallocHost((void **)&col, sizeof(int)*NNZ));
+  checkCudaErrors(cudaMallocHost((void **)&ptr, sizeof(int)*(N+1)));
+
 
 
   GetData(col_path, ptr_path, bx_path, col, ptr, val, bvec, xvec, N, NNZ);
 
+  ost2=gettimeofday_sec();
+ 
   checkCudaErrors( cudaMalloc((void **)&d_val, sizeof(double)*NNZ) );
   checkCudaErrors( cudaMalloc((void **)&d_col, sizeof(int)*NNZ) );
   checkCudaErrors( cudaMalloc((void **)&d_ptr, sizeof(int)*(N+1)) );
-    checkCudaErrors( cudaMemcpy(d_val, val, sizeof(double)*NNZ, cudaMemcpyHostToDevice) );
-    checkCudaErrors( cudaMemcpy(d_col, col, sizeof(int)*NNZ, cudaMemcpyHostToDevice) );
-    checkCudaErrors( cudaMemcpy(d_ptr, ptr, sizeof(int)*(N+1), cudaMemcpyHostToDevice) );
-
+  checkCudaErrors( cudaMemcpy(d_val, val, sizeof(double)*NNZ, cudaMemcpyHostToDevice) );
+  checkCudaErrors( cudaMemcpy(d_col, col, sizeof(int)*NNZ, cudaMemcpyHostToDevice) );
+  checkCudaErrors( cudaMemcpy(d_ptr, ptr, sizeof(int)*(N+1), cudaMemcpyHostToDevice) );
+  
+  oet2=gettimeofday_sec();
 
   error = SolverSelecter(val, col, ptr, bvec, xvec, N, NNZ, eps_outer, loop_outer, kskip_outer, fix_outer);
 
@@ -132,6 +152,15 @@ int CSR_start(int argc, char *argv[]){
   checkCudaErrors( cudaFree(d_col) );
   checkCudaErrors( cudaFree(d_ptr) );
 
+  oet1=gettimeofday_sec();
+
+  ot1=oet1-ost1;
+  ot2=oet2-ost2;
+  if(cuda){
+    printf("@@@@@@@ all=%.3f, mainCopy=%.3f\n", ot1, ot2);
+  }else{
+    printf("@@@@@@@ all=%.3f\n", ot1);
+  }
   if(error!=0){
     Display_Err("error in start");
     return(-1);
@@ -140,17 +169,19 @@ int CSR_start(int argc, char *argv[]){
   if(verbose){
     DisplayCMD();
   }
-  Double1Free(bvec);
-  Double1Free(xvec);
-  Double1Free(val);
-  Intger1Free(col);
-  Intger1Free(ptr);
 
-  /* cudaFree(bvec); */
-  /* cudaFree(xvec); */
-  /* cudaFree(val); */
-  /* cudaFree(col); */
-  /* cudaFree(ptr); */
+  /* Double1Free(bvec); */
+  /* Double1Free(xvec); */
+  /* Double1Free(val); */
+  /* Intger1Free(col); */
+  /* Intger1Free(ptr); */
+
+  checkCudaErrors(cudaFreeHost(bvec));
+  checkCudaErrors(cudaFreeHost(xvec));
+
+  checkCudaErrors(cudaFreeHost(val));
+  checkCudaErrors(cudaFreeHost(col));
+  checkCudaErrors(cudaFreeHost(ptr));
 
   return 0;
 }

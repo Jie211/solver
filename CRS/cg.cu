@@ -20,20 +20,26 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
   double t_error=0.0;
   FILE *p_x=NULL, *p_his=NULL;
 
-  double st, et, t1=0.0;
-  double st2, et2, t2=0.0;
+  double ct_start, ct_end, copytime=0.0;
+  double dt_start, dt_end, dottime=0.0;
+  double mvt_start, mvt_end, mvtime=0.0;
 
   if(!INNER){
     p_x=FileInit("./output/CG_x.txt", "w");
     p_his=FileInit("./output/CG_his.txt", "w");
   }
 
-  st=gettimeofday_sec();
 
-  Av=Double1Malloc(ndata);
-  rvec=Double1Malloc(ndata);
-  pvec=Double1Malloc(ndata);
-  x_0=Double1Malloc(ndata);
+
+  /* Av=Double1Malloc(ndata); */
+  /* rvec=Double1Malloc(ndata); */
+  /* pvec=Double1Malloc(ndata); */
+  /* x_0=Double1Malloc(ndata); */
+
+  checkCudaErrors( cudaMallocHost((void **)&Av, sizeof(double)*ndata) );
+  checkCudaErrors( cudaMallocHost((void **)&rvec, sizeof(double)*ndata) );
+  checkCudaErrors( cudaMallocHost((void **)&pvec, sizeof(double)*ndata) );
+  checkCudaErrors( cudaMallocHost((void **)&x_0, sizeof(double)*ndata) );
 
 
   double *d_Av=NULL, *d_xvec=NULL, *d_pvec=NULL;
@@ -72,22 +78,28 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
 
     /* checkCudaErrors(cudaDeviceSynchronize()); */
 
-    st2=gettimeofday_sec();
 
-
+    ct_start=gettimeofday_sec();
     checkCudaErrors( cudaMemcpy(d_xvec, xvec, sizeof(double)*ndata, cudaMemcpyHostToDevice) );
     checkCudaErrors( cudaMemset(d_Av, 0, sizeof(double)*ndata) );
+    ct_end=gettimeofday_sec();
+    copytime+=ct_end-ct_start;
 
-
+    mvt_start=gettimeofday_sec();
     DoubleCudaMVMCSR<<<BlockPerGrid, ThreadPerBlock, sizeof(double)*(ThreadPerBlock+16)>>>(ndata, d_val, d_col, d_ptr, d_xvec, d_Av);
+    mvt_end=gettimeofday_sec();
+    mvtime+=mvt_end-mvt_start;
 
     checkCudaErrors( cudaPeekAtLastError() );
 
+
+    ct_start=gettimeofday_sec();
     checkCudaErrors( cudaMemcpy(Av, d_Av, sizeof(double)*ndata, cudaMemcpyDeviceToHost) );
+    ct_end=gettimeofday_sec();
+    copytime+=ct_end-ct_start;
+
 
     /* checkCudaErrors(cudaDeviceSynchronize()); */
-    et2=gettimeofday_sec();
-    t2+=et2-st2;
 
   }else{
     DoubleMVMCSR(Av, val, col, ptr, xvec, ndata);
@@ -103,12 +115,19 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
   /* rnorm = Double2Norm(rvec, ndata); */
   // (r,r)
   if(cuda){
-    st2=gettimeofday_sec();
+    ct_start=gettimeofday_sec();
     checkCudaErrors( cudaMemcpy(d_rvec, rvec, sizeof(double)*ndata, cudaMemcpyHostToDevice) );
+    ct_end=gettimeofday_sec();
+    copytime+=ct_end-ct_start;
+
+    dt_start=gettimeofday_sec();
     dot=DoubleCudaDot_Host(ndata, d_rvec, d_rvec, DotBlockPerGrid, DotThreadPerBlock);
-    et2=gettimeofday_sec();
-    t2=et2-st2;
+    dt_end=gettimeofday_sec();
+    dottime+=dt_end-dt_start;
+
     rr=dot;
+
+    /* rr=DoubleDot(rvec, rvec, ndata);  */
   }else{
     rr=DoubleDot(rvec, rvec, ndata); 
   }
@@ -132,20 +151,27 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
     if(cuda){
       /* checkCudaErrors(cudaDeviceSynchronize()); */
 
-      st2=gettimeofday_sec();
 
+      ct_start=gettimeofday_sec();
       checkCudaErrors( cudaMemcpy(d_pvec, pvec, sizeof(double)*ndata, cudaMemcpyHostToDevice) );
       checkCudaErrors( cudaMemset(d_Av, 0, sizeof(double)*ndata) );
+      ct_end=gettimeofday_sec();
+      copytime+=ct_end-ct_start;
 
+      mvt_start=gettimeofday_sec();
       DoubleCudaMVMCSR<<<BlockPerGrid, ThreadPerBlock, sizeof(double)*(ThreadPerBlock+16)>>>(ndata, d_val, d_col, d_ptr, d_pvec, d_Av);
+      mvt_end=gettimeofday_sec();
+      mvtime+=mvt_end-mvt_start;
 
       checkCudaErrors( cudaPeekAtLastError() );
 
+      ct_start=gettimeofday_sec();
       checkCudaErrors( cudaMemcpy(Av, d_Av, sizeof(double)*ndata, cudaMemcpyDeviceToHost) );
+      ct_end=gettimeofday_sec();
+      copytime+=ct_end-ct_start;
+
 
       /* checkCudaErrors(cudaDeviceSynchronize()); */
-      et2=gettimeofday_sec();
-      t2+=et2-st2;
 
     }else{
       DoubleMVMCSR(Av, val, col, ptr, pvec, ndata);
@@ -156,14 +182,14 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
       
       /* checkCudaErrors(cudaDeviceSynchronize()); */
 
-      st2=gettimeofday_sec();
-
+      dt_start=gettimeofday_sec();
       dot=DoubleCudaDot_Host(ndata, d_pvec, d_Av, DotBlockPerGrid, DotThreadPerBlock);
-      
-      /* checkCudaErrors(cudaDeviceSynchronize()); */
-      et2=gettimeofday_sec();
-      t2+=et2-st2;
+      dt_end=gettimeofday_sec();
+      dottime+=dt_end-dt_start;
 
+      /* checkCudaErrors(cudaDeviceSynchronize()); */
+
+      /* dot=DoubleDot(pvec, Av, ndata); */
     }else{
       dot=DoubleDot(pvec, Av, ndata);
     }
@@ -180,15 +206,21 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
 
       /* checkCudaErrors(cudaDeviceSynchronize()); */
 
-      st2=gettimeofday_sec();
 
+      ct_start=gettimeofday_sec();
       checkCudaErrors( cudaMemcpy(d_rvec, rvec, sizeof(double)*ndata, cudaMemcpyHostToDevice) );
+      ct_end=gettimeofday_sec();
+      copytime+=ct_end-ct_start;
+
+      dt_start=gettimeofday_sec();
       rr2=DoubleCudaDot_Host(ndata, d_rvec, d_rvec, DotBlockPerGrid, DotThreadPerBlock);
+      dt_end=gettimeofday_sec();
+      dottime+=dt_end-dt_start;
+
 
       /* checkCudaErrors(cudaDeviceSynchronize()); */
-      et2=gettimeofday_sec();
-      t2+=et2-st2;
 
+      /* rr2=DoubleDot(rvec, rvec, ndata); */
     }else{
       rr2=DoubleDot(rvec, rvec, ndata);
     }
@@ -203,16 +235,15 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
 
   }
 
-  et=gettimeofday_sec();
-  t1=et-st;
 
   if(!INNER){
     FileOutPutVec(p_x, xvec, ndata);
     t_error=error_check_CRS(val, col, ptr, bvec, xvec, x_0, ndata);
     printf("|b-ax|2/|b|2=%.1f\n", t_error);
-    printf("Execution Time=%lf s\n", t1);
+    /* printf("Execution Time=%lf s\n", t1); */
     if(cuda){
-      printf("->Copy Time=%lf s\n", t2);
+      /* printf("->Copy Time=%lf s\n", t2); */
+      printf("Copy=%lf Dot=%lf MV=%lf\n", copytime, dottime, mvtime);
     }
   }
   if(INNER && verbose)
@@ -234,10 +265,19 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
   /* cudaFree(rvec); */
   /* cudaFree(pvec); */
   /* cudaFree(x_0); */
-  Double1Free(Av);
-  Double1Free(rvec);
-  Double1Free(pvec);
-  Double1Free(x_0);
+
+  /* Double1Free(Av); */
+  /* Double1Free(rvec); */
+  /* Double1Free(pvec); */
+  /* Double1Free(x_0); */
+
+  checkCudaErrors(cudaFreeHost(Av));
+  checkCudaErrors(cudaFreeHost(rvec));
+  checkCudaErrors(cudaFreeHost(pvec));
+  checkCudaErrors(cudaFreeHost(x_0));
+
+
+
   if(!INNER){
     FileClose(p_x);
     FileClose(p_his);

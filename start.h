@@ -109,6 +109,8 @@ extern double *d_val;
 extern int *d_col;
 extern int *d_ptr;
 
+extern __device__ unsigned int count ;
+__shared__ double cache[16];
 
 extern int 
 CSR_start(int argc, 

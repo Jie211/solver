@@ -1,5 +1,6 @@
 #include "cudafunc.cuh"
 
+
 void DoubleCudaMalloc(double *ptr, int size){
   cudaMalloc((void **)&ptr, sizeof(double)*size);
 }
@@ -79,35 +80,123 @@ DoubleCudaMVMCSR2(int n, double *val, int *col, int *ptr, double *b, double *c)
 
 __global__ void
 DoubleCudaDot(int n, int ThreadPerBlock, double *a, double *b, double *c) {
-  extern __shared__ double share[];
-
-    int i = blockDim.x * blockIdx.x + threadIdx.x;
-    int j;
-
-    if(i < n)
-      share[threadIdx.x] = a[i] * b[i];
-    else
-      share[threadIdx.x] = 0.0;
-    __syncthreads();
-
-    for(j=ThreadPerBlock/2; j>31; j>>=1){
-      if(threadIdx.x < j)
-        share[threadIdx.x] += share[threadIdx.x + j];
-      __syncthreads();
+  /* extern __shared__ double share[]; */
+  /*  */
+  /*   int i = blockDim.x * blockIdx.x + threadIdx.x; */
+  /*   int j; */
+  /*  */
+  /*   if(i < n) */
+  /*     share[threadIdx.x] = a[i] * b[i]; */
+  /*   else */
+  /*     share[threadIdx.x] = 0.0; */
+  /*   __syncthreads(); */
+  /*  */
+  /*   for(j=ThreadPerBlock/2; j>31; j>>=1){ */
+  /*     if(threadIdx.x < j) */
+  /*       share[threadIdx.x] += share[threadIdx.x + j]; */
+  /*     __syncthreads(); */
+  /*   } */
+  /*   if(threadIdx.x < 16){ */
+  /*     share[threadIdx.x] += share[threadIdx.x + 16]; */
+  /*     __syncthreads(); */
+  /*     share[threadIdx.x] += share[threadIdx.x + 8]; */
+  /*     __syncthreads(); */
+  /*     share[threadIdx.x] += share[threadIdx.x + 4]; */
+  /*     __syncthreads(); */
+  /*     share[threadIdx.x] += share[threadIdx.x + 2]; */
+  /*     __syncthreads(); */
+  /*     share[threadIdx.x] += share[threadIdx.x + 1]; */
+  /*   } */
+  /*   __syncthreads(); */
+  /*  */
+  /*   if(threadIdx.x == 0) */
+  /*     c[blockIdx.x] = share[0]; */
+  __shared__ double cache[128];
+  int i=blockIdx.x*(blockDim.x*2)+threadIdx.x;
+  int tid=threadIdx.x;
+  double mySum;
+  if(i<n){
+    mySum=a[i]*b[i];
+  }else{
+    mySum=0.0;
+  }
+  if(i+blockDim.x<n){
+    mySum+=a[i+blockDim.x]*b[i+blockDim.x];
+  }
+  cache[tid]=mySum;
+  __syncthreads();
+  for(int s=blockDim.x/2;s>32;s>>=1){
+    if(tid<s){
+      cache[tid]=mySum=mySum+cache[tid+s];
     }
-    if(threadIdx.x < 16){
-      share[threadIdx.x] += share[threadIdx.x + 16];
-      __syncthreads();
-      share[threadIdx.x] += share[threadIdx.x + 8];
-      __syncthreads();
-      share[threadIdx.x] += share[threadIdx.x + 4];
-      __syncthreads();
-      share[threadIdx.x] += share[threadIdx.x + 2];
-      __syncthreads();
-      share[threadIdx.x] += share[threadIdx.x + 1];
-    }
     __syncthreads();
-
-    if(threadIdx.x == 0)
-      c[blockIdx.x] = share[0];
+  }
+  if(tid<32){
+    if(blockDim.x>=64)
+      mySum+=cache[tid+32];
+    for(int offset=32/2;offset>0;offset/=2){
+      mySum+=__shfl_down(mySum,offset);
+    }
+  }
+  if(tid==0){
+    c[blockIdx.x]=mySum;
+  }
 }
+__device__ double partial_dot( const double* v1, const double* v2, int N, double* out  ) {
+  int i = blockIdx.x * blockDim.x + threadIdx.x;
+  if( i >= N ) return double( 0 );
+    cache[ threadIdx.x ] = 0.f;
+      while( i < N ) {
+        cache[ threadIdx.x ] += v1[ i ] * v2[ i ];
+          i += gridDim.x * blockDim.x;
+      }
+  __syncthreads();
+  /* i = BLOCK_SIZE / 2;\ */
+  i = 16 / 2;
+    while( i > 0 ) {
+      if( threadIdx.x < i ) cache[ threadIdx.x ] += cache[ threadIdx.x + i ];
+        __syncthreads();
+          i /= 2; 
+    }
+  return cache[ 0 ];
+}
+
+__device__ double sum( const double* v ) {
+  cache[ threadIdx.x ] = 0.f;
+  int i = threadIdx.x;
+  while( i < gridDim.x ) {
+    cache[ threadIdx.x ] += v[ i ];
+      i += blockDim.x;
+  }
+  __syncthreads();
+  /* i = BLOCK_SIZE / 2;\ */
+  i = 16 / 2;
+    while( i > 0 ) {
+      if( threadIdx.x < i ) cache[ threadIdx.x ] += cache[ threadIdx.x + i ];
+        __syncthreads();
+          i /= 2; 
+    }
+  return cache[ 0 ];
+}
+
+__global__ void full_dot( const double* v1, const double* v2, int N, double* out ) {
+  __shared__ bool lastBlock;
+  double r = partial_dot( v1, v2, N, out );
+  if( threadIdx.x == 0 ) {
+    out[ blockIdx.x ] = r;
+    __threadfence();
+    const unsigned int v = atomicInc( &count, gridDim.x );
+    lastBlock = ( v == gridDim.x - 1 );
+  }
+    __syncthreads();
+
+  if( lastBlock ) {
+    r = sum( out );
+    if( threadIdx.x == 0 ) {
+      out[ 0 ] =  r;
+      count = 0;
+    }
+  }   
+}
+
+

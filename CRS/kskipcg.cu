@@ -36,7 +36,10 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
   double error=0.0;
 
   double st, et, t1=0.0;
-  double st2, et2, t2=0.0;
+
+  double cp_s, cp_e, cp_t=0;
+  double mv_s, mv_e, mv_t=0;
+  double dot_s, dot_e, dot_t=0;
 
   double t_error;
   FILE *p_x=NULL, *p_his=NULL;
@@ -47,7 +50,6 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
     p_his=FileInit("./output/KskipCG_his.txt", "w");
   }
 
-  st=gettimeofday_sec();
 
   /* Ar=Double1Malloc(2*kskip*ndata); */
   Ar=Double2Malloc(ndata, 2*kskip+1);
@@ -70,7 +72,7 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
   /* BlockPerGrid=ceil((double)ndata/(double)ThreadPerBlock); */
 
   int DotThreadPerBlock=128;
-  int DotBlockPerGrid=ceil((double)ndata/(double)ThreadPerBlock);
+  int DotBlockPerGrid=(ndata-1)/(DotThreadPerBlock)+1;
 
   if(cuda){
     checkCudaErrors( cudaMalloc((void **)&d_Ar, sizeof(double)*ndata)  );
@@ -83,6 +85,7 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
 
   }
 
+  st=gettimeofday_sec();
 
   KSKIPCG_Init(Ar, Ap, delta, eta, zeta, rvec, pvec, Av, xvec, ndata, kskip);
 
@@ -90,19 +93,26 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
 
   //Ax
   if(cuda){
-    st2=gettimeofday_sec();
+    cp_s=gettimeofday_sec();
 
     checkCudaErrors( cudaMemcpy(d_xvec, xvec, sizeof(double)*ndata, cudaMemcpyHostToDevice)  );
     checkCudaErrors( cudaMemset(d_Av, 0, sizeof(double)*ndata)  );
 
+    cp_e=gettimeofday_sec();
+    cp_t+=cp_e-cp_s;
+
+    mv_s=gettimeofday_sec();
     DoubleCudaMVMCSR<<<BlockPerGrid, ThreadPerBlock, sizeof(double)*(ThreadPerBlock+16)>>>(ndata, d_val, d_col, d_ptr, d_xvec, d_Av);
+    mv_e=gettimeofday_sec();
+    mv_t+=mv_e-mv_s;
 
     checkCudaErrors( cudaPeekAtLastError() );
 
+    cp_s=gettimeofday_sec();
     checkCudaErrors( cudaMemcpy(Av, d_Av, sizeof(double)*ndata, cudaMemcpyDeviceToHost) );
+    cp_e=gettimeofday_sec();
+    cp_t+=cp_e-cp_s;
 
-    et2=gettimeofday_sec();
-    t2+=et2-st2;
 
   }else{
     DoubleMVMCSR(Av, val, col, ptr, xvec, ndata);
@@ -137,48 +147,86 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
     /* DoubleCalArApKCG(Ar, Ap, val, col, ptr, rvec, pvec, ndata, kskip); */
 
     if(cuda){
-      st2=gettimeofday_sec();
+      cp_s=gettimeofday_sec();
 
       checkCudaErrors(cudaMemcpy(d_pvec, pvec, sizeof(double)*ndata, cudaMemcpyHostToDevice));
       checkCudaErrors(cudaMemcpy(d_rvec, rvec, sizeof(double)*ndata, cudaMemcpyHostToDevice));
       checkCudaErrors(cudaMemset(d_Ar, 0, sizeof(double)*ndata));
       checkCudaErrors(cudaMemset(d_Ap, 0, sizeof(double)*ndata));
 
+      cp_e=gettimeofday_sec();
+      cp_t+=cp_e-cp_s;
+
+      mv_s=gettimeofday_sec();
       DoubleCudaMVMCSR<<<BlockPerGrid, ThreadPerBlock, sizeof(double)*(ThreadPerBlock+16)>>>(ndata, d_val, d_col, d_ptr, d_rvec, d_Ar);
+      mv_e=gettimeofday_sec();
+      mv_t+=mv_e-mv_s;
 
       checkCudaErrors(cudaPeekAtLastError());
+
+      cp_s=gettimeofday_sec();
       checkCudaErrors(cudaMemcpy(Ar[0], d_Ar, sizeof(double)*ndata, cudaMemcpyDeviceToHost));
+      cp_e=gettimeofday_sec();
+      cp_t+=cp_e-cp_s;
 
+
+      mv_s=gettimeofday_sec();
       DoubleCudaMVMCSR<<<BlockPerGrid, ThreadPerBlock, sizeof(double)*(ThreadPerBlock+16)>>>(ndata, d_val, d_col, d_ptr, d_pvec, d_Ap);
+      mv_e=gettimeofday_sec();
+      mv_t+=mv_e-mv_s;
 
       checkCudaErrors(cudaPeekAtLastError());
+
+      cp_s=gettimeofday_sec();
       checkCudaErrors(cudaMemcpy(Ap[0], d_Ap, sizeof(double)*ndata, cudaMemcpyDeviceToHost));
+      cp_e=gettimeofday_sec();
+      cp_t+=cp_e-cp_s;
 
       for(ii=1;ii<2*kskip;ii++){
+        cp_s=gettimeofday_sec();
         checkCudaErrors( cudaMemcpy(d_Ar, Ar[ii-1], sizeof(double)*ndata, cudaMemcpyHostToDevice)  );
         checkCudaErrors( cudaMemset(d_tmp, 0, sizeof(double)*ndata)  );
+        cp_e=gettimeofday_sec();
+        cp_t+=cp_e-cp_s;
 
+
+
+        mv_s=gettimeofday_sec();
         DoubleCudaMVMCSR<<<BlockPerGrid, ThreadPerBlock, sizeof(double)*(ThreadPerBlock+16)>>>(ndata, d_val, d_col, d_ptr, d_Ar, d_tmp);
+        mv_e=gettimeofday_sec();
+        mv_t+=mv_e-mv_s;
 
         checkCudaErrors( cudaPeekAtLastError() );
 
+        cp_s=gettimeofday_sec();
         checkCudaErrors( cudaMemcpy(Ar[ii], d_tmp, sizeof(double)*ndata, cudaMemcpyDeviceToHost) );
+        cp_e=gettimeofday_sec();
+        cp_t+=cp_e-cp_s;
+
       }
 
       for(ii=1;ii<2*kskip+2;ii++){
 
+        cp_s=gettimeofday_sec();
         checkCudaErrors( cudaMemcpy(d_Ap, Ap[ii-1], sizeof(double)*ndata, cudaMemcpyHostToDevice)  );
         checkCudaErrors( cudaMemset(d_tmp, 0, sizeof(double)*ndata)  );
+        cp_e=gettimeofday_sec();
+        cp_t+=cp_e-cp_s;
 
+        mv_s=gettimeofday_sec();
         DoubleCudaMVMCSR<<<BlockPerGrid, ThreadPerBlock, sizeof(double)*(ThreadPerBlock+16)>>>(ndata, d_val, d_col, d_ptr, d_Ap, d_tmp);
+        mv_e=gettimeofday_sec();
+        mv_t+=mv_e-mv_s;
 
         checkCudaErrors( cudaPeekAtLastError() );
 
+        cp_s=gettimeofday_sec();
         checkCudaErrors( cudaMemcpy(Ap[ii], d_tmp, sizeof(double)*ndata, cudaMemcpyDeviceToHost) );
+        cp_e=gettimeofday_sec();
+        cp_t+=cp_e-cp_s;
+
       }
 
-      et2=gettimeofday_sec();
-      t2+=et2-st2;
     }else{
       DoubleCalArApKCG(Ar, Ap, val, col, ptr, rvec, pvec, ndata, kskip);
     }
@@ -186,11 +234,12 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
 
     //gamma=(r,r)
     if(cuda){
-      st2=gettimeofday_sec();
 
+      dot_s=gettimeofday_sec();
       dot=DoubleCudaDot_Host(ndata, d_rvec, d_rvec, DotBlockPerGrid, DotThreadPerBlock);
-      et2=gettimeofday_sec();
-      t2+=et2-st2;
+      dot_e=gettimeofday_sec();
+      dot_t+=dot_e-dot_s;
+
       gamma=dot;
     }else{
       gamma=DoubleDot(rvec, rvec, ndata);
@@ -201,25 +250,39 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
     //zeta=(p,Ap)
     if(cuda){
 
-      st2=gettimeofday_sec();
 
       for(i=0;i<2*kskip+2;i++){
+        cp_s=gettimeofday_sec();
         checkCudaErrors( cudaMemcpy(d_Ap, Ap[i], sizeof(double)*ndata, cudaMemcpyHostToDevice)  );
+        cp_e=gettimeofday_sec();
+        cp_t+=cp_e-cp_s;
         if(i<2*kskip){
+
+          cp_s=gettimeofday_sec();
           checkCudaErrors( cudaMemcpy(d_Ar, Ar[i], sizeof(double)*ndata, cudaMemcpyHostToDevice)  );
+          cp_e=gettimeofday_sec();
+          cp_t+=cp_e-cp_s;
+
+          dot_s=gettimeofday_sec();
           tmp1=DoubleCudaDot_Host(ndata, d_rvec, d_Ar, DotBlockPerGrid, DotThreadPerBlock);
+          dot_e=gettimeofday_sec();
+          dot_t+=dot_e-dot_s;
           delta[i]=tmp1;
         }
         if(i<2*kskip+1){
+          dot_s=gettimeofday_sec();
           tmp2=DoubleCudaDot_Host(ndata, d_rvec, d_Ap, DotBlockPerGrid, DotThreadPerBlock);
+          dot_e=gettimeofday_sec();
+          dot_t+=dot_e-dot_s;
           eta[i]=tmp2;
         }
+        dot_s=gettimeofday_sec();
         tmp3=DoubleCudaDot_Host(ndata, d_pvec, d_Ap, DotBlockPerGrid, DotThreadPerBlock);
+        dot_e=gettimeofday_sec();
+        dot_t+=dot_e-dot_s;
         zeta[i]=tmp3;
       }
 
-      et2=gettimeofday_sec();
-      t2+=et2-st2;
     }else{
       DoubleCalDeltaEtaZetaKCG(delta, eta, zeta, Ar, Ap, rvec, pvec, ndata, kskip);
     }
@@ -252,18 +315,25 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
 
       //new Ap
       if(cuda){
-        st2=gettimeofday_sec();
+        cp_s=gettimeofday_sec();
         checkCudaErrors( cudaMemcpy(d_pvec, pvec, sizeof(double)*ndata, cudaMemcpyHostToDevice) );
         checkCudaErrors( cudaMemset(d_Av, 0, sizeof(double)*ndata)  );
+        cp_e=gettimeofday_sec();
+        cp_t+=cp_e-cp_s;
 
+        mv_s=gettimeofday_sec();
         DoubleCudaMVMCSR<<<BlockPerGrid, ThreadPerBlock, sizeof(double)*(ThreadPerBlock+16)>>>(ndata, d_val, d_col, d_ptr, d_pvec, d_Av);
+        mv_e=gettimeofday_sec();
+        mv_t+=mv_e-mv_s;
 
         checkCudaErrors( cudaPeekAtLastError() );
 
+        cp_s=gettimeofday_sec();
         checkCudaErrors( cudaMemcpy(Av, d_Av, sizeof(double)*ndata, cudaMemcpyDeviceToHost) );
+        cp_e=gettimeofday_sec();
+        cp_t+=cp_e-cp_s;
 
-        et2=gettimeofday_sec();
-        t2+=et2-st2;
+
       }else{
         DoubleMVMCSR(Av, val, col, ptr, pvec, ndata);
       }
@@ -287,7 +357,9 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
     printf("|b-ax|2/|b|2=%.1f\n", t_error);
     printf("Execution Time=%lf s\n", t1);
     if(cuda){
-      printf("->Copy Time=%lf s\n", t2);
+      printf("copy = %lf s\n", cp_t);
+      printf("mv = %lf s\n", mv_t);
+      printf("dot = %lf s\n", dot_t);
     }
   }
   if(INNER){
