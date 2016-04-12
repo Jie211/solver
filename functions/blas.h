@@ -162,5 +162,11 @@ DoubleCudaDot_Host(int N,
     int BlockPerGrid, 
     int ThreadPerBlock);
 
+extern void 
+solve_Hye(double *h, 
+    double *y, 
+    double *e, 
+    int n, 
+    int ndata);
 #endif //BLAS_H_INCLUDED__
 

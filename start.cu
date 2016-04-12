@@ -38,6 +38,7 @@ bool f_cuda=false;
 bool S_CG=false;
 bool S_CR=false;
 bool S_GCR=false;
+bool S_GMRES=false;
 bool K_CG=false;
 bool K_CR=false;
 bool VP_CG=false;
@@ -194,6 +195,8 @@ void InputCMD(void){
     S_CR=true;
   }else if(strcmp(solver_outer, "gcr") == 0){
     S_GCR=true;
+  }else if(strcmp(solver_outer, "gmres") == 0){
+    S_GMRES=true;
   }else if(strcmp(solver_outer, "kcg") == 0){
     K_CG=true;
   }else if(strcmp(solver_outer, "kcr") == 0){

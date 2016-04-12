@@ -235,6 +235,22 @@ void Double2VecInit(double **vec, double val, int ndatax, int ndatay)
     }
   }
 }
+
+void solve_Hye(double *h, double *y, double *e, int n, int ndata){
+  int i,j;
+  double tmp;
+  for(i=0;i<n;i++){
+    y[i] = 0.0;
+  }
+  for(i=n-1;i>=0;i--){
+    tmp=0.0;
+    for(j=i+1;j<n;j++){
+      tmp += y[j] * h[i*ndata+j];
+    }
+    y[i] = (e[i] - tmp)/h[i*ndata+i];
+  }
+}
+
 /* void DoubleCalArApKCG(double *Ar, double *Ap, double *val, int *col, int *ptr, double *rvec, double *pvec, int ndata, int kskip) */
 /* void DoubleCalArApKCG(double *Ar, double **Ap, double *val, int *col, int *ptr, double *rvec, double *pvec, int ndata, int kskip) */
 void DoubleCalArApKCG(double **Ar, double **Ap, double *val, int *col, int *ptr, double *rvec, double *pvec, int ndata, int kskip)

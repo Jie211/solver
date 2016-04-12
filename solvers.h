@@ -16,6 +16,7 @@
 #include "./CRS/vpcr.h"
 #include "./CRS/vpgcr.h"
 #include "./CRS/gcr.h"
+#include "./CRS/gmres.h"
 
 extern int 
 SolverSelecter(double *val, 

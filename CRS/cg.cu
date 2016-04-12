@@ -107,7 +107,6 @@ int CG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
 
   //r=b-Ax
   DoubleVecSub(rvec, bvec, Av, ndata);
-
   //p=r
   DoubleVecCopy(pvec, rvec, ndata);
 

@@ -71,6 +71,7 @@ extern bool f_cuda;
 extern bool S_CG;
 extern bool S_CR;
 extern bool S_GCR;
+extern bool S_GMRES;
 extern bool K_CG;
 extern bool K_CR;
 extern bool VP_CG;

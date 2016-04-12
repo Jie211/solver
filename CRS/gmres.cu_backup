@@ -1,0 +1,215 @@
+#include "gmres.h"
+
+void GMRES_Init(double *rvec, double *Av, double *vvec, double *vmtx, double *evec, double *hmtx, double *yvec, double *wvec, double *cvec, double *svec, double *x0vec, double *xvec, int ndata, int rs){
+  int i;
+  for(i=0;i<ndata;i++){
+    rvec[i]=0.0;
+    Av[i]=0.0;
+    vvec[i]=0.0;
+    evec[i]=0.0;
+    wvec[i]=0.0;
+    x0vec[i]=0.0;
+    xvec[i]=0.0;
+  }
+  for(i=0;i<ndata*(rs+1);i++){
+    vmtx[i]=0.0;
+    hmtx[i]=0.0;
+  }
+  for(i=0;i<rs;i++){
+    yvec[i]=0.0;
+    cvec[i]=0.0;
+    svec[i]=0.0;
+  }
+
+}
+
+int GMRES_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, int nnz, double eps, int i_max, int rs){
+  int loop,k;
+  int i, j;
+
+  double *rvec, *Av, *vvec, *evec, *wvec, *x0vec, *x_0;
+  double *vmtx, *hmtx;
+  double *yvec, *cvec, *svec; 
+
+  double rnorm, bnorm, error, alpha, t_error=0.0;
+  double tmp_1, tmp_2;
+  
+  FILE *p_x=NULL, *p_his=NULL;
+
+  bool flag=false;
+
+  if(!INNER){
+    p_x=FileInit("./output/GMRES_x.txt", "w");
+    p_his=FileInit("./output/GMRES_his.txt", "w");
+  }
+
+  rvec = Double1Malloc(ndata);
+  Av = Double1Malloc(ndata);
+  vvec = Double1Malloc(ndata);
+  vmtx = Double1Malloc(ndata*(rs+1));
+  evec = Double1Malloc(ndata);
+  hmtx = Double1Malloc(ndata*(rs+1));
+  yvec = Double1Malloc(rs);
+  wvec = Double1Malloc(ndata);
+  cvec = Double1Malloc(rs);
+  svec = Double1Malloc(rs);
+  x0vec = Double1Malloc(ndata);
+  x_0 = Double1Malloc(ndata);
+
+
+  GMRES_Init(rvec, Av, vvec, vmtx, evec, hmtx, yvec, wvec, cvec, svec, x0vec, xvec, ndata, rs);
+
+  DoubleVecCopy(x_0, xvec, ndata);
+
+  bnorm=Double2Norm(bvec, ndata);
+
+  for(loop=0;loop<i_max;){
+    //Ax
+    DoubleMVMCSR(Av, val, col, ptr, xvec, ndata);
+    //rvec
+    DoubleVecSub(rvec, bvec, Av, ndata);
+    //rnorm
+    rnorm=DoubleDot(rvec, rvec, ndata);
+    //vvec=rvec/rnorm
+    //vmtx=vvec
+    for(i=0;i<ndata;i++){
+      vvec[i] = rvec[i] / rnorm;
+      vmtx[0*ndata+i] = vvec[i];
+    }
+    //evec_0
+    for(i=0;i<rs;i++){
+      evec[i]=0.0;
+    }
+    evec[0]=rnorm;
+
+    for(k=0;k<rs-1;k++){
+      error=fabs(evec[k])/bnorm;
+      if(!INNER){
+        if(verbose){
+          printf("%d %.12e\n",loop,error);
+        }
+        fprintf(p_his,"%d %.12e\n", loop, error);
+      }
+      if(error <= eps){
+        //H_k y_k = e_k
+        solve_Hye(hmtx, yvec, evec, rs-1, ndata);
+
+        //sum(y_i + v_i)
+        for(i=0;i<ndata;i++){
+          Av[i]=0.0;
+        }
+        for(i=0;i<k;i++){
+          for(j=0;j<ndata;j++){
+            Av[j] += yvec[i] * vmtx[i*ndata+j];
+          }
+        }
+        //x=x0+sum(y_i + v_i)
+        DoubleVecAdd(xvec, x0vec, Av, ndata);
+        flag=true;
+        break;
+      }
+
+      //wvec = Av 
+      for(i=0;i<ndata;i++){
+        double tmp = 0.0;
+        for(j=ptr[i];j<ptr[i+1];j++){
+          tmp += val[j] * vmtx[k*ndata+col[j]];
+        }
+        wvec[i]=tmp;
+      }
+
+      //h_i wvec
+      for(i=0;i<=k;i++){
+        for(j=0;j<ndata;j++){
+          Av[j] = vmtx[i*ndata+j];
+        }
+        double tmp = 0.0;
+        for(j=0;j<ndata;j++){
+          tmp += wvec[j] * vmtx[i*ndata+j];
+        }
+        hmtx[i*ndata+k] = tmp;
+        for(j=0;j<ndata;j++){
+          wvec[j] = wvec[j] = tmp * vmtx[i*ndata+j];
+        }
+      }
+
+      //h_k+1
+      tmp_1 = Double2Norm(wvec, ndata);
+      hmtx[(k+1)*ndata+k] = tmp_1;;
+
+      //v+1
+      for(i=0;i<ndata;i++){
+        vvec[i] = wvec[i] / tmp_1;
+        vmtx[(k+1)*ndata+i] = vvec[i];
+      }
+
+      //h update
+      for(i=0;i<=(k-1);i++){
+        tmp_1 = hmtx[i*ndata+k];
+        tmp_2 = hmtx[(i+1)*ndata+k];
+        hmtx[i*ndata+k] = cvec[i] * tmp_1 - svec[i] * tmp_2;
+        hmtx[(i+1)*ndata+k] = svec[i] * tmp_1 + cvec[i] * tmp_2;
+      }
+
+      //alpha
+      alpha = sqrt( pow(hmtx[k*ndata+k],2.0) + pow(hmtx[(k+1)*ndata+k], 2.0) );
+
+      //update
+      cvec[k] = hmtx[k*ndata+k] / alpha;
+      svec[k] =-hmtx[(k+1)*ndata+k] / alpha;
+      evec[k+1] = svec[k] * evec[k];
+      evec[k] = cvec[k] * evec[k];
+      hmtx[k*ndata+k] = cvec[k] * hmtx[k*ndata+k] - svec[k] * hmtx[(k+1)*ndata+k];
+      hmtx[(k+1)*ndata+k] = 0.0;
+
+      loop++;
+    }
+    if(flag==true){
+      break;
+    }
+    solve_Hye(hmtx, yvec, evec, rs-1, ndata);
+
+    for(i=0;i<ndata;i++){
+      Av[i]=0.0;
+    }
+    for(i=0;i<rs;i++){
+      for(j=0;j<ndata;j++){
+        Av[j] += yvec[i] * vmtx[i*ndata+j];
+      }
+    }
+    for(i=0;i<ndata;i++){
+      xvec[i] = x0vec[i] + Av[i];
+      x0vec[i] = xvec[i];
+    }
+
+  }
+  if(!INNER){
+    FileOutPutVec(p_x, xvec, ndata);
+    t_error=error_check_CRS(val, col, ptr, bvec, xvec, x_0, ndata);
+    printf("|b-ax|2/|b|2=%.1f\n", t_error);
+  }
+  if(INNER && verbose)
+    printf("Inner %d %.12e\n", loop, error);
+
+  if(!INNER){
+    FileClose(p_x);
+    FileClose(p_his);
+  }
+
+  free(rvec);
+  free(Av);
+  free(vvec);
+  free(vmtx);
+  free(evec);
+  free(hmtx);
+  free(yvec);
+  free(wvec);
+  free(cvec);
+  free(svec);
+  free(x0vec);
+
+  if(flag){
+    return 1;
+  }
+  return 2;
+}

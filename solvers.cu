@@ -1,6 +1,7 @@
 #include "solvers.h"
 
 int SolverSelecter(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, int nnz, double eps, int i_max, int kskip, int fix){
+
   int error=0;
 
   if(S_CG){
@@ -19,6 +20,8 @@ int SolverSelecter(double *val, int *col, int *ptr, double *bvec, double *xvec, 
     error=VPGCR_CRS(val, col, ptr, bvec, xvec, ndata, nnz, eps, i_max, restart_outer);
   }else if(S_GCR){
     error=GCR_CRS(val, col, ptr, bvec, xvec, ndata, nnz, eps, i_max, restart_outer);
+  }else if(S_GMRES){
+    error=GMRES_CRS(val, col, ptr, bvec, xvec, ndata, nnz, eps, i_max, restart_outer);
   }else{
     error=-1;
   }

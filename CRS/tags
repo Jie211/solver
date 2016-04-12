@@ -1,0 +1,18 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+CG_H_INCLUDED__	cg.h	2;"	d
+CR_H_INCLUDED__	cr.h	2;"	d
+GCR_H_INCLUDED__	gcr.h	2;"	d
+GMRES_CRS	gmres.c	/^int GMRES_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, int nnz, double eps, int i_max, int rs){$/;"	f
+GMRES_H_INCLUDED__	gmres.h	2;"	d
+GMRES_Init	gmres.c	/^void GMRES_Init(double *rvec, double *Av, double *vvec, double *vmtx, double *evec, double *hmtx, double *yvec, double *wvec, double *cvec, double *svec, double *x0vec){$/;"	f
+KSKIPCG_H_INCLUDED__	kskipcg.h	2;"	d
+KSKIPCR_H_INCLUDED__	kskipcr.h	2;"	d
+VPCG_H_INCLUDED__	vpcg.h	2;"	d
+VPCR_H_INCLUDED__	vpcr.h	2;"	d
+VPGCR_H_INCLUDED__	vpgcr.h	2;"	d
+gmres_CRS	gmres_backup.c	/^gmres_CRS(double *val,$/;"	f
