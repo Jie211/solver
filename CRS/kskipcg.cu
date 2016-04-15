@@ -21,7 +21,8 @@ void KSKIPCG_Init(double **v1, double **v2, double *v3, double *v4, double *v5, 
 int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndata, int nnz, double eps, int i_max, int kskip, int fix)
 {
 
-  printf("get %d loop!\n", i_max);
+  if(verbose)
+    printf("get %d loop!\n", i_max);
   int nloop, iloop, jloop;
   int i,  ii;
 
@@ -362,7 +363,7 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
       printf("dot = %lf s\n", dot_t);
     }
   }
-  if(INNER){
+  if(INNER && verbose){
     printf("Inner %d %.12e\n",nloop,error);
   }
 

@@ -77,6 +77,7 @@ extern bool K_CR;
 extern bool VP_CG;
 extern bool VP_CR;
 extern bool VP_GCR;
+extern bool VP_GMRES;
 extern bool IS_CG;
 extern bool IS_CR;
 extern bool IS_GCR;

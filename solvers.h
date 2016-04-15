@@ -15,6 +15,7 @@
 #include "./CRS/vpcg.h"
 #include "./CRS/vpcr.h"
 #include "./CRS/vpgcr.h"
+#include "./CRS/vpgmres.h"
 #include "./CRS/gcr.h"
 #include "./CRS/gmres.h"
 

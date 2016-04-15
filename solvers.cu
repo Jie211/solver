@@ -22,6 +22,8 @@ int SolverSelecter(double *val, int *col, int *ptr, double *bvec, double *xvec, 
     error=GCR_CRS(val, col, ptr, bvec, xvec, ndata, nnz, eps, i_max, restart_outer);
   }else if(S_GMRES){
     error=GMRES_CRS(val, col, ptr, bvec, xvec, ndata, nnz, eps, i_max, restart_outer);
+  }else if(VP_GMRES){
+    error=VPGMRES_CRS(val, col, ptr, bvec, xvec, ndata, nnz, eps, i_max, restart_outer);
   }else{
     error=-1;
   }

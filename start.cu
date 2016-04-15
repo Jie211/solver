@@ -44,6 +44,7 @@ bool K_CR=false;
 bool VP_CG=false;
 bool VP_CR=false;
 bool VP_GCR=false;
+bool VP_GMRES=false;
 bool IS_CG=false;
 bool IS_CR=false;
 bool IS_GCR=false;
@@ -207,6 +208,8 @@ void InputCMD(void){
     VP_CR=true;
   }else if(strcmp(solver_outer, "vpgcr") == 0){
     VP_GCR=true;
+  }else if(strcmp(solver_outer, "vpgmres") == 0){
+    VP_GMRES=true;
   }
   if(solver_inner==NULL){
   }else if(strcmp(solver_inner, "cg") == 0){
@@ -228,9 +231,9 @@ int CheckCMD(void){
   }else if(!f_solver_outer){
     Display_Mes("Must set a Solver");
     return -1;
-  }else if(VP_CG || VP_CR || VP_GCR){
+  }else if(VP_CG || VP_CR || VP_GCR || VP_GMRES){
     INNER=true;
-  }else if( (VP_CG || VP_CR || VP_GCR)  && ((!IS_CG) && (!IS_CR) && (!IS_GCR) && (!IK_CG) && (!IK_CR) )){
+  }else if( (VP_CG || VP_CR || VP_GCR || VP_GMRES)  && ((!IS_CG) && (!IS_CR) && (!IS_GCR) && (!IK_CG) && (!IK_CR) )){
     Display_Mes("If VP method is selected, Please select inner method. [-OuterSolver=]");
     return -1;
   }
