@@ -1,5 +1,6 @@
 Iterative Krylov-Subspace Solvers
 ====
+## 2016/3/20 Now Working on CUDA version Kskip-CG.
 
 ## Description
 Iterative Krylov-Subspace Solvers for large systems of linear equations. 
@@ -18,7 +19,7 @@ Iterative Krylov-Subspace Solvers for large systems of linear equations.
 
 ## Requirement
 GCC compiler.
-
+CUDA Ver>6.0.
 OpenMP.
 
 ## Licence
