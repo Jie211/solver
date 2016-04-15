@@ -1,14 +1,15 @@
 Iterative Krylov-Subspace Solvers
 ====
-## readme last update 16/4/15
-## 2016/4/12 Now Working on GMRES Method.
-## 2016/3/20 Now Working on CUDA version Kskip-CG.
+*-last update 16/4/15-*
+## News
+* 2016/4/12 Now Working on GMRES Method.
+* 2016/3/20 Now Working on CUDA version Kskip-CG.
 
 ## Branches
-* cuda branche is for parallel with CUDA.(now work at here)
-* makefile branche is for make this solvers as a linux package by using GNUAutomake.(last update 2015/12
-* cmdline branche is a dev branche.(now not use)
-* master branche is not using now.
+* **cuda branche** is for parallel with CUDA.(now work at here)
+* **makefile branche** is for make this solvers as a linux package by using GNUAutomake.(**last update 2015/12**)
+* **cmdline branche** is a dev branche.(now not use)
+* **master branche** is **not using** now.
 
 
 ## Description
