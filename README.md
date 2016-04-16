@@ -1,9 +1,12 @@
 Iterative Krylov-Subspace Solvers
 ====
-*-last update 16/4/15-*
+*-last update 16/4/17-*
+
+**行列変換ツールのPythonバージョンを追加**
 
 **日本語での説明を追加しました**
 ## News
+* 2016/4/17 Add MatrixTransformTools, rewrite by Python2.
 * 2016/4/12 Now Working on GMRES Method.
 * 2016/3/20 Now Working on CUDA version Kskip-CG.
 
