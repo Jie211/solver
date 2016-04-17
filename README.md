@@ -120,14 +120,32 @@ Ikuno, S., Kawaguchi, Y., Fujita, N., Itoh, T., Nakata, S., & Watanabe, K. (2012
 	* makefileを利用してコンパイルする(今後はAutomakeを作る予定)。
 
 - サンプルの実行
-	* [ここ](https://www.dropbox.com/sh/cuvspwrca345www/AABVYFIuHmAAFQTH2vqkztmEa?dl=0)でダウンロードしたディレクトリをsolverディレクトリと同じレベルに置き、
-		
-			./a.out -Matrix=25-100 -OuterSolver=cg -Verbose=1
-でCG法で行列を解くことができる。
+	* 問題である行列を用意する。（下の二つの方法がある）
+		- [ここ](https://www.dropbox.com/sh/cuvspwrca345www/AABVYFIuHmAAFQTH2vqkztmEa?dl=0)で最小テスト行列を使用する。
+		- [MatrixMarket](http://math.nist.gov/MatrixMarket/)で行列をダウンロードする(解法により使う行列の種類が違う、CG CR kskipCG kskipCRに対しては正定値対称行列が必要、それ以外の解法では対称性行列が必要である。)
+	
+	* ダウンロードしたディレクトリ次のように配置する。
+	
+	~~~~
+	./
+	|-- Matrix
+	|   `-- CSR
+	|       `-- bcsstk14
+	|-- solver
+	|   |-- CRS
+	|   |   |-- cg.cu
+	|   |   |-- cg.h
+	|   |   |-- cr.cu
+	|   |   |-- cr.h
+	|   |   |-- gcr.cu
+	~~~~
+	
 	* オプション一覧は
-
-			./a.out
-だけを実行する。
+	
+	~~~~
+	./a.out
+	~~~~
+	だけを実行する。
 
 ## ライセンス
 Apache License
