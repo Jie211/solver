@@ -268,7 +268,10 @@ int getCMD(int argc, char *argv[])
   /* int i; */
 
   if(argc==1){
-    printf("Option: Matrix, OuterSolver, InnerSolver, OuterLoop, InnerLoop, OuterEPS, InnerEPS, OuterRestart, InnerRestart, OuterKskip, InnerKskip, OuterFix, InnerFix, Verbose, Cuda\n");
+    printf("Option: -Matrix=[matrix], -Verbose=[=0,1], -Cuda=[=0,1]\n");
+    printf("-OuterSolver=[method], -OuterLoop=[loops], -OuterEPS=[eps], -OuterRestart[RestartTimes], -OuterKskip=[k], -OuterFix=[debug]\n");
+    printf("-InnerSolver=[method], -InnerLoop=[loops], -InnerESP=[eps], -InnerRestart[RestartTimes], -InnerKskip=[k], -InnerFix=[debug]\n");
+    printf("Method: cg, cr, gcr, gmres, kcg, kcr, vpcg, vpcr, vpgmres\n");
     return -1;
   }
 
