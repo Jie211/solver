@@ -268,10 +268,33 @@ int getCMD(int argc, char *argv[])
   /* int i; */
 
   if(argc==1){
+<<<<<<< HEAD
+    printf("Option: \n"
+        "\tRequire:\n"
+        "\t\t-M/--Matrix [matrix name]-> Matrix to solve\n"
+        "\t\t\t-S/--OuterSolver [solver name]-> Select Outsider solver\n"
+        "\t\t\t-s/--InnerSolver [solver name]-> Select Insider solver\n"
+        "\tOther:\n"
+        "\t\t-L/--OuterLoop [int]-> maxloop for Outer solver\n"
+        "\t\t-l/--InnerLoop [int]-> maxloop for Inner solver\n"
+        "\t\t-E/--OuterEPS [double]-> EPS for Outer solver\n"
+        "\t\t-e/--InnerEPS [double]-> EPS for Inner solver\n"
+        "\t\t-R/--OuterRestart [int]-> Restart counter for Outer solver\n"
+        "\t\t-r/--InnerRestart [int]-> Restart counter for Outer solver\n"
+        "\t\t-K/--OuterKskip [int]-> skip num for K-skip Outer solver\n"
+        "\t\t-k/--InnerKskip [int]-> skip num for K-skip Inner solver\n"
+        "\t\t-F/--OuterFix [1,2]-> BugFix for K-skip Outer solver(DEBUG)\n"
+        "\t\t-f/--InnerFix [1,2]-> BugFix for K-skip Inner solver(DEBUG)\n"
+        "\t\t-V/--Verbose [0,1]-> verbose mode\n"
+        "\t\t-T/--Thread [num]-> Thread for OpenMP\n"
+        "\t\t-C/--Cuda [0,1]-> Cuda mode\n");
+    /* printf("Option: Matrix, OuterSolver, InnerSolver, OuterLoop, InnerLoop, OuterEPS, InnerEPS, OuterRestart, InnerRestart, OuterKskip, InnerKskip, OuterFix, InnerFix, Verbose, Cuda\n"); */
+=======
     printf("Option: -Matrix=[matrix], -Verbose=[=0,1], -Cuda=[=0,1]\n");
     printf("-OuterSolver=[method], -OuterLoop=[loops], -OuterEPS=[eps], -OuterRestart[RestartTimes], -OuterKskip=[k], -OuterFix=[debug]\n");
     printf("-InnerSolver=[method], -InnerLoop=[loops], -InnerESP=[eps], -InnerRestart[RestartTimes], -InnerKskip=[k], -InnerFix=[debug]\n");
     printf("Method: cg, cr, gcr, gmres, kcg, kcr, vpcg, vpcr, vpgmres\n");
+>>>>>>> 7d5c6de0d237c69d3aad1f15f115ac970c45ebdc
     return -1;
   }
 
