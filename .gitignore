@@ -3,4 +3,4 @@
 *.dSYM
 *.tags
 .DS_Store
-/output
+/output/*

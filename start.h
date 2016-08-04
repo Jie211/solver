@@ -29,7 +29,7 @@
 #define K_IN 2
 #define F_OUT 2
 #define F_IN 2
-#define THREAD 8
+#define THREAD 16
 #define VERBOSE 0
 #define CUDA 0
 

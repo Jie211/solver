@@ -65,9 +65,9 @@ int VPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nd
     rnorm = Double2Norm(rvec, ndata);
     error=rnorm/bnorm;
     if(verbose){
-      printf("Outer %d %.12e\n",loop, error);
+      printf("Outer %d %.12e\n",loop+1, error);
     }
-    fprintf(p_his,"%d %.12e\n",loop, error);
+    fprintf(p_his,"%d %.12e\n",loop+1, error);
     if(error <= eps){
       flag=true;
       break;

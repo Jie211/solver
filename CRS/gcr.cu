@@ -121,9 +121,9 @@ int GCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int nda
       error=rnorm/bnorm;
       if(!INNER ){
         if(verbose){
-          printf("Outer %d %.12e\n",loop, error);
+          printf("Outer %d %.12e\n",loop+1, error);
         }
-        fprintf(p_his,"%d %.12e\n",loop, error);
+        fprintf(p_his,"%d %.12e\n",loop+1, error);
       }
       if(error <= eps){
         flag=true;

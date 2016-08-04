@@ -130,9 +130,9 @@ int CR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int ndat
     error=rnorm/bnorm;
     if(!INNER){
       if(verbose){
-        printf("%d %.12e\n",loop, error);
+        printf("%d %.12e\n",loop+1, error);
       }
-      fprintf(p_his,"%d %.12e\n",loop, error);
+      fprintf(p_his,"%d %.12e\n",loop+1, error);
     }
     if(error <= eps){
       flag=true;

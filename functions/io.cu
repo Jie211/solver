@@ -1,15 +1,18 @@
 #include "io.h"
 #include <sys/stat.h>
 
-int UsageCheck(char *argv){
+int UsageCheck(char *argv)
+{
   int error = FileFound(argv);
-  if(error!=0){
+  if(error!=0)
+  {
     printf("** error Usagecheck **\n");
     return -1;
   }
   return 0;
 }
-int FileFound(char *argv){
+int FileFound(char *argv)
+{
   DIR *dir;
   struct dirent *dp;
   struct stat st;
@@ -26,11 +29,13 @@ int FileFound(char *argv){
   strcpy(searchname, argv);
   strcpy(path, "../Matrix/CSR/");
 
-  if((dir=opendir(path))==NULL){
+  if((dir=opendir(path))==NULL)
+  {
     perror("** error opendir **\n");
     return -1;
   }
-  for(dp=readdir(dir);dp!=NULL;dp=readdir(dir)){
+  for(dp=readdir(dir);dp!=NULL;dp=readdir(dir))
+  {
     /* result = stat(dp->d_name,&st); */
     stat(dp->d_name,&st);
     /* if((st.st_mode & S_IFMT) == S_IFDIR){ */
@@ -41,7 +46,8 @@ int FileFound(char *argv){
       }
     }
   }
-  if(!dir_found){
+  if(!dir_found)
+  {
     printf("** error Matrix directory not found **\n");
   }else{
     printf("---- DirFound ----\n");
@@ -50,11 +56,13 @@ int FileFound(char *argv){
   strcpy(fullpath, path);
   strcat(fullpath, searchname);
   strcat(fullpath, "/");
-  if((dir=opendir(fullpath))==NULL){
+  if((dir=opendir(fullpath))==NULL)
+  {
     perror("** error opendir **\n");
     return -1;
   }
-  for(dp=readdir(dir);dp!=NULL;dp=readdir(dir)){
+  for(dp=readdir(dir);dp!=NULL;dp=readdir(dir))
+  {
     /* result = stat(dp->d_name,&st); */
     stat(dp->d_name,&st);
     /* if((st.st_mode & S_IFMT) == S_IFDIR){ */
@@ -79,7 +87,8 @@ int FileFound(char *argv){
   strcat(ptr_path, "Ptr.txt");
   strcat(col_path, "ColVal.txt");
 
-  if(!file_found){
+  if(!file_found)
+  {
     printf("** error Matrix file not found **\n");
   }else{
     printf("---- FileFound ----\n");
@@ -203,7 +212,8 @@ void GetData(const char *file1, const char *file2, const char *file3, int *col, 
   fclose(in2);
   fclose(in3);
 }
-FILE* FileInit(const char *name, const char *mode){
+FILE* FileInit(const char *name, const char *mode)
+{
   FILE *tmp;
   if((tmp = fopen(name, mode))==NULL){
     perror("** error File init **\n");
@@ -212,10 +222,12 @@ FILE* FileInit(const char *name, const char *mode){
   }
   return (tmp);
 }
-void FileClose(FILE *fp){
+void FileClose(FILE *fp)
+{
   fclose(fp);
 }
-void FileOutPutVec(FILE *fp, double *vec, int ndata){
+void FileOutPutVec(FILE *fp, double *vec, int ndata)
+{
   int i;
   for(i=0;i<ndata;i++){
     fprintf(fp,"%d %.12e", i, vec[i]);

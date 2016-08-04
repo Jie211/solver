@@ -46,9 +46,12 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
   FILE *p_x=NULL, *p_his=NULL;
 
   double dot=0.0, tmp1=0.0, tmp2=0.0, tmp3=0.0;
+  /* if(INNER){ */
+    /* printf("%d\n", kskip); */
+  /* } */
   if(!INNER){
-    p_x=FileInit("./output/KskipCG_x.txt", "w");
-    p_his=FileInit("./output/KskipCG_his.txt", "w");
+    p_x=FileInit("./output/KCG_x.txt", "w");
+    p_his=FileInit("./output/KCG_his.txt", "w");
   }
 
 
@@ -134,9 +137,9 @@ int KSKIPCG_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
     error=rnorm/bnorm;
     if(!INNER){
       if(verbose){
-        printf("%d %.12e\n", nloop, error);
+        printf("%d %.12e\n", nloop+1, error);
       }
-      fprintf(p_his,"%d %.12e\n", nloop, error);
+      fprintf(p_his,"%d %.12e\n", nloop+1, error);
     }
     if(error<=eps){
       flag=true;

@@ -33,9 +33,11 @@ int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
 
   double st, et, t1;
 
+  int i;
+
   if(!INNER){
-    p_x=FileInit("./output/KskipCR_x.txt", "w");
-    p_his=FileInit("./output/KskipCR_his.txt", "w");
+    p_x=FileInit("./output/KCR_x.txt", "w");
+    p_his=FileInit("./output/KCR_his.txt", "w");
   }
 
   st=gettimeofday_sec();
@@ -60,7 +62,7 @@ int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
 
   //Ax
   DoubleMVMCSR(Av, val, col, ptr, xvec, ndata);
-
+  
   //r=b-Ax
   DoubleVecSub(rvec, bvec, Av, ndata);
 
@@ -71,13 +73,14 @@ int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
 
   for(nloop=0; nloop<i_max; nloop+=(kskip+1))
   {
+
     rnorm=Double2Norm(rvec, ndata);
     error=rnorm/bnorm;
     if(!INNER){
       if(verbose){
-        printf("%d %.12e\n", nloop, error);
+        printf("%d %.12e\n", nloop+1, error);
       }
-      fprintf(p_his, "%d %.12e\n", nloop, error);
+      fprintf(p_his, "%d %.12e\n", nloop+1, error);
     }
     if(error<=eps){
       flag=true;
@@ -107,8 +110,8 @@ int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
         double delta2=0.0;
         delta[jloop] = delta[jloop] - 2*alpha*zeta[jloop+1] + alpha*alpha*eta[jloop+1];
         delta2=delta[jloop+1] - 2*alpha*zeta[jloop+2] + alpha*alpha*eta[jloop+2];
-        /* eta[jloop] = delta[jloop+1] + 2*beta*(zeta[jloop+1]-alpha*eta[jloop+1]) + beta*beta*eta[jloop]; */
-        eta[jloop] = delta2 + 2*beta*(zeta[jloop+1]-alpha*eta[jloop+1]) + beta*beta*eta[jloop];
+        eta[jloop] = delta[jloop+1] + 2*beta*(zeta[jloop+1]-alpha*eta[jloop+1]) + beta*beta*eta[jloop];
+        /* eta[jloop] = delta2 + 2*beta*(zeta[jloop+1]-alpha*eta[jloop+1]) + beta*beta*eta[jloop]; */
         zeta[jloop] = delta[jloop] - alpha*zeta[jloop+1] - alpha*(zeta[jloop+1]-alpha*eta[jloop+1]) + beta*zeta[jloop] - alpha*beta*eta[jloop];
       }
 
@@ -119,7 +122,12 @@ int KSKIPCR_CRS(double *val, int *col, int *ptr, double *bvec, double *xvec, int
       DoubleScalarxpy(xvec, alpha, pvec, xvec, ndata);
 
       //r=r-alpha*Ap
-      DoubleScalarxpy(rvec, -alpha, Av, rvec, ndata);
+      /* DoubleScalarxpy(rvec, -alpha, Av, rvec, ndata); */
+      for(i=0;i<ndata;i++)
+      {
+        double tmp = rvec[i];
+        rvec[i] = tmp - alpha * Av[i];
+      }
 
       //p=r+beta*p
       DoubleScalarxpy(pvec, beta, pvec, rvec, ndata);

@@ -33,4 +33,52 @@ VPCG_H_INCLUDED__	CRS/vpcg.h	2;"	d
 VPCR_H_INCLUDED__	CRS/vpcr.h	2;"	d
 VPGCR_H_INCLUDED__	CRS/vpgcr.h	2;"	d
 VPGMRES_H_INCLUDED__	CRS/vpgmres.h	2;"	d
+arglen	MM2CRS.py	/^arglen = len(argvs)$/;"	v
+arglen	MMinfo.py	/^arglen = len(argvs)$/;"	v
+argvs	MM2CRS.py	/^argvs = sys.argv$/;"	v
+argvs	MMinfo.py	/^argvs = sys.argv$/;"	v
+ave_nnz	MMinfo.py	/^ave_nnz = np.average(nnz_row)$/;"	v
+bvec	MM2CRS.py	/^bvec = matscr.dot(xvec)$/;"	v
+bxpath	MM2CRS.py	/^bxpath = path+'\/bx.txt'$/;"	v
 cache	start.h	/^__shared__ double cache[16];$/;"	v
+col	MM2CRS.py	/^col = matscr.indices$/;"	v
+colvalpath	MM2CRS.py	/^colvalpath = path+'\/ColVal.txt'$/;"	v
+data	MM2CRS.py	/^data = matscr.data$/;"	v
+do_job_1	todo.sh	/^do_job_1()$/;"	f
+do_job_2	todo.sh	/^do_job_2()$/;"	f
+do_job_3	todo.sh	/^do_job_3()$/;"	f
+f_bx	MM2CRS.py	/^f_bx = open(bxpath, 'w')$/;"	v
+f_colval	MM2CRS.py	/^f_colval = open(colvalpath, 'w')$/;"	v
+f_ptr	MM2CRS.py	/^f_ptr = open(ptrpath, 'w')$/;"	v
+ftype	MMinfo.py	/^ftype = mat.getformat()$/;"	v
+head	MM2CRS.py	/^head = "%d %d %d\\n" % (size, size, nnz)$/;"	v
+mat	MMinfo.py	/^mat = sio.mmread(target)$/;"	v
+matcoo	MM2CRS.py	/^matcoo = sio.mmread(target)$/;"	v
+matscr	MM2CRS.py	/^matscr = matcoo.tocsr()$/;"	v
+max_all	MMinfo.py	/^max_all = mat.max()$/;"	v
+max_nnz	MMinfo.py	/^max_nnz = max(nnz_row)$/;"	v
+min_all	MMinfo.py	/^min_all = mat.min()$/;"	v
+min_nnz	MMinfo.py	/^min_nnz = min(nnz_row)$/;"	v
+nnz	MM2CRS.py	/^nnz = matscr.nnz$/;"	v
+nnz	MMinfo.py	/^nnz = mat.getnnz()$/;"	v
+nnz_row	MMinfo.py	/^nnz_row = mat.getnnz(1)$/;"	v
+np	MM2CRS.py	/^import numpy as np$/;"	i
+np	MMinfo.py	/^import numpy as np$/;"	i
+os	MM2CRS.py	/^import os$/;"	i
+path	MM2CRS.py	/^path = '.\/'+target.replace('.mtx', '')$/;"	v
+ptr	MM2CRS.py	/^ptr = matscr.indptr$/;"	v
+ptrpath	MM2CRS.py	/^ptrpath = path+'\/Ptr.txt'$/;"	v
+scipy	MM2CRS.py	/^import scipy.io as sio$/;"	i
+scipy	MMinfo.py	/^import scipy.io as sio$/;"	i
+sio	MM2CRS.py	/^import scipy.io as sio$/;"	i
+sio	MMinfo.py	/^import scipy.io as sio$/;"	i
+size	MM2CRS.py	/^size = matscr.shape[0]$/;"	v
+sys	MM2CRS.py	/^import sys$/;"	i
+sys	MMinfo.py	/^import sys$/;"	i
+target	MM2CRS.py	/^target = argvs[1]$/;"	v
+target	MMinfo.py	/^target = argvs[1]$/;"	v
+tmp	MM2CRS.py	/^	tmp = "%.16e %.16e\\n" % (bvec[i], xvec[i])$/;"	v
+tmp	MM2CRS.py	/^	tmp = "%d %.16e\\n" % (col[i], data[i])$/;"	v
+tmp	MM2CRS.py	/^	tmp = "%d\\n" % (i)$/;"	v
+xvec	MM2CRS.py	/^xvec = []$/;"	v
+zero	MMinfo.py	/^zero = float(sizex*sizex-nnz)\/float(sizex*sizex)*100.0$/;"	v
