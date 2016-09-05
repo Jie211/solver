@@ -4,7 +4,7 @@ do_job_1()
 {
   rm -f ./output/*
 #./a.out -M $1 -S $2 -V 1 >> ../$DIR/$MAT/$1-$2.log
-  ./a.out -M $1 -S $2>> ../$DIR/$MAT/$1-$2.log
+  ./a.out -M $1 -S $2 -CUDA 1 >> ../$DIR/$MAT/$1-$2.log
   cp ./output/${2^^}_his.txt ../$DIR/$MAT/$1-$2.txt
   echo "-------- Matrix [$1] solver [$2] Done ------"
   gnuplot -e "INPUTNAME='../$DIR/$MAT/$1-$2.txt'; OUTPUTNAME='$1-$2.eps'; TITLE='$2'" ./plot.gnp
@@ -18,7 +18,7 @@ do_job_2()
   do
     rm -f ./output/*
 #./a.out -M $1 -S $2 -s $3 -k $i -V 1 >> ../$DIR/$MAT/$1-$2-$3-k$i.log
-    ./a.out -M $1 -S $2 -s $3 -k $i >> ../$DIR/$MAT/$1-$2-$3-k$i.log
+    ./a.out -M $1 -S $2 -s $3 -k $i -CUDA 1 -l 10 >> ../$DIR/$MAT/$1-$2-$3-k$i.log
     cp ./output/${2^^}_his.txt ../$DIR/$MAT/$1-$2-$3-k$i.txt
     echo "-------- Matrix [$1] OuterSolver [$2] InnerSolver [$3] in k [$i] Done ------"
   done
@@ -46,7 +46,7 @@ fi
 
 #DIR="16-7-26"
 # DIR="16-7-31"
-DIR="16-8-4"
+DIR="16-8-4-L10"
 MAT=$1
 
 DIRFULL=../$DIR/$MAT/EPS/
@@ -55,13 +55,13 @@ if [ ! -e $DIRFULL ]; then
   echo "mkdir"
 fi
 
-do_job_1 $MAT "cg"
-do_job_1 $MAT "cr"
-do_job_1 $MAT "gcr"
-do_job_1 $MAT "gmres"
-do_job_1 $MAT "kcg"
-
-do_job_3 $MAT "cg" "cr" "gcr" "gmres" "kcg" 
+# do_job_1 $MAT "cg"
+# do_job_1 $MAT "cr"
+# do_job_1 $MAT "gcr"
+# do_job_1 $MAT "gmres"
+# do_job_1 $MAT "kcg"
+#
+# do_job_3 $MAT "cg" "cr" "gcr" "gmres" "kcg" 
 
 do_job_2 $MAT "vpcg" "kcg" "4"
 # do_job_2 $MAT "vpcr" "kcg" "4"
